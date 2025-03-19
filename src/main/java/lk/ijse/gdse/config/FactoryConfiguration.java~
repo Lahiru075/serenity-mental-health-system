@@ -16,7 +16,7 @@ public class FactoryConfiguration {
 
     private FactoryConfiguration() {
         Configuration configuration = new Configuration();
-
+        
         Properties properties = new Properties();
         try (InputStream inputStream = FactoryConfiguration.class.getClassLoader().getResourceAsStream("hibernate.properties")) {
             if (inputStream != null) {
