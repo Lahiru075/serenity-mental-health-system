@@ -3,6 +3,6 @@ module lk.ijse.gdse.serenity_mental_health_system {
     requires javafx.fxml;
 
 
-    opens lk.ijse.gdse.serenity_mental_health_system to javafx.fxml;
-    exports lk.ijse.gdse.serenity_mental_health_system;
+    opens lk.ijse.gdse to javafx.fxml;
+    exports lk.ijse.gdse;
 }
