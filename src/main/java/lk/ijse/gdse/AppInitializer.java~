@@ -11,8 +11,8 @@ import org.hibernate.Session;
 
 public class AppInitializer extends Application {
     public static void main(String[] args) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        session.close();
+//        Session session = FactoryConfiguration.getInstance().getSession();
+//        session.close();
 
         launch(args);
 
