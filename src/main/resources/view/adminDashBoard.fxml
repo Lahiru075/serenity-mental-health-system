@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1116.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.controller.AdminDashBoardController">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="700.0" prefWidth="1116.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.controller.AdminDashBoardController">
     <children>
         <!-- Side Navigation Panel -->
         <VBox prefHeight="700.0" prefWidth="264.0" style="-fx-background-color: #2c3e50;">
@@ -104,7 +104,7 @@
         </VBox>
 
         <!-- Main Content Area -->
-        <AnchorPane layoutX="267.0" prefHeight="700.0" prefWidth="886.0" style="-fx-background-color: #f5f5f5;">
+        <AnchorPane fx:id="subAnchorPaneOne" layoutX="267.0" prefHeight="700.0" prefWidth="886.0" style="-fx-background-color: #f5f5f5;">
             <children>
                 <!-- Top Bar -->
                 <HBox alignment="CENTER_RIGHT" layoutY="0.0" prefHeight="60.0" prefWidth="887.0" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">

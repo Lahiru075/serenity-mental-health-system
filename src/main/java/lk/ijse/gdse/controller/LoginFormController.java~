@@ -51,6 +51,7 @@ public class LoginFormController {
                     new Alert(Alert.AlertType.ERROR, "Invalid username or password").showAndWait();
                     txtUsername.clear();
                     txtPassword.clear();
+                    txtSecondPassword.clear();
                     return;
                 }
 
@@ -76,19 +77,14 @@ public class LoginFormController {
     @FXML
     void showPasswordBoxOnAction(ActionEvent event) {
 
-
-
-
         if (showPasswordBox.isSelected()) {
-            // Checkbox එක select කරලා තියෙනවා නම් password එක show කරන්න
-            txtSecondPassword.setText(txtPassword.getText()); // PasswordField එකේ text එක TextField එකට දානවා
-            txtSecondPassword.setVisible(true); // TextField එක visible කරනවා
-            txtPassword.setVisible(false); // PasswordField එක hide කරනවා
+            txtSecondPassword.setText(txtPassword.getText());
+            txtSecondPassword.setVisible(true);
+            txtPassword.setVisible(false);
         } else {
-            // Checkbox එක unselect කරලා තියෙනවා නම් password එක hide කරන්න
-            txtPassword.setText(txtSecondPassword.getText()); // TextField එකේ text එක PasswordField එකට දානවා
-            txtPassword.setVisible(true); // PasswordField එක visible කරනවා
-            txtSecondPassword.setVisible(false); // TextField එක hide කරනවා
+            txtPassword.setText(txtSecondPassword.getText());
+            txtPassword.setVisible(true);
+            txtSecondPassword.setVisible(false);
         }
     }
 }

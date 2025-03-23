@@ -2,8 +2,16 @@ package lk.ijse.gdse.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class AdminDashBoardController {
 
@@ -62,8 +70,22 @@ public class AdminDashBoardController {
     private Label lblTotalUsers;
 
     @FXML
-    void btnLogoutOnAction(ActionEvent event) {
+    private AnchorPane subAnchorPaneOne;
 
+    @FXML
+    private AnchorPane mainAnchorPane;
+
+    @FXML
+    void btnLogoutOnAction(ActionEvent event) throws IOException {
+        Stage currentStage = (Stage) mainAnchorPane.getScene().getWindow();
+        currentStage.close();
+
+        Parent load = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(load));
+        stage.setTitle("Login Form");
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -92,8 +114,14 @@ public class AdminDashBoardController {
     }
 
     @FXML
-    void btnUserManageOnAction(ActionEvent event) {
+    void btnUserManageOnAction(ActionEvent event) throws IOException {
+        navigateToAnchorPane("/view/adminUserManage.fxml");
+    }
 
+    private void navigateToAnchorPane(String path) throws IOException {
+        subAnchorPaneOne.getChildren().clear();
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
+        subAnchorPaneOne.getChildren().add(anchorPane);
     }
 
 }

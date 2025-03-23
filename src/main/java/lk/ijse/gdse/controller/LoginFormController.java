@@ -41,6 +41,11 @@ public class LoginFormController {
     @FXML
     void btnLoginOnAction(ActionEvent event) {
 
+        if (showPasswordBox.isSelected()){
+            new Alert(Alert.AlertType.ERROR, "Please uncheck show password box").showAndWait();
+            return;
+        }
+
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please enter username and password").showAndWait();
         } else {
@@ -51,6 +56,7 @@ public class LoginFormController {
                     new Alert(Alert.AlertType.ERROR, "Invalid username or password").showAndWait();
                     txtUsername.clear();
                     txtPassword.clear();
+                    txtSecondPassword.clear();
                     return;
                 }
 
