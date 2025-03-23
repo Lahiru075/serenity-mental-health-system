@@ -1,8 +1,8 @@
 package lk.ijse.gdse.dao.custom.impl;
 
 import lk.ijse.gdse.config.FactoryConfiguration;
-import lk.ijse.gdse.dao.custom.UserDao;
-import lk.ijse.gdse.dto.UserDto;
+import lk.ijse.gdse.dao.custom.TherapistDao;
+import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,25 +12,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
+public class TherapistDaoImpl implements TherapistDao {
 
     FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
-
-
-    @Override
-    public List<User> checkUser() {
-        Session session = factoryConfiguration.getSession();
-        Query<User> query = session.createQuery("from User", User.class);
-        List<User> list = query.list();
-        return list;
-    }
 
     @Override
     public String getNextId() throws SQLException {
         Session session = factoryConfiguration.getSession();
 
         String lastId = session
-                .createQuery("SELECT u.id FROM User u ORDER BY u.id DESC", String.class)
+                .createQuery("SELECT t.id FROM Therapist t ORDER BY t.id DESC", String.class)
                 .setMaxResults(1)
                 .getSingleResult();
 
@@ -38,20 +29,20 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public ArrayList<User> getAll() throws SQLException {
+    public ArrayList<Therapist> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        Query<User> query = session.createQuery("from User", User.class);
-        List<User> list = query.list();
+        Query<Therapist> query = session.createQuery("from Therapist", Therapist.class);
+        List<Therapist> list = query.list();
         return new ArrayList<>(list);
     }
 
     @Override
-    public boolean save(User user) throws SQLException {
+    public boolean save(Therapist therapist) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.persist(user);
+            session.persist(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -70,8 +61,8 @@ public class UserDaoImpl implements UserDao {
         Transaction transaction = session.beginTransaction();
 
         try {
-            User user = session.get(User.class, Id);
-            session.remove(user);
+            Therapist therapist = session.get(Therapist.class, Id);
+            session.remove(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -85,12 +76,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean update(User user) throws SQLException {
+    public boolean update(Therapist therapist) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(user);
+            session.merge(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){

@@ -1,6 +1,7 @@
 package lk.ijse.gdse.bo;
 
 import lk.ijse.gdse.bo.custom.impl.EncryptAndDecryptImpl;
+import lk.ijse.gdse.bo.custom.impl.TherapistBoImpl;
 import lk.ijse.gdse.bo.custom.impl.UserBoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -32,8 +33,8 @@ public class BOFactory {
 //                return new PatientBOImpl();
 //            case PROGRAM_DETAILS:
 //                return new ProgramDetailsBOImpl();
-//            case THERAPIST:
-//                return new TherapistBOImpl();
+            case THERAPIST:
+                return (T) new TherapistBoImpl();
 //            case THERAPY_PROGRAM:
 //                return new TherapyProgramBOImpl();
 //            case THERAPY_SESSION:

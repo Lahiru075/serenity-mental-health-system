@@ -18,7 +18,7 @@ public class Therapist implements SuperEntity{
     private String id;
     private String name;
     private String email;
-    private int contact;
+    private String contact;
 
     @ManyToMany(mappedBy = "therapists")
     private List<TherapyProgram> therapyPrograms;
