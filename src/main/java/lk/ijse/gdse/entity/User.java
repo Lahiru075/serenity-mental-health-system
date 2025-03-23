@@ -12,7 +12,7 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements SuperEntity{
     @Id
     @Column(name = "user_id")
     private String id;

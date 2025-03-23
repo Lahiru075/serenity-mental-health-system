@@ -1,6 +1,8 @@
 package lk.ijse.gdse.bo;
 
+import lk.ijse.gdse.bo.custom.impl.EncryptAndDecryptImpl;
 import lk.ijse.gdse.bo.custom.impl.UserBoImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -16,7 +18,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        USER, PATIENT, PROGRAM_DETAILS, THERAPIST, THERAPY_PROGRAM, THERAPY_SESSION, PAYMENT
+        USER, PATIENT, PROGRAM_DETAILS, THERAPIST, THERAPY_PROGRAM, THERAPY_SESSION, PAYMENT, ENCRYPT
     }
 
     @SuppressWarnings("unchecked")
@@ -24,6 +26,8 @@ public class BOFactory {
         switch (boType) {
             case USER:
                 return (T) new UserBoImpl();
+            case ENCRYPT:
+                return (T) new EncryptAndDecryptImpl(new BCryptPasswordEncoder());
 //            case PATIENT:
 //                return new PatientBOImpl();
 //            case PROGRAM_DETAILS:

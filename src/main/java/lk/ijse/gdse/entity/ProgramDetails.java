@@ -8,7 +8,7 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "program_details")
-public class ProgramDetails {
+public class ProgramDetails implements SuperEntity {
 
     @EmbeddedId
     private ProgramDetailsId id;

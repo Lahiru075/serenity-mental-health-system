@@ -1,4 +1,7 @@
 package lk.ijse.gdse.dao;
 
-public interface CrudDao {
+import lk.ijse.gdse.entity.SuperEntity;
+
+public interface CrudDao<T extends SuperEntity, ID > extends SuperDao{
+
 }

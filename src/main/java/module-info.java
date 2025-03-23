@@ -8,6 +8,7 @@ module lk.ijse.gdse.serenity_mental_health_system {
     requires net.sf.jasperreports.core;
 
     requires java.naming;
+    requires spring.security.crypto;
 
     opens lk.ijse.gdse.entity to org.hibernate.orm.core;
     opens lk.ijse.gdse.config to jakarta.persistence;

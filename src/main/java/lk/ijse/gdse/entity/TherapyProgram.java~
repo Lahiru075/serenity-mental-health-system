@@ -22,6 +22,11 @@ public class TherapyProgram {
     private double fee;
 
     @ManyToMany
+    @JoinTable (
+            name = "therapist_therapy_program",
+            joinColumns = @JoinColumn(name = "program_id"),
+            inverseJoinColumns = @JoinColumn(name = "therapist_id")
+    )
     private List<Therapist> therapists;
 
     @OneToMany(mappedBy = "therapyProgram")

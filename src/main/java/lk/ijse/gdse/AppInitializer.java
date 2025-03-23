@@ -7,11 +7,64 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lk.ijse.gdse.config.FactoryConfiguration;
+import lk.ijse.gdse.entity.User;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class AppInitializer extends Application {
+
+//    private final BCryptPasswordEncoder passwordEncoder;
+//
+//    public AppInitializer(BCryptPasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
+//
+//    public void save(){
+//        String hashedPassword = passwordEncoder.encode("1234");
+//
+//        User user = new User();
+//        user.setId("U001");
+//        user.setUsername("lahiru");
+//        user.setPassword(hashedPassword);
+//        user.setRole("addmin");
+//        user.setEmail("lahiru@gmail.com");
+//
+//        Session session = FactoryConfiguration.getInstance().getSession();
+//
+//        Transaction transaction = session.beginTransaction();
+//        session.save(user);
+//        transaction.commit();
+//
+//        session.close();
+//
+//    }
+//
+//    public User verify(){
+//
+//        Session session = FactoryConfiguration.getInstance().getSession();
+//
+//        User user = session.get(User.class, "2");
+//
+//        if(user != null){
+//            boolean isMatch = passwordEncoder.matches("1234", user.getPassword());
+//            return user;
+//        }
+//
+//        return null;
+//    }
+
     public static void main(String[] args) {
+
+//        User user = appInitializer.verify();
+//        System.out.println(user.getId() + " " + user.getUsername() + " " + user.getPassword() + " " + user.getRole() + " " + user.getEmail());
+
+
+
         Session session = FactoryConfiguration.getInstance().getSession();
+
+
+
         session.close();
 
         launch(args);
