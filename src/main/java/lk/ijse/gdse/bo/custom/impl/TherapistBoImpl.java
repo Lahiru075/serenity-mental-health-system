@@ -74,4 +74,10 @@ public class TherapistBoImpl implements TherapistBo {
 
         return therapistDao.update(therapist);
     }
+
+    @Override
+    public TherapistDto findById(String therapistId) {
+        Therapist therapist = therapistDao.findById(therapistId);
+        return new TherapistDto(therapist.getId(), therapist.getName(), therapist.getEmail(), therapist.getContact());
+    }
 }

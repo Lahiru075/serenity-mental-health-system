@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="887.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.controller.ProgramManageController">
+   <children>
+      <Label layoutX="34.0" layoutY="30.0" text="Therapy Program Manage" textFill="#2c3e50">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="25.0" layoutY="77.0" prefHeight="650.0" prefWidth="884.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="77.0">
+         <children>
+            <HBox layoutX="46.0" layoutY="236.0" prefHeight="35.0" prefWidth="760.0" spacing="50.0">
+               <children>
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #2c3e50; -fx-background-radius: 5;" text="Save" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #3498db; -fx-background-radius: 5;" text="Update" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 5;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #95a5a6; -fx-background-radius: 5;" text="Reset" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="80.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnLinkTherapist" mnemonicParsing="false" onAction="#btnLinkTherapistOnAction" prefHeight="41.0" prefWidth="196.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-radius: 5px;" text="Link Therapist">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <TableView fx:id="tbProgram" layoutX="44.0" layoutY="290.0" onMouseClicked="#tbProgramOnMouseClicked" prefHeight="203.0" prefWidth="766.0">
+               <columns>
+                  <TableColumn fx:id="colProgramId" prefWidth="92.0" text="Program ID" />
+                  <TableColumn fx:id="colProgramName" prefWidth="177.5999755859375" text="Name" />
+                  <TableColumn fx:id="colFee" prefWidth="118.4000244140625" text="Fee" />
+                  <TableColumn fx:id="colDuration" prefWidth="140.79998779296875" text="Duration" />
+                  <TableColumn fx:id="colDescription" prefWidth="235.199951171875" text="Description" />
+               </columns>
+            </TableView>
+            <Label layoutX="51.0" layoutY="59.0" text="Program ID">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="labTherapistId" layoutX="51.0" layoutY="77.0" prefHeight="26.0" prefWidth="72.0" style="-fx-background-color: #fff;" text="TP001" />
+            <TextField fx:id="txtName" layoutX="50.0" layoutY="153.0" promptText="Name" />
+            <TextField fx:id="txtDuration" layoutX="336.0" layoutY="151.0" prefHeight="26.0" prefWidth="199.0" promptText="Duration" />
+            <TextField fx:id="txtFee" layoutX="336.0" layoutY="81.0" prefHeight="26.0" prefWidth="199.0" promptText="Fee" />
+            <Label layoutX="52.0" layoutY="129.0" text="Program Name">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="336.0" layoutY="59.0" text="Fee">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="336.0" layoutY="129.0" text="Duration">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="611.0" layoutY="59.0" text="Description">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="txtDescription" layoutX="611.0" layoutY="86.0" prefHeight="100.0" prefWidth="199.0" promptText="Description" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+      </AnchorPane>
+   </children>
+</AnchorPane>

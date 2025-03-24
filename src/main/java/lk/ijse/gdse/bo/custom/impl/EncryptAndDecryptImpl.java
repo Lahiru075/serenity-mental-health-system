@@ -1,6 +1,6 @@
 package lk.ijse.gdse.bo.custom.impl;
 
-import lk.ijse.gdse.bo.EncryptAndDecrypt;
+import lk.ijse.gdse.bo.custom.EncryptAndDecrypt;
 import lk.ijse.gdse.config.FactoryConfiguration;
 import lk.ijse.gdse.entity.User;
 import org.hibernate.Session;

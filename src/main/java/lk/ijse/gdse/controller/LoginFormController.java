@@ -9,12 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.gdse.bo.BOFactory;
-import lk.ijse.gdse.bo.EncryptAndDecrypt;
 import lk.ijse.gdse.bo.custom.UserBo;
 import lk.ijse.gdse.dto.UserDto;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class LoginFormController {
 

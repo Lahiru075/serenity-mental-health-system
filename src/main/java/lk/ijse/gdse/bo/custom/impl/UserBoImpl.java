@@ -1,7 +1,7 @@
 package lk.ijse.gdse.bo.custom.impl;
 
 import lk.ijse.gdse.bo.BOFactory;
-import lk.ijse.gdse.bo.EncryptAndDecrypt;
+import lk.ijse.gdse.bo.custom.EncryptAndDecrypt;
 import lk.ijse.gdse.bo.custom.UserBo;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.UserDao;

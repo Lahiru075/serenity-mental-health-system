@@ -4,10 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.TherapistBo;
 import lk.ijse.gdse.dao.custom.TherapistDao;
@@ -17,6 +21,7 @@ import lk.ijse.gdse.dto.tm.TherapistTm;
 import lk.ijse.gdse.dto.tm.UserTm;
 import lk.ijse.gdse.entity.Therapist;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +31,9 @@ public class TherapistManageController implements Initializable {
 
     @FXML
     private Button btnDelete;
+
+    @FXML
+    private Button btnAssignProgram;
 
     @FXML
     private Button btnReset;
@@ -67,6 +75,23 @@ public class TherapistManageController implements Initializable {
     private TextField txtName;
 
     TherapistBo therapistBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
+
+    @FXML
+    void btnAssignProgramOnAction(ActionEvent event) throws IOException {
+        Parent load =  FXMLLoader.load(getClass().getResource("/view/assignProgram.fxml"));
+        Scene scene = new Scene(load);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Assign Program");
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void btnTrackScheduleOnAction(ActionEvent event) {
+
+    }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException {

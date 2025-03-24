@@ -1,8 +1,8 @@
 package lk.ijse.gdse.dao.custom.impl;
 
 import lk.ijse.gdse.config.FactoryConfiguration;
-import lk.ijse.gdse.dao.custom.TherapistDao;
-import lk.ijse.gdse.entity.Therapist;
+import lk.ijse.gdse.dao.custom.TherapyProgramDao;
+import lk.ijse.gdse.entity.TherapyProgram;
 import lk.ijse.gdse.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TherapistDaoImpl implements TherapistDao {
+public class TherapyProgramDaoImpl implements TherapyProgramDao {
 
     FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
@@ -21,7 +21,7 @@ public class TherapistDaoImpl implements TherapistDao {
         Session session = factoryConfiguration.getSession();
 
         String lastId = session
-                .createQuery("SELECT t.id FROM Therapist t ORDER BY t.id DESC", String.class)
+                .createQuery("SELECT tp.id FROM TherapyProgram tp ORDER BY tp.id DESC", String.class)
                 .setMaxResults(1)
                 .getSingleResult();
 
@@ -29,20 +29,20 @@ public class TherapistDaoImpl implements TherapistDao {
     }
 
     @Override
-    public ArrayList<Therapist> getAll() throws SQLException {
+    public ArrayList<TherapyProgram> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        Query<Therapist> query = session.createQuery("from Therapist", Therapist.class);
-        List<Therapist> list = query.list();
+        Query<TherapyProgram> query = session.createQuery("from TherapyProgram", TherapyProgram.class);
+        List<TherapyProgram> list = query.list();
         return new ArrayList<>(list);
     }
 
     @Override
-    public boolean save(Therapist therapist) throws SQLException {
+    public boolean save(TherapyProgram therapyProgram) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.persist(therapist);
+            session.persist(therapyProgram);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -61,8 +61,8 @@ public class TherapistDaoImpl implements TherapistDao {
         Transaction transaction = session.beginTransaction();
 
         try {
-            Therapist therapist = session.get(Therapist.class, Id);
-            session.remove(therapist);
+            TherapyProgram therapyPrgram = session.get(TherapyProgram.class, Id);
+            session.remove(therapyPrgram);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -76,12 +76,12 @@ public class TherapistDaoImpl implements TherapistDao {
     }
 
     @Override
-    public boolean update(Therapist therapist) throws SQLException {
+    public boolean update(TherapyProgram therapyProgram) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(therapist);
+            session.merge(therapyProgram);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -92,17 +92,5 @@ public class TherapistDaoImpl implements TherapistDao {
                 session.close();
             }
         }
-    }
-
-    @Override
-    public Therapist findById(String therapistId) {
-        Session session = factoryConfiguration.getSession();
-        Therapist therapist = session.get(Therapist.class, therapistId);
-
-        if (therapist != null) {
-            return therapist;
-        }
-
-        return null;
     }
 }

@@ -2,7 +2,6 @@ package lk.ijse.gdse.dao;
 
 import lk.ijse.gdse.dao.custom.impl.TherapistDaoImpl;
 import lk.ijse.gdse.dao.custom.impl.TherapistTherapyProgramDaoImpl;
-import lk.ijse.gdse.dao.custom.impl.TherapyProgramDaoImpl;
 import lk.ijse.gdse.dao.custom.impl.UserDaoImpl;
 
 public class DaoFactory {
@@ -29,8 +28,6 @@ public class DaoFactory {
                 return (T) new TherapistDaoImpl();
             case THERAPIST_THERAPY_PROGRAM:
                 return (T) new TherapistTherapyProgramDaoImpl();
-            case PROGRAM:
-                return (T) new TherapyProgramDaoImpl();
             default:
                 return null;
         }

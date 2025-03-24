@@ -1,0 +1,203 @@
+package lk.ijse.gdse.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import lk.ijse.gdse.bo.BOFactory;
+import lk.ijse.gdse.bo.custom.TherapistBo;
+import lk.ijse.gdse.bo.custom.TherapistTherapyProgramBo;
+import lk.ijse.gdse.dto.TherapistDto;
+import lk.ijse.gdse.dto.TherapistTherapyProgramDto;
+import lk.ijse.gdse.dto.UserDto;
+import lk.ijse.gdse.dto.tm.TherapistTherapyProgramTm;
+import lk.ijse.gdse.dto.tm.UserTm;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class AssignProgramController implements Initializable {
+
+    @FXML
+    private Button btnAssign;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private ComboBox<String> cmbProgramName;
+
+    @FXML
+    private ComboBox<String> cmbTherapistName;
+
+    @FXML
+    private TableColumn<TherapistTherapyProgramTm, String> colProgramId;
+
+    @FXML
+    private TableColumn<TherapistTherapyProgramTm, String> colTherapistId;
+
+    @FXML
+    private Label lblProgramId;
+
+    @FXML
+    private Label lblTherapistId;
+
+    @FXML
+    private TableView<TherapistTherapyProgramTm> tblAssignments;
+
+    TherapistTherapyProgramBo therapistTherapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST_THERAPY_PROGRAM);
+    TherapistBo therapistBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
+
+    @FXML
+    void btnAssignOnAction(ActionEvent event) throws SQLException {
+        String programId = lblProgramId.getText();
+        String therapistId = lblTherapistId.getText();
+
+        boolean isAssigned = therapistTherapyProgramBo.save(new TherapistTherapyProgramDto(programId, therapistId));
+
+        if (isAssigned) {
+            new Alert(Alert.AlertType.INFORMATION, "Program assigned successfully").showAndWait();
+            reset();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to assign program").showAndWait();
+        }
+    }
+
+    @FXML
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
+        String programId = lblProgramId.getText();
+        String therapistId = lblTherapistId.getText();
+
+        boolean isDeleted = therapistTherapyProgramBo.delete(programId, therapistId);
+
+        if (isDeleted) {
+            new Alert(Alert.AlertType.INFORMATION, "Program deleted successfully").showAndWait();
+            reset();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete program").showAndWait();
+        }
+    }
+
+    @FXML
+    void cmbProgramNameOnAction(ActionEvent event) {
+        /*
+
+        String selectedCustomerId = cmbCustomerId.getSelectionModel().getSelectedItem();
+
+        if (selectedCustomerId == null) {
+            return;
+        }
+
+        CustomerDTO customerDTO = customerBo.findById(selectedCustomerId);
+
+        if (customerDTO != null) {
+
+            lblCustomerName.setText(customerDTO.getName());
+        }
+
+        */
+
+        String programId = cmbProgramName.getSelectionModel().getSelectedItem();
+
+        if (programId == null) {
+            return;
+        }
+
+
+
+    }
+
+    @FXML
+    void cmbTherapistNameOnAction(ActionEvent event) {
+        /*
+
+        String selectedCustomerId = cmbCustomerId.getSelectionModel().getSelectedItem();
+
+        if (selectedCustomerId == null) {
+            return;
+        }
+
+        CustomerDTO customerDTO = customerBo.findById(selectedCustomerId);
+
+        if (customerDTO != null) {
+
+            lblCustomerName.setText(customerDTO.getName());
+        }
+
+        */
+
+        String therapistId = cmbTherapistName.getSelectionModel().getSelectedItem();
+
+        if (therapistId == null) {
+            return;
+        }
+
+        TherapistDto therapistDto = therapistBo.findById(therapistId);
+
+        if (therapistDto != null) {
+
+            lblTherapistId.setText(therapistDto.getName());
+        }
+    }
+
+    @FXML
+    void tblAssignmentsOnMouseClicked(MouseEvent event) {
+        TherapistTherapyProgramTm therapistTherapyProgramTm = tblAssignments.getSelectionModel().getSelectedItem();
+
+        if (therapistTherapyProgramTm != null){
+            lblProgramId.setText(therapistTherapyProgramTm.getTherapyProgramId());
+            lblTherapistId.setText(therapistTherapyProgramTm.getTherapistId());
+        }
+
+        btnAssign.setDisable(true);
+        btnDelete.setDisable(false);
+    }
+
+    void reset() throws SQLException {
+
+        loadTable();
+
+        lblProgramId.setText("");
+        lblTherapistId.setText("");
+        cmbProgramName.setValue("");
+        cmbTherapistName.setValue("");
+
+        btnAssign.setDisable(false);
+        btnDelete.setDisable(true);
+    }
+
+    void loadTable() throws SQLException {
+        ArrayList<TherapistTherapyProgramDto> therapistTherapyProgramDtos = therapistTherapyProgramBo.getAll();
+
+        ObservableList<TherapistTherapyProgramTm> therapistTherapyProgramTms = FXCollections.observableArrayList();
+
+        for (TherapistTherapyProgramDto therapistTherapyProgramDto : therapistTherapyProgramDtos) {
+            TherapistTherapyProgramTm therapistTherapyProgramTm = new TherapistTherapyProgramTm();
+            therapistTherapyProgramTm.setTherapyProgramId(therapistTherapyProgramDto.getProgramId());
+            therapistTherapyProgramTm.setTherapistId(therapistTherapyProgramDto.getTherapistId());
+
+            therapistTherapyProgramTms.add(therapistTherapyProgramTm);
+        }
+
+        tblAssignments.setItems(therapistTherapyProgramTms);
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("therapyProgramId"));
+        colTherapistId.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
+
+        try {
+            reset();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

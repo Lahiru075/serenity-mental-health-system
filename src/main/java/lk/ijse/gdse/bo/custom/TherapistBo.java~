@@ -13,5 +13,4 @@ public interface TherapistBo extends SuperBo {
     boolean save(TherapistDto therapistDto) throws SQLException;
     boolean delete(String Id) throws SQLException;
     boolean update(TherapistDto therapistDto) throws SQLException;
-    TherapistDto findById(String therapistId);
 }
