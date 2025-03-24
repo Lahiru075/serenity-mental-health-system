@@ -95,14 +95,27 @@ public class TherapistDaoImpl implements TherapistDao {
     }
 
     @Override
-    public Therapist findById(String therapistId) {
+    public Therapist findByName(String therapistName) {
         Session session = factoryConfiguration.getSession();
-        Therapist therapist = session.get(Therapist.class, therapistId);
+
+        Query<Therapist> query = session.createQuery("FROM Therapist t WHERE t.name = :therapistName", Therapist.class);
+        query.setParameter("therapistName", therapistName);
+
+        Therapist therapist = query.uniqueResult();
 
         if (therapist != null) {
             return therapist;
         }
 
         return null;
+    }
+
+    @Override
+    public Therapist findById(String therapistId) {
+        Session session = factoryConfiguration.getSession();
+
+        Therapist therapist = session.get(Therapist.class, therapistId);
+
+        return therapist;
     }
 }

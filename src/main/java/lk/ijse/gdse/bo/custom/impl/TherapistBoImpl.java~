@@ -79,6 +79,10 @@ public class TherapistBoImpl implements TherapistBo {
     public TherapistDto findByName(String therapistName) {
         Therapist therapist = therapistDao.findByName(therapistName);
 
+        if (therapist == null){
+
+        }
+
         return new TherapistDto(therapist.getId(), therapist.getName(), therapist.getEmail(), therapist.getContact());
     }
 }

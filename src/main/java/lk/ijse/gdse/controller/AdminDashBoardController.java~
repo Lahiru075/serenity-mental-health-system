@@ -109,8 +109,8 @@ public class AdminDashBoardController {
     }
 
     @FXML
-    void btnTherapistProgramManageOnAction(ActionEvent event) {
-
+    void btnTherapistProgramManageOnAction(ActionEvent event) throws IOException {
+        navigateToAnchorPane("/view/programManage.fxml");
     }
 
     @FXML

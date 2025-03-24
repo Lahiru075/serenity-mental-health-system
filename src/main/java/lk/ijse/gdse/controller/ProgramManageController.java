@@ -105,6 +105,11 @@ public class ProgramManageController implements Initializable {
         String description = txtDescription.getText();
         double newFee = Double.parseDouble(fee);
 
+        if (id.isEmpty() || name.isEmpty() || duration.isEmpty() || fee.isEmpty() || description.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
+            return;
+        }
+
         String namePattern = "^[A-Za-z\\s-]+$";
         String durationPattern = "^\\d+\\s+(weeks|months)$";
         String feePattern = "^\\d+(\\.\\d{1,2})?$";
@@ -159,6 +164,11 @@ public class ProgramManageController implements Initializable {
         String fee = txtFee.getText();
         String description = txtDescription.getText();
         double newFee = Double.parseDouble(fee);
+
+        if (id.isEmpty() || name.isEmpty() || duration.isEmpty() || fee.isEmpty() || description.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
+            return;
+        }
 
         String namePattern = "^[A-Za-z\\s-]+$";
         String durationPattern = "^\\d+\\s+(weeks|months)$";

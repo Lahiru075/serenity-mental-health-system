@@ -3,7 +3,9 @@ package lk.ijse.gdse.bo.custom.impl;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.TherapyProgramDao;
+import lk.ijse.gdse.dto.TherapistDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
+import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.TherapyProgram;
 
 import java.sql.SQLException;
@@ -73,5 +75,19 @@ public class TherapyProgramBoImpl implements TherapyProgramBo {
         therapyProgram.setFee(therapyProgramDto.getFee());
 
         return therapyProgramDao.update(therapyProgram);
+    }
+
+    @Override
+    public TherapyProgramDto findByName(String programName) {
+        TherapyProgram therapyProgram = therapyProgramDao.findByName(programName);
+
+        TherapyProgramDto therapyProgramDto = new TherapyProgramDto();
+        therapyProgramDto.setId(therapyProgram.getId());
+        therapyProgramDto.setName(therapyProgram.getName());
+        therapyProgramDto.setDuration(therapyProgram.getDuration());
+        therapyProgramDto.setDescription(therapyProgram.getDescription());
+        therapyProgramDto.setFee(therapyProgram.getFee());
+
+        return therapyProgramDto;
     }
 }

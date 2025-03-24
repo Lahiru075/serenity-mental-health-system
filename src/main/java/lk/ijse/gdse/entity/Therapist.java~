@@ -20,7 +20,7 @@ public class Therapist implements SuperEntity{
     private String email;
     private String contact;
 
-    @ManyToMany(mappedBy = "therapists", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "therapists")
     private List<TherapyProgram> therapyPrograms;
 
     @OneToMany(mappedBy = "therapists")

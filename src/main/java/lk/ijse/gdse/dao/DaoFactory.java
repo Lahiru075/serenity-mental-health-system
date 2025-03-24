@@ -1,9 +1,6 @@
 package lk.ijse.gdse.dao;
 
-import lk.ijse.gdse.dao.custom.impl.TherapistDaoImpl;
-import lk.ijse.gdse.dao.custom.impl.TherapistTherapyProgramDaoImpl;
-import lk.ijse.gdse.dao.custom.impl.TherapyProgramDaoImpl;
-import lk.ijse.gdse.dao.custom.impl.UserDaoImpl;
+import lk.ijse.gdse.dao.custom.impl.*;
 
 public class DaoFactory {
     private static DaoFactory daoFactory;
@@ -18,7 +15,7 @@ public class DaoFactory {
     }
 
     public enum DaoType {
-        USER, THERAPIST, THERAPIST_THERAPY_PROGRAM, PROGRAM
+        USER, THERAPIST, THERAPIST_THERAPY_PROGRAM, PROGRAM, PATIENT
     }
 
     public <T extends SuperDao> T getDao(DaoType daoType) {
@@ -31,6 +28,8 @@ public class DaoFactory {
                 return (T) new TherapistTherapyProgramDaoImpl();
             case PROGRAM:
                 return (T) new TherapyProgramDaoImpl();
+            case PATIENT:
+                return (T) new PatientDaoImpl();
             default:
                 return null;
         }

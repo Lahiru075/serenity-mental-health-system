@@ -99,7 +99,7 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     public TherapyProgram findByName(String therapistName) {
         Session session = factoryConfiguration.getSession();
 
-        Query<TherapyProgram> query = session.createQuery("FROM TherapyProgram tp WHERE tp.name = :therapyProgramName", TherapyProgram.class);
+        Query<TherapyProgram> query = session.createQuery("FROM TherapyProgram tp WHERE tp.name = :therapistName", TherapyProgram.class);
         query.setParameter("therapyProgramName", therapistName);
 
         TherapyProgram therapyProgram = query.uniqueResult();

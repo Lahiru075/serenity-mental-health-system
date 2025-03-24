@@ -1,0 +1,36 @@
+package lk.ijse.gdse.bo.custom.impl;
+
+import lk.ijse.gdse.bo.custom.PatientBo;
+import lk.ijse.gdse.dto.PatientDto;
+import lk.ijse.gdse.entity.Patient;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class PatientBoImpl implements PatientBo {
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
+
+    @Override
+    public ArrayList<PatientDto> getAll() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean save(PatientDto dto) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String Id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(PatientDto dto) throws SQLException {
+        return false;
+    }
+}

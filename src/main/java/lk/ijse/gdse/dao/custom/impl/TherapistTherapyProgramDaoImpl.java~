@@ -2,7 +2,9 @@ package lk.ijse.gdse.dao.custom.impl;
 
 import lk.ijse.gdse.config.FactoryConfiguration;
 import lk.ijse.gdse.dao.custom.TherapistTherapyProgramDao;
+import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.TherapistTherapyPrograms;
+import lk.ijse.gdse.entity.TherapyProgram;
 import lk.ijse.gdse.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -27,11 +29,16 @@ public class TherapistTherapyProgramDaoImpl implements TherapistTherapyProgramDa
 
     @Override
     public boolean save(TherapistTherapyPrograms therapistTherapyPrograms) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean save(TherapyProgram therapyProgram) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.persist(therapistTherapyPrograms);
+            session.merge(therapyProgram);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -61,7 +68,9 @@ public class TherapistTherapyProgramDaoImpl implements TherapistTherapyProgramDa
 
         try {
             Query<TherapistTherapyPrograms> query = session.createQuery("FROM TherapistTherapyPrograms ttp WHERE ttp.therapistId = :therapistId AND ttp.therapyProgramId = :therapyProgramId", TherapistTherapyPrograms.class);
-
+            query.setParameter("therapyProgramId", programId);
+            query.setParameter("therapistId", therapistId);
+            TherapistTherapyPrograms therapistTherapyPrograms = query.uniqueResult();
 
             session.remove(therapistTherapyPrograms);
             transaction.commit();

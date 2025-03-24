@@ -29,8 +29,8 @@ public class BOFactory {
                 return (T) new EncryptAndDecryptImpl(new BCryptPasswordEncoder());
             case THERAPIST_THERAPY_PROGRAM:
                 return (T) new TherapistTherapyProgramBoImpl();
-//            case PATIENT:
-//                return new PatientBOImpl();
+            case PATIENT:
+                return (T) new PatientBoImpl();
 //            case PROGRAM_DETAILS:
 //                return new ProgramDetailsBOImpl();
             case THERAPIST:
