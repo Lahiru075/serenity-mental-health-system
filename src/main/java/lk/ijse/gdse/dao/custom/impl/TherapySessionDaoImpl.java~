@@ -1,0 +1,34 @@
+package lk.ijse.gdse.dao.custom.impl;
+
+import lk.ijse.gdse.dao.custom.TherapySessionDao;
+import lk.ijse.gdse.entity.TherapySession;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class TherapySessionDaoImpl implements TherapySessionDao {
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
+
+    @Override
+    public ArrayList<TherapySession> getAll() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean save(TherapySession therapySession) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String Id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(TherapySession therapySession) throws SQLException {
+        return false;
+    }
+}

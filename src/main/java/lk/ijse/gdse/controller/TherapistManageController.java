@@ -14,8 +14,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.TherapistBo;
+import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.dao.custom.TherapistDao;
 import lk.ijse.gdse.dto.TherapistDto;
+import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.dto.UserDto;
 import lk.ijse.gdse.dto.tm.TherapistTm;
 import lk.ijse.gdse.dto.tm.UserTm;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TherapistManageController implements Initializable {
@@ -43,6 +46,9 @@ public class TherapistManageController implements Initializable {
 
     @FXML
     private Button btnUpdate;
+
+    @FXML
+    private ListView<String> programList;
 
     @FXML
     private ComboBox<String> cmbTherapyProgram;
@@ -75,18 +81,7 @@ public class TherapistManageController implements Initializable {
     private TextField txtName;
 
     TherapistBo therapistBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
-
-    @FXML
-    void btnAssignProgramOnAction(ActionEvent event) throws IOException {
-        Parent load =  FXMLLoader.load(getClass().getResource("/view/assignProgram.fxml"));
-        Scene scene = new Scene(load);
-
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Assign Program");
-        stage.setResizable(false);
-        stage.show();
-    }
+    TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
 
     @FXML
     void btnTrackScheduleOnAction(ActionEvent event) {
@@ -118,6 +113,12 @@ public class TherapistManageController implements Initializable {
         String email = txtEmail.getText();
         String contact = txtContact.getText();
 
+        List<String> list = new ArrayList<>();
+
+        for (String s : programList.getSelectionModel().getSelectedItems()) {
+            list.add(s);
+        }
+
         if (id.isEmpty() || name.isEmpty() || email.isEmpty() || contact.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Empty Fields").showAndWait();
             return;
@@ -144,7 +145,7 @@ public class TherapistManageController implements Initializable {
             return;
         }
 
-        boolean isSave = therapistBo.save(new TherapistDto(id, name, email, contact));
+        boolean isSave = therapistBo.save(new TherapistDto(id, name, email, contact),list);
 
         if (isSave) {
             new Alert(Alert.AlertType.INFORMATION, "Therapist Save Successful").showAndWait();
@@ -161,6 +162,12 @@ public class TherapistManageController implements Initializable {
         String email = txtEmail.getText();
         String contact = txtContact.getText();
 
+        List<String> list = new ArrayList<>();
+
+        for (String s : programList.getSelectionModel().getSelectedItems()) {
+            list.add(s);
+        }
+
         if (id.isEmpty() || name.isEmpty() || email.isEmpty() || contact.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Empty Fields").showAndWait();
             return;
@@ -187,7 +194,7 @@ public class TherapistManageController implements Initializable {
             return;
         }
 
-        boolean isSave = therapistBo.update(new TherapistDto(id, name, email, contact));
+        boolean isSave = therapistBo.update(new TherapistDto(id, name, email, contact),list);
 
         if (isSave) {
             new Alert(Alert.AlertType.INFORMATION, "Therapist Updated Successful").showAndWait();
@@ -247,15 +254,30 @@ public class TherapistManageController implements Initializable {
         btnUpdate.setDisable(true);
     }
 
+    void loadTherapistName() throws SQLException {
+        ArrayList<TherapyProgramDto> therapistDtos = therapyProgramBo.getAll();
+
+        ArrayList<String> therapistNames = new ArrayList<>();
+
+        for (TherapyProgramDto therapyProgramDto : therapistDtos) {
+            therapistNames.add(therapyProgramDto.getName());
+        }
+
+        programList.setItems(FXCollections.observableArrayList(therapistNames));
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colTherapyId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTherapistName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        programList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         try {
             reset();
+            loadTherapistName();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

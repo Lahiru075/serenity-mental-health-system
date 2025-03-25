@@ -76,4 +76,18 @@ public class PatientBoImpl implements PatientBo {
 
         return patientDao.update(patient);
     }
+
+    @Override
+    public PatientDto findById(String patientId) {
+        Patient patient = patientDao.findById(patientId);
+
+        return new PatientDto(
+                patient.getId(),
+                patient.getName(),
+                patient.getEmail(),
+                patient.getRegisterDate(),
+                patient.getContact(),
+                patient.getMedical_history()
+        );
+    }
 }

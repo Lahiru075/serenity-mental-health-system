@@ -42,7 +42,7 @@ public class TherapistDaoImpl implements TherapistDao {
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.persist(therapist);
+            session.merge(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){

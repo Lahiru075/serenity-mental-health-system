@@ -1,25 +1,25 @@
 package lk.ijse.gdse.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Date;
 import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "therapy_session")
 public class TherapySession implements SuperEntity{
     @Id
     @Column(name = "therapy_session_id")
     private String id;
-    private LocalTime time;
+    private Time time;
     private Date date;
     private String status;
 
@@ -35,7 +35,7 @@ public class TherapySession implements SuperEntity{
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @OneToMany(mappedBy = "therapySession")
+    @OneToMany(mappedBy = "therapySession" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<Payment> payments;
 
 }

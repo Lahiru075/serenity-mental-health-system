@@ -66,6 +66,7 @@ public class AppInitializer extends Application {
         Session session = FactoryConfiguration.getInstance().getSession();
 
 
+
         session.close();
 
         launch(args);

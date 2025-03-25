@@ -19,4 +19,6 @@ public interface TherapyProgramBo extends SuperBo {
     boolean update(TherapyProgramDto dto) throws SQLException;
 
     TherapyProgramDto findByName(String programName);
+
+    TherapyProgramDto findById(String therapyProgramId);
 }

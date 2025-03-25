@@ -21,21 +21,16 @@ public class TherapyProgram implements SuperEntity{
     private String description;
     private double fee;
 
-    @ManyToMany
-    @JoinTable (
-            name = "therapist_therapy_program",
-            joinColumns = @JoinColumn(name = "program_id"),
-            inverseJoinColumns = @JoinColumn(name = "therapist_id")
-    )
+    @ManyToMany(mappedBy = "therapyPrograms" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<Therapist> therapists;
 
-    @OneToMany(mappedBy = "therapyProgram")
+    @OneToMany(mappedBy = "therapyProgram" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<TherapySession> therapySessions;
 
-    @OneToMany(mappedBy = "therapyProgram")
+    @OneToMany(mappedBy = "therapyProgram" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<ProgramDetails> programDetails;
 
-    @OneToMany(mappedBy = "therapyProgram")
+    @OneToMany(mappedBy = "therapyProgram" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<Payment> payments;
 
 

@@ -20,9 +20,14 @@ public class Therapist implements SuperEntity{
     private String email;
     private String contact;
 
-    @ManyToMany(mappedBy = "therapists", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable (
+            name = "therapist_therapy_program",
+            joinColumns = @JoinColumn(name = "program_id"),
+            inverseJoinColumns = @JoinColumn(name = "therapist_id")
+    )
     private List<TherapyProgram> therapyPrograms;
 
-    @OneToMany(mappedBy = "therapists")
+    @OneToMany(mappedBy = "therapists", fetch = FetchType.LAZY)
     private List<TherapySession> therapySessions;
 }

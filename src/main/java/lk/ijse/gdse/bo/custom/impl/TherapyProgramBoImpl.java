@@ -90,4 +90,18 @@ public class TherapyProgramBoImpl implements TherapyProgramBo {
 
         return therapyProgramDto;
     }
+
+    @Override
+    public TherapyProgramDto findById(String therapyProgramId) {
+        TherapyProgram therapyProgram = therapyProgramDao.findById(therapyProgramId);
+
+        TherapyProgramDto therapyProgramDto = new TherapyProgramDto();
+        therapyProgramDto.setId(therapyProgram.getId());
+        therapyProgramDto.setName(therapyProgram.getName());
+        therapyProgramDto.setDuration(therapyProgram.getDuration());
+        therapyProgramDto.setDescription(therapyProgram.getDescription());
+        therapyProgramDto.setFee(therapyProgram.getFee());
+
+        return therapyProgramDto;
+    }
 }

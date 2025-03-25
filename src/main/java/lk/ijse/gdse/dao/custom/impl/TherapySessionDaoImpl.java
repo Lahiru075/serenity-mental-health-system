@@ -1,10 +1,8 @@
 package lk.ijse.gdse.dao.custom.impl;
 
 import lk.ijse.gdse.config.FactoryConfiguration;
-import lk.ijse.gdse.dao.custom.TherapyProgramDao;
-import lk.ijse.gdse.entity.Therapist;
-import lk.ijse.gdse.entity.TherapyProgram;
-import lk.ijse.gdse.entity.User;
+import lk.ijse.gdse.dao.custom.TherapySessionDao;
+import lk.ijse.gdse.entity.TherapySession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -13,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TherapyProgramDaoImpl implements TherapyProgramDao {
+public class TherapySessionDaoImpl implements TherapySessionDao {
 
     FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
@@ -22,7 +20,7 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
         Session session = factoryConfiguration.getSession();
 
         String lastId = session
-                .createQuery("SELECT tp.id FROM TherapyProgram tp ORDER BY tp.id DESC", String.class)
+                .createQuery("SELECT ts.id FROM TherapySession ts ORDER BY ts.id DESC", String.class)
                 .setMaxResults(1)
                 .getSingleResult();
 
@@ -30,20 +28,21 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     }
 
     @Override
-    public ArrayList<TherapyProgram> getAll() throws SQLException {
+    public ArrayList<TherapySession> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        Query<TherapyProgram> query = session.createQuery("from TherapyProgram", TherapyProgram.class);
-        List<TherapyProgram> list = query.list();
+        Query<TherapySession> query = session.createQuery("from TherapySession", TherapySession.class);
+        List<TherapySession> list = query.list();
         return new ArrayList<>(list);
+
     }
 
     @Override
-    public boolean save(TherapyProgram therapyProgram) throws SQLException {
+    public boolean save(TherapySession therapySession) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
-        try {
-            session.persist(therapyProgram);
+        try{
+            session.persist(therapySession);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -62,8 +61,8 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
         Transaction transaction = session.beginTransaction();
 
         try {
-            TherapyProgram therapyPrgram = session.get(TherapyProgram.class, Id);
-            session.remove(therapyPrgram);
+            TherapySession therapySession = session.get(TherapySession.class, Id);
+            session.remove(therapySession);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -77,12 +76,12 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     }
 
     @Override
-    public boolean update(TherapyProgram therapyProgram) throws SQLException {
+    public boolean update(TherapySession therapySession) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
-        try {
-            session.merge(therapyProgram);
+        try{
+            session.merge(therapySession);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -93,21 +92,5 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
                 session.close();
             }
         }
-    }
-
-    @Override
-    public TherapyProgram findByName(String therapistName) {
-        Session session = factoryConfiguration.getSession();
-
-        Query<TherapyProgram> query = session.createQuery("FROM TherapyProgram tp WHERE tp.name = :therapistName", TherapyProgram.class);
-        query.setParameter("therapyProgramName", therapistName);
-
-        TherapyProgram therapyProgram = query.uniqueResult();
-
-        if (therapyProgram != null) {
-            return therapyProgram;
-        }
-
-        return null;
     }
 }

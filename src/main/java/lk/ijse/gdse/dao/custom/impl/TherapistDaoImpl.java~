@@ -1,9 +1,8 @@
 package lk.ijse.gdse.dao.custom.impl;
 
 import lk.ijse.gdse.config.FactoryConfiguration;
-import lk.ijse.gdse.dao.custom.TherapyProgramDao;
+import lk.ijse.gdse.dao.custom.TherapistDao;
 import lk.ijse.gdse.entity.Therapist;
-import lk.ijse.gdse.entity.TherapyProgram;
 import lk.ijse.gdse.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TherapyProgramDaoImpl implements TherapyProgramDao {
+public class TherapistDaoImpl implements TherapistDao {
 
     FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
@@ -22,7 +21,7 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
         Session session = factoryConfiguration.getSession();
 
         String lastId = session
-                .createQuery("SELECT tp.id FROM TherapyProgram tp ORDER BY tp.id DESC", String.class)
+                .createQuery("SELECT t.id FROM Therapist t ORDER BY t.id DESC", String.class)
                 .setMaxResults(1)
                 .getSingleResult();
 
@@ -30,20 +29,20 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     }
 
     @Override
-    public ArrayList<TherapyProgram> getAll() throws SQLException {
+    public ArrayList<Therapist> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        Query<TherapyProgram> query = session.createQuery("from TherapyProgram", TherapyProgram.class);
-        List<TherapyProgram> list = query.list();
+        Query<Therapist> query = session.createQuery("from Therapist", Therapist.class);
+        List<Therapist> list = query.list();
         return new ArrayList<>(list);
     }
 
     @Override
-    public boolean save(TherapyProgram therapyProgram) throws SQLException {
+    public boolean save(Therapist therapist) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.persist(therapyProgram);
+            session.persist(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -62,8 +61,8 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
         Transaction transaction = session.beginTransaction();
 
         try {
-            TherapyProgram therapyPrgram = session.get(TherapyProgram.class, Id);
-            session.remove(therapyPrgram);
+            Therapist therapist = session.get(Therapist.class, Id);
+            session.remove(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -77,12 +76,12 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     }
 
     @Override
-    public boolean update(TherapyProgram therapyProgram) throws SQLException {
+    public boolean update(Therapist therapist) throws SQLException {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            session.merge(therapyProgram);
+            session.merge(therapist);
             transaction.commit();
             return true;
         } catch (Exception e){
@@ -96,27 +95,27 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     }
 
     @Override
-    public TherapyProgram findByName(String therapistName) {
+    public Therapist findByName(String therapistName) {
         Session session = factoryConfiguration.getSession();
 
-        Query<TherapyProgram> query = session.createQuery("FROM TherapyProgram tp WHERE tp.name = :therapyProgramName", TherapyProgram.class);
-        query.setParameter("therapyProgramName", therapistName);
+        Query<Therapist> query = session.createQuery("FROM Therapist t WHERE t.name = :therapistName", Therapist.class);
+        query.setParameter("therapistName", therapistName);
 
-        TherapyProgram therapyProgram = query.uniqueResult();
+        Therapist therapist = query.uniqueResult();
 
-        if (therapyProgram != null) {
-            return therapyProgram;
+        if (therapist != null) {
+            return therapist;
         }
 
         return null;
     }
 
     @Override
-    public TherapyProgram findById(String therapyProgramId) {
+    public Therapist findById(String therapistId) {
         Session session = factoryConfiguration.getSession();
 
-        TherapyProgram therapyProgram = session.get(TherapyProgram.class, therapyProgramId);
+        Therapist therapist = session.get(Therapist.class, therapistId);
 
-        return therapyProgram;
+        return therapist;
     }
 }

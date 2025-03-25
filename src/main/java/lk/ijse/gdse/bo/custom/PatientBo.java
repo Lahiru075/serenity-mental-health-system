@@ -13,4 +13,6 @@ public interface PatientBo extends SuperBo {
     boolean save(PatientDto dto) throws SQLException;
     boolean delete(String Id) throws SQLException;
     boolean update(PatientDto dto) throws SQLException;
+
+    PatientDto findById(String patientId);
 }

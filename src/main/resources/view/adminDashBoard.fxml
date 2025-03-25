@@ -63,7 +63,7 @@
                     </padding>
                 </Button>
 
-                <Button fx:id="btnTherapySessionScheduling" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#btnPatientManageOnAction" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Therapy Session Scheduling" textFill="WHITE" wrapText="true">
+                <Button fx:id="btnTherapySessionScheduling" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#btnTherapySessionSchedulingOnAction" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Therapy Session Scheduling" textFill="WHITE" wrapText="true">
                     <font>
                         <Font size="14.0" />
                     </font>
