@@ -2,6 +2,7 @@ package lk.ijse.gdse.bo.custom;
 
 import lk.ijse.gdse.bo.SuperBo;
 import lk.ijse.gdse.dto.TherapySessionDto;
+import lk.ijse.gdse.entity.TherapySession;
 
 
 import java.sql.SQLException;
@@ -13,4 +14,5 @@ public interface TherapySessionBo extends SuperBo {
     boolean save(TherapySessionDto dto) throws SQLException;
     boolean delete(String Id) throws SQLException;
     boolean update(TherapySessionDto dto) throws SQLException;
+    ArrayList<TherapySessionDto> checkByTherapistId(String id);
 }

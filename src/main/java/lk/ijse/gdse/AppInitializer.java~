@@ -55,20 +55,10 @@ public class AppInitializer extends Application {
 //    }
 
     public static void main(String[] args) {
-
-//        User user = appInitializer.verify();
-//        System.out.println(user.getId() + " " + user.getUsername() + " " + user.getPassword() + " " + user.getRole() + " " + user.getEmail());
-
 //        AppInitializer appInitializer = new AppInitializer(new BCryptPasswordEncoder());
 //        appInitializer.save();
 
-
-        Session session = FactoryConfiguration.getInstance().getSession();
-
-
-
-        session.close();
-
+        
         launch(args);
 
     }

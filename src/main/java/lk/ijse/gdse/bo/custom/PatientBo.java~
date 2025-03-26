@@ -15,6 +15,4 @@ public interface PatientBo extends SuperBo {
     boolean update(PatientDto dto) throws SQLException;
 
     PatientDto findById(String patientId);
-
-    PatientDto findByName(String therapistName);
 }

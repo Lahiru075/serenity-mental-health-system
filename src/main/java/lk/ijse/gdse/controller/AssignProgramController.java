@@ -9,16 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.bo.BOFactory;
-import lk.ijse.gdse.bo.custom.TherapistBo;
-import lk.ijse.gdse.bo.custom.TherapistTherapyProgramBo;
+import lk.ijse.gdse.bo.custom.PatientBo;
+import lk.ijse.gdse.bo.custom.ProgramDetailsBo;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
-import lk.ijse.gdse.dto.TherapistDto;
-import lk.ijse.gdse.dto.TherapistTherapyProgramDto;
+import lk.ijse.gdse.dto.PatientDto;
+import lk.ijse.gdse.dto.ProgramDetailsDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
-import lk.ijse.gdse.dto.UserDto;
-import lk.ijse.gdse.dto.tm.TherapistTherapyProgramTm;
-import lk.ijse.gdse.dto.tm.UserTm;
-import lk.ijse.gdse.entity.Therapist;
+import lk.ijse.gdse.dto.tm.ProgramDetailsTm;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -37,34 +34,38 @@ public class AssignProgramController implements Initializable {
     private ComboBox<String> cmbProgramName;
 
     @FXML
-    private ComboBox<String> cmbTherapistName;
+    private ComboBox<String> cmbPatientName;
 
     @FXML
-    private TableColumn<TherapistTherapyProgramTm, String> colProgramId;
+    private TableColumn<ProgramDetailsTm, String> colProgramId;
 
     @FXML
-    private TableColumn<TherapistTherapyProgramTm, String> colTherapistId;
+    private TableColumn<ProgramDetailsTm, String> colPatientId;
 
     @FXML
-    private Label lblProgramId;
+    private TableColumn<ProgramDetailsTm, String> colProgramName;
 
     @FXML
-    private Label lblTherapistId;
+    private Label lbProgramId;
 
     @FXML
-    private TableView<TherapistTherapyProgramTm> tblAssignments;
+    private Label lbPatientId;
 
-    TherapistTherapyProgramBo therapistTherapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST_THERAPY_PROGRAM);
-    TherapistBo therapistBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
+    @FXML
+    private TableView<ProgramDetailsTm> tblAssignments;
+
+    ProgramDetailsBo programDetailsBo = BOFactory.getInstance().getBO(BOFactory.BOType.PROGRAM_DETAILS);
+    PatientBo patientBo = BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
     TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
 
-    private TherapyProgramDto therapyProgramDto = new TherapyProgramDto();
+
 
     @FXML
     void btnAssignOnAction(ActionEvent event) throws SQLException {
-        String therapistId = lblTherapistId.getText();
+        String patientId = lbPatientId.getText();
+        String programId = lbProgramId.getText();
 
-        boolean isAssigned = therapistTherapyProgramBo.save(therapyProgramDto,therapistId);
+        boolean isAssigned = programDetailsBo.save(programId,patientId);
 
         if (isAssigned) {
             new Alert(Alert.AlertType.INFORMATION, "Program assigned successfully").showAndWait();
@@ -76,10 +77,10 @@ public class AssignProgramController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) throws SQLException {
-        String programId = lblProgramId.getText();
-        String therapistId = lblTherapistId.getText();
+        String programId = lbProgramId.getText();
+        String patientId = lbPatientId.getText();
 
-        boolean isDeleted = therapistTherapyProgramBo.delete(programId, therapistId);
+        boolean isDeleted = programDetailsBo.delete(patientId, programId);
 
         if (isDeleted) {
             new Alert(Alert.AlertType.INFORMATION, "Program deleted successfully").showAndWait();
@@ -97,43 +98,42 @@ public class AssignProgramController implements Initializable {
             return;
         }
 
-        TherapyProgramDto therapyProgramDto1 = therapyProgramBo.findByName(programName);
-        therapyProgramDto.setId(therapyProgramDto1.getId());
-        therapyProgramDto.setName(therapyProgramDto1.getName());
-        therapyProgramDto.setDuration(therapyProgramDto1.getDuration());
-        therapyProgramDto.setDescription(therapyProgramDto1.getDescription());
-        therapyProgramDto.setFee(therapyProgramDto1.getFee());
+        TherapyProgramDto therapyProgramDto = therapyProgramBo.findByName(programName);
 
-        lblProgramId.setText(therapyProgramDto1.getId());
+        if (therapyProgramDto == null){
+            return;
+        }
+
+        lbProgramId.setText(therapyProgramDto.getId());
 
     }
 
     @FXML
-    void cmbTherapistNameOnAction(ActionEvent event) {
-        String therapistName = cmbTherapistName.getSelectionModel().getSelectedItem();
+    void cmbPatientNameOnAction(ActionEvent event) {
+        String therapistName = cmbPatientName.getSelectionModel().getSelectedItem();
 
         if (therapistName == null || therapistName.isEmpty()) {
             return;
         }
 
-        TherapistDto therapistDto = therapistBo.findByName(therapistName);
+        PatientDto patientDto = patientBo.findByName(therapistName);
 
 
-        if (therapistDto == null){
+        if (patientDto == null){
             return;
         }
 
-        lblTherapistId.setText(therapistDto.getId());
+        lbPatientId.setText(patientDto.getId());
 
     }
 
     @FXML
     void tblAssignmentsOnMouseClicked(MouseEvent event) {
-        TherapistTherapyProgramTm therapistTherapyProgramTm = tblAssignments.getSelectionModel().getSelectedItem();
+        ProgramDetailsTm therapistTherapyProgramTm = tblAssignments.getSelectionModel().getSelectedItem();
 
         if (therapistTherapyProgramTm != null){
-            lblProgramId.setText(therapistTherapyProgramTm.getTherapyProgramId());
-            lblTherapistId.setText(therapistTherapyProgramTm.getTherapistId());
+            lbProgramId.setText(therapistTherapyProgramTm.getTherapyProgram());
+            lbPatientId.setText(therapistTherapyProgramTm.getPatient());
         }
 
         btnAssign.setDisable(true);
@@ -144,24 +144,25 @@ public class AssignProgramController implements Initializable {
 
         loadTable();
 
-        lblProgramId.setText("");
-        lblTherapistId.setText("");
+        lbProgramId.setText("");
+        lbPatientId.setText("");
         cmbProgramName.setValue("");
-        cmbTherapistName.setValue("");
+        cmbPatientName.setValue("");
 
         btnAssign.setDisable(false);
         btnDelete.setDisable(true);
     }
 
     void loadTable() throws SQLException {
-        ArrayList<TherapistTherapyProgramDto> therapistTherapyProgramDtos = therapistTherapyProgramBo.getAll();
+        ArrayList<ProgramDetailsDto> therapistTherapyProgramDtos = programDetailsBo.getAll();
 
-        ObservableList<TherapistTherapyProgramTm> therapistTherapyProgramTms = FXCollections.observableArrayList();
+        ObservableList<ProgramDetailsTm> therapistTherapyProgramTms = FXCollections.observableArrayList();
 
-        for (TherapistTherapyProgramDto therapistTherapyProgramDto : therapistTherapyProgramDtos) {
-            TherapistTherapyProgramTm therapistTherapyProgramTm = new TherapistTherapyProgramTm();
-            therapistTherapyProgramTm.setTherapyProgramId(therapistTherapyProgramDto.getProgramId());
-            therapistTherapyProgramTm.setTherapistId(therapistTherapyProgramDto.getTherapistId());
+        for (ProgramDetailsDto therapistTherapyProgramDto : therapistTherapyProgramDtos) {
+            ProgramDetailsTm therapistTherapyProgramTm = new ProgramDetailsTm();
+            therapistTherapyProgramTm.setPatient(therapistTherapyProgramDto.getPatient());
+            therapistTherapyProgramTm.setTherapyProgram(therapistTherapyProgramDto.getTherapyProgram());
+            therapistTherapyProgramTm.setTherapyProgramName(therapistTherapyProgramDto.getTherapyProgramName());
 
             therapistTherapyProgramTms.add(therapistTherapyProgramTm);
         }
@@ -170,17 +171,17 @@ public class AssignProgramController implements Initializable {
 
     }
 
-    void loadTherapistId() throws SQLException {
-        ArrayList<TherapistDto> therapistDtos = therapistBo.getAll();
+    void loadPatientIds() throws SQLException {
+        ArrayList<PatientDto> patientDtos = patientBo.getAll();
 
-        ArrayList<String> therapistIds = new ArrayList<>();
+        ArrayList<String> patientIds = new ArrayList<>();
 
-        for (TherapistDto therapistDto : therapistDtos) {
-            therapistIds.add(therapistDto.getName());
+        for (PatientDto patientDto : patientDtos) {
+            patientIds.add(patientDto.getName());
         }
 
-        ObservableList<String> therapists = FXCollections.observableArrayList(therapistIds);
-        cmbTherapistName.setItems(therapists);
+        ObservableList<String> therapists = FXCollections.observableArrayList(patientIds);
+        cmbPatientName.setItems(therapists);
     }
 
     void loadTherapyProgramsId() throws SQLException {
@@ -198,12 +199,13 @@ public class AssignProgramController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colProgramId.setCellValueFactory(new PropertyValueFactory<>("therapyProgramId"));
-        colTherapistId.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("therapyProgram"));
+        colPatientId.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        colProgramName.setCellValueFactory(new PropertyValueFactory<>("therapyProgramName"));
 
         try {
             reset();
-            loadTherapistId();
+            loadPatientIds();
             loadTherapyProgramsId();
         } catch (SQLException e) {
             throw new RuntimeException(e);

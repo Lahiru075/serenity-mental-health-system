@@ -23,7 +23,7 @@
         <!-- Therapist Selection Section -->
         <VBox layoutX="30.0" layoutY="93.0" spacing="10.0">
             <children>
-                <Label text="Select Therapist" textFill="#2c3e50">
+                <Label text="Select Patient" textFill="#2c3e50">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -31,13 +31,13 @@
 
                 <HBox spacing="20.0">
                     <children>
-                        <Label text="Therapist Name:">
+                        <Label text="Patinet Name:">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </Label>
 
-                        <ComboBox fx:id="cmbTherapistName" onAction="#cmbTherapistNameOnAction" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+                        <ComboBox fx:id="cmbPatientName" onAction="#cmbPatientNameOnAction" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
                     </children>
                 </HBox>
             </children>
@@ -85,8 +85,9 @@
 
         <TableView fx:id="tblAssignments" layoutX="30.0" layoutY="336.0" onMouseClicked="#tblAssignmentsOnMouseClicked" prefHeight="144.0" prefWidth="540.0">
             <columns>
-                <TableColumn fx:id="colTherapistId" prefWidth="276.79997634887695" text="Therapist ID" />
-                <TableColumn fx:id="colProgramId" prefWidth="263.20001220703125" text="Program ID" />
+                <TableColumn fx:id="colPatientId" prefWidth="123.19995498657227" text="Patient ID" />
+                <TableColumn fx:id="colProgramId" prefWidth="145.59996032714844" text="Program ID" />
+            <TableColumn fx:id="colProgramName" prefWidth="270.4000244140625" text="Program Name" />
             </columns>
         </TableView>
 
@@ -98,7 +99,7 @@
                       </font>
                   </Label>
 
-                  <Label fx:id="lblProgramId" prefHeight="20.0" prefWidth="117.0" textFill="#2c3e50">
+                  <Label fx:id="lbProgramId" prefHeight="20.0" prefWidth="117.0" textFill="#2c3e50">
                       <font>
                           <Font size="14.0" />
                       </font>
@@ -108,13 +109,13 @@
 
           <HBox layoutX="397.0" layoutY="131.0" spacing="20.0">
               <children>
-                  <Label text="Therapist ID">
+                  <Label text="Patient ID">
                       <font>
                           <Font size="14.0" />
                       </font>
                   </Label>
 
-                  <Label fx:id="lblTherapistId" prefHeight="20.0" prefWidth="139.0" textFill="#2c3e50">
+                  <Label fx:id="lbPatientId" prefHeight="20.0" prefWidth="139.0" textFill="#2c3e50">
                       <font>
                           <Font size="14.0" />
                       </font>

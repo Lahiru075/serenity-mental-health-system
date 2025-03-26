@@ -146,4 +146,26 @@ public class TherapySessionBoImpl implements TherapySessionBo {
 
         return therapySessionDao.update(therapySession);
     }
+
+    @Override
+    public ArrayList<TherapySessionDto> checkByTherapistId(String id) {
+        ArrayList<TherapySession> therapySessions = therapySessionDao.checkByTherapistId(id);
+
+        ArrayList<TherapySessionDto> therapySessionDtos = new ArrayList<>();
+
+        for (TherapySession therapySession : therapySessions){
+            TherapySessionDto therapySessionDto = new TherapySessionDto();
+            therapySessionDto.setId(therapySession.getId());
+            therapySessionDto.setTime(therapySession.getTime());
+            therapySessionDto.setDate(therapySession.getDate());
+            therapySessionDto.setStatus(therapySession.getStatus());
+            therapySessionDto.setTherapyProgramId(therapySession.getTherapyProgram().getId());
+            therapySessionDto.setTherapistsId(therapySession.getTherapists().getId());
+            therapySessionDto.setPatientId(therapySession.getPatient().getId());
+
+            therapySessionDtos.add(therapySessionDto);
+        }
+
+        return therapySessionDtos;
+    }
 }

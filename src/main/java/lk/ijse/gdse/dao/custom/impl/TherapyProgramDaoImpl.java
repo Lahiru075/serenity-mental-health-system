@@ -24,7 +24,7 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
         String lastId = session
                 .createQuery("SELECT tp.id FROM TherapyProgram tp ORDER BY tp.id DESC", String.class)
                 .setMaxResults(1)
-                .getSingleResult();
+                .uniqueResult();
 
         return lastId;
     }
@@ -96,19 +96,17 @@ public class TherapyProgramDaoImpl implements TherapyProgramDao {
     }
 
     @Override
-    public TherapyProgram findByName(String therapistName) {
+    public TherapyProgram findByName(String therapyProgramName) {
         Session session = factoryConfiguration.getSession();
 
         Query<TherapyProgram> query = session.createQuery("FROM TherapyProgram tp WHERE tp.name = :therapyProgramName", TherapyProgram.class);
-        query.setParameter("therapyProgramName", therapistName);
+        query.setParameter("therapyProgramName", therapyProgramName);
 
         TherapyProgram therapyProgram = query.uniqueResult();
 
-        if (therapyProgram != null) {
-            return therapyProgram;
-        }
 
-        return null;
+        return therapyProgram;
+
     }
 
     @Override

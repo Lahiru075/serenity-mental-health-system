@@ -90,4 +90,18 @@ public class PatientBoImpl implements PatientBo {
                 patient.getMedical_history()
         );
     }
+
+    @Override
+    public PatientDto findByName(String therapistName) {
+        Patient patient = patientDao.findByName(therapistName);
+
+        return new PatientDto(
+                patient.getId(),
+                patient.getName(),
+                patient.getEmail(),
+                patient.getRegisterDate(),
+                patient.getContact(),
+                patient.getMedical_history()
+        );
+    }
 }

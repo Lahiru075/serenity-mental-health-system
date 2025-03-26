@@ -1,5 +1,6 @@
 package lk.ijse.gdse.bo;
 
+import lk.ijse.gdse.bo.custom.TrackTherapyScheduleBo;
 import lk.ijse.gdse.bo.custom.impl.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -17,7 +18,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        USER, THERAPIST_THERAPY_PROGRAM, PATIENT, PROGRAM_DETAILS, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT
+        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE
     }
 
     @SuppressWarnings("unchecked")
@@ -27,18 +28,18 @@ public class BOFactory {
                 return (T) new UserBoImpl();
             case ENCRYPT:
                 return (T) new EncryptAndDecryptImpl(new BCryptPasswordEncoder());
-            case THERAPIST_THERAPY_PROGRAM:
-                return (T) new TherapistTherapyProgramBoImpl();
+            case PROGRAM_DETAILS:
+                return (T) new ProgramDetailsBoImpl();
             case PATIENT:
                 return (T) new PatientBoImpl();
-//            case PROGRAM_DETAILS:
-//                return new ProgramDetailsBOImpl();
             case THERAPIST:
                 return (T) new TherapistBoImpl();
             case THERAPY_PROGRAM:
                 return (T) new TherapyProgramBoImpl();
             case SESSION:
                 return (T) new TherapySessionBoImpl();
+            case TRACK_THERAPY_SCHEDULE:
+                return (T) new TrackTherapyScheduleBoImpl();
 //            case PAYMENT:
 //                return new PaymentBOImpl();
             default:

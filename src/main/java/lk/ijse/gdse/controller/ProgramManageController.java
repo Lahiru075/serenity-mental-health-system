@@ -10,10 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
-import lk.ijse.gdse.dto.TherapistDto;
-import lk.ijse.gdse.dto.TherapistTherapyProgramDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
-import lk.ijse.gdse.dto.tm.TherapistTm;
 import lk.ijse.gdse.dto.tm.TherapyProgramTm;
 
 import java.net.URL;

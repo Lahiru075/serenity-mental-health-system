@@ -9,7 +9,6 @@ module lk.ijse.gdse.serenity_mental_health_system {
 
     requires java.naming;
     requires spring.security.crypto;
-    requires spring.security.core;
 
     opens lk.ijse.gdse.dto.tm to javafx.base;
     opens lk.ijse.gdse.entity to org.hibernate.orm.core;

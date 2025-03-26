@@ -15,7 +15,7 @@ public class DaoFactory {
     }
 
     public enum DaoType {
-        USER, THERAPIST, THERAPIST_THERAPY_PROGRAM, PROGRAM, PATIENT, SESSION
+        USER, THERAPIST, PROGRAM, PATIENT, SESSION, PROGRAM_DETAILS
     }
 
     public <T extends SuperDao> T getDao(DaoType daoType) {
@@ -24,14 +24,14 @@ public class DaoFactory {
                 return (T) new UserDaoImpl();
             case THERAPIST:
                 return (T) new TherapistDaoImpl();
-            case THERAPIST_THERAPY_PROGRAM:
-                return (T) new TherapistTherapyProgramDaoImpl();
             case PROGRAM:
                 return (T) new TherapyProgramDaoImpl();
             case PATIENT:
                 return (T) new PatientDaoImpl();
             case SESSION:
                 return (T) new TherapySessionDaoImpl();
+            case PROGRAM_DETAILS:
+                return (T) new ProgramDetailsDaoImpl();
             default:
                 return null;
         }

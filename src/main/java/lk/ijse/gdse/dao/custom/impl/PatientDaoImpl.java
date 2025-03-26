@@ -3,6 +3,7 @@ package lk.ijse.gdse.dao.custom.impl;
 import lk.ijse.gdse.config.FactoryConfiguration;
 import lk.ijse.gdse.dao.custom.PatientDao;
 import lk.ijse.gdse.entity.Patient;
+import lk.ijse.gdse.entity.Therapist;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -22,7 +23,7 @@ public class PatientDaoImpl implements PatientDao {
         String lastId = session
                 .createQuery("SELECT p.id FROM Patient p ORDER BY p.id DESC", String.class)
                 .setMaxResults(1)
-                .getSingleResult();
+                .uniqueResult();
 
         return lastId;
     }
@@ -100,5 +101,21 @@ public class PatientDaoImpl implements PatientDao {
         Patient patient = session.get(Patient.class, patientId);
 
         return patient;
+    }
+
+    @Override
+    public Patient findByName(String patientName) {
+        Session session = factoryConfiguration.getSession();
+
+        Query<Patient> query = session.createQuery("FROM Patient p WHERE p.name = :patientName", Patient.class);
+        query.setParameter("patientName", patientName);
+
+        Patient patient = query.uniqueResult();
+
+        if (patient != null) {
+            return patient;
+        }
+
+        return null;
     }
 }

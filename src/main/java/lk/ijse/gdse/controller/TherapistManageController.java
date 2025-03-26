@@ -84,8 +84,15 @@ public class TherapistManageController implements Initializable {
     TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
 
     @FXML
-    void btnTrackScheduleOnAction(ActionEvent event) {
+    void btnTrackScheduleOnAction(ActionEvent event) throws IOException {
+        Parent load =  FXMLLoader.load(getClass().getResource("/view/trackTherapistSchedule.fxml"));
+        Scene scene = new Scene(load);
 
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Schedule Form");
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML

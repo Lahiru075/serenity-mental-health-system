@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
         String lastId = session
                 .createQuery("SELECT u.id FROM User u ORDER BY u.id DESC", String.class)
                 .setMaxResults(1)
-                .getSingleResult();
+                .uniqueResult();
 
         return lastId;
     }

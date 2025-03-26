@@ -1,0 +1,106 @@
+package lk.ijse.gdse.bo.custom.impl;
+
+import lk.ijse.gdse.bo.BOFactory;
+import lk.ijse.gdse.bo.custom.PatientBo;
+import lk.ijse.gdse.bo.custom.ProgramDetailsBo;
+import lk.ijse.gdse.bo.custom.TherapyProgramBo;
+import lk.ijse.gdse.dao.DaoFactory;
+import lk.ijse.gdse.dao.custom.ProgramDetailsDao;
+import lk.ijse.gdse.dto.PatientDto;
+import lk.ijse.gdse.dto.ProgramDetailsDto;
+import lk.ijse.gdse.dto.TherapyProgramDto;
+import lk.ijse.gdse.entity.Patient;
+import lk.ijse.gdse.entity.ProgramDetails;
+import lk.ijse.gdse.entity.ProgramDetailsId;
+import lk.ijse.gdse.entity.TherapyProgram;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class ProgramDetailsBoImpl implements ProgramDetailsBo {
+
+    ProgramDetailsDao programDetailsDao = DaoFactory.getInstance().getDao(DaoFactory.DaoType.PROGRAM_DETAILS);
+    TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
+    PatientBo patientBo = BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
+
+    @Override
+    public ArrayList<ProgramDetailsDto> getAll() throws SQLException {
+        ArrayList<ProgramDetails> programDetails = programDetailsDao.getAll();
+
+        ArrayList<ProgramDetailsDto> programDetailsDtos = new ArrayList<>();
+
+        for (ProgramDetails programDetail : programDetails) {
+            ProgramDetailsDto programDetailsDto = new ProgramDetailsDto();
+            programDetailsDto.setPatient(programDetail.getPatient().getId());
+            programDetailsDto.setTherapyProgram(programDetail.getTherapyProgram().getId());
+            programDetailsDto.setTherapyProgramName(programDetail.getTherapyProgramName());
+
+            programDetailsDtos.add(programDetailsDto);
+        }
+
+        return programDetailsDtos;
+    }
+
+    @Override
+    public boolean save(String programId, String patientId) throws SQLException {
+        ProgramDetailsId programDetailsId = new ProgramDetailsId(programId, patientId);
+
+        TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId);
+        PatientDto patientDto = patientBo.findById(patientId);
+
+        TherapyProgram therapyProgram = new TherapyProgram();
+        therapyProgram.setId(therapyProgramDto.getId());
+        therapyProgram.setName(therapyProgramDto.getName());
+        therapyProgram.setDescription(therapyProgramDto.getDescription());
+        therapyProgram.setDuration(therapyProgramDto.getDuration());
+        therapyProgram.setFee(therapyProgramDto.getFee());
+
+        Patient patient = new Patient();
+        patient.setId(patientDto.getId());
+        patient.setName(patientDto.getName());
+        patient.setEmail(patientDto.getEmail());
+        patient.setRegisterDate(patientDto.getRegisterDate());
+        patient.setContact(patientDto.getContact());
+        patient.setMedical_history(patientDto.getMedical_history());
+
+        ProgramDetails programDetails = new ProgramDetails();
+        programDetails.setId(programDetailsId);
+        programDetails.setTherapyProgram(therapyProgram);
+        programDetails.setPatient(patient);
+        programDetails.setTherapyProgramName(therapyProgram.getName());
+
+        return programDetailsDao.save(programDetails);
+
+
+    }
+
+    @Override
+    public boolean delete(String patientId, String programId) throws SQLException {
+        TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId);
+        PatientDto patientDto = patientBo.findById(patientId);
+
+        TherapyProgram therapyProgram = new TherapyProgram();
+        therapyProgram.setId(therapyProgramDto.getId());
+        therapyProgram.setName(therapyProgramDto.getName());
+        therapyProgram.setDescription(therapyProgramDto.getDescription());
+        therapyProgram.setDuration(therapyProgramDto.getDuration());
+        therapyProgram.setFee(therapyProgramDto.getFee());
+
+        Patient patient = new Patient();
+        patient.setId(patientDto.getId());
+        patient.setName(patientDto.getName());
+        patient.setEmail(patientDto.getEmail());
+        patient.setRegisterDate(patientDto.getRegisterDate());
+        patient.setContact(patientDto.getContact());
+        patient.setMedical_history(patientDto.getMedical_history());
+
+        ProgramDetails programDetails = new ProgramDetails();
+        programDetails.setId(new ProgramDetailsId(programId, patientId));
+        programDetails.setTherapyProgram(therapyProgram);
+        programDetails.setPatient(patient);
+        programDetails.setTherapyProgramName(therapyProgram.getName());
+
+        return programDetailsDao.delete(programDetails);
+    }
+
+}
