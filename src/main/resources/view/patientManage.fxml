@@ -87,13 +87,13 @@
                 <!-- Special Action Buttons -->
                 <HBox layoutX="48.0" layoutY="521.0" prefHeight="35.0" prefWidth="714.0" spacing="50.0">
                     <children>
-                        <Button fx:id="btnFilterPatient" mnemonicParsing="false" onAction="#btnFilterPatientOnAction" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #16a085; -fx-background-radius: 5;" text="Filter Patient" textFill="WHITE">
+                        <Button fx:id="btnFilterPatient" mnemonicParsing="false" onAction="#btnFilterPatientOnAction" prefHeight="35.0" prefWidth="171.0" style="-fx-background-color: #16a085; -fx-background-radius: 5;" text="Filter Patient" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
                         </Button>
 
-                        <Button fx:id="btnPatientPrograms" mnemonicParsing="false" onAction="#btnPatientProgramsOnAction" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #8e44ad; -fx-background-radius: 5;" text="Patient's Programs" textFill="WHITE">
+                        <Button fx:id="btnViewPatientPrograms" mnemonicParsing="false" onAction="#btnViewPatientProgramsOnAction" prefHeight="35.0" prefWidth="221.0" style="-fx-background-color: #8e44ad; -fx-background-radius: 5;" text="View Patient's Programs" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

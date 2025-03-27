@@ -1,0 +1,128 @@
+package lk.ijse.gdse.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import lk.ijse.gdse.bo.BOFactory;
+import lk.ijse.gdse.bo.custom.PatientBo;
+import lk.ijse.gdse.bo.custom.TherapyProgramBo;
+import lk.ijse.gdse.bo.custom.ViewPatientProgramBo;
+import lk.ijse.gdse.dao.custom.impl.PatientDaoImpl;
+import lk.ijse.gdse.dto.PatientDto;
+import lk.ijse.gdse.dto.TherapyProgramDto;
+import lk.ijse.gdse.dto.TherapySessionDto;
+import lk.ijse.gdse.dto.tm.TherapyProgramTm;
+import lk.ijse.gdse.dto.tm.TherapySessionTm;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class PatientTherapyProgramController implements Initializable {
+
+    @FXML
+    private Button btnClose;
+
+    @FXML
+    private Button btnViewDetails;
+
+    @FXML
+    private ComboBox<String> cmbPatientId;
+
+    @FXML
+    private TableColumn<TherapyProgramTm, String> colProgramId;
+
+    @FXML
+    private TableColumn<TherapyProgramTm, String> colProgramName;
+
+    @FXML
+    private Label lblPatientName;
+
+    @FXML
+    private TableView<TherapyProgramTm> tblPatientPrograms;
+
+    PatientBo patientBo =  BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
+    ViewPatientProgramBo viewPatientProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.VIEW_PATIENT_PROGRAM);
+
+    @FXML
+    void btnCloseOnAction(ActionEvent event) {
+        cmbPatientId.setValue(null);
+        lblPatientName.setText("");
+        tblPatientPrograms.setItems(null);
+    }
+
+    @FXML
+    void btnViewDetailsOnAction(ActionEvent event) {
+        String patientId = cmbPatientId.getValue();
+
+        if (patientId == null || patientId.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please select a patient").showAndWait();
+            return;
+        }
+
+        ArrayList<TherapyProgramDto> therapyProgramDtos = viewPatientProgramBo.getProgramsByPatientId(patientId);
+
+        ObservableList<TherapyProgramTm> therapyProgramTms = FXCollections.observableArrayList();
+
+        for (TherapyProgramDto therapyProgramDto : therapyProgramDtos) {
+            TherapyProgramTm therapyProgramTm = new TherapyProgramTm();
+            therapyProgramTm.setId(therapyProgramDto.getId());
+            therapyProgramTm.setName(therapyProgramDto.getName());
+
+            therapyProgramTms.add(therapyProgramTm);
+        }
+
+        tblPatientPrograms.setItems(therapyProgramTms);
+    }
+
+    @FXML
+    void cmbPatientIdOnAction(ActionEvent event) {
+        String id = cmbPatientId.getValue();
+
+        if (id == null){
+            return;
+        }
+
+        PatientDto patientDto = patientBo.findById(id);
+        lblPatientName.setText(patientDto.getName());
+
+    }
+
+    @FXML
+    void tblPatientProgramsOnMouseClicked(MouseEvent event) {
+
+    }
+
+    void loadProgramIds() throws SQLException {
+        ArrayList<PatientDto> patientDtos = patientBo.getAll();
+
+        ArrayList<String> therapyProgramIds = new ArrayList<>();
+
+        for (PatientDto patientDto : patientDtos) {
+            therapyProgramIds.add(patientDto.getId());
+        }
+
+        ObservableList<String> programIds = FXCollections.observableArrayList(therapyProgramIds);
+        cmbPatientId.setItems(programIds);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colProgramName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        try {
+            loadProgramIds();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}

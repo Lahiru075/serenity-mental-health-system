@@ -116,7 +116,7 @@ public class PatientManageController implements Initializable {
 
 
     @FXML
-    void btnPatientProgramsOnAction(ActionEvent event) throws IOException {
+    void btnViewPtientProgramsOnAction(ActionEvent event) {
 
     }
 
@@ -188,10 +188,6 @@ public class PatientManageController implements Initializable {
 
     }
 
-    @FXML
-    void btnSearchSessionOnAction(ActionEvent event) {
-
-    }
 
     @FXML
     void btnTherapyProgramsOnAction(ActionEvent event) {
@@ -218,9 +214,9 @@ public class PatientManageController implements Initializable {
         String descriptionPattern = "^[A-Za-z0-9\\s.,!-]+$";
 
         boolean isValidName = name.matches(namePattern);
-        boolean isValidEmail = name.matches(emailPattern);
-        boolean isValidContact = name.matches(contactPattern);
-        boolean isValidDescription = name.matches(descriptionPattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValidContact = contact.matches(contactPattern);
+        boolean isValidDescription = medicalHistory.matches(descriptionPattern);
 
         if (!isValidName){
             new Alert(Alert.AlertType.ERROR, "Invalid name").showAndWait();

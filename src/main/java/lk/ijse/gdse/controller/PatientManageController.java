@@ -116,8 +116,15 @@ public class PatientManageController implements Initializable {
 
 
     @FXML
-    void btnPatientProgramsOnAction(ActionEvent event) throws IOException {
+    void btnViewPatientProgramsOnAction(ActionEvent event) throws IOException {
+        Parent load =  FXMLLoader.load(getClass().getResource("/view/patientTherapyProgram.fxml"));
+        Scene scene = new Scene(load);
 
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Patient's Program Form");
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -188,10 +195,6 @@ public class PatientManageController implements Initializable {
 
     }
 
-    @FXML
-    void btnSearchSessionOnAction(ActionEvent event) {
-
-    }
 
     @FXML
     void btnTherapyProgramsOnAction(ActionEvent event) {
