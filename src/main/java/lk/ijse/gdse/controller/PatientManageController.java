@@ -98,7 +98,15 @@ public class PatientManageController implements Initializable {
 
 
     @FXML
-    void btnFilterPatientOnAction(ActionEvent event) {
+    void btnFilterPatientOnAction(ActionEvent event) throws IOException {
+        Parent load =  FXMLLoader.load(getClass().getResource("/view/filterPatient.fxml"));
+        Scene scene = new Scene(load);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Filter Patients Form");
+        stage.setResizable(false);
+        stage.show();
 
     }
 
@@ -323,8 +331,8 @@ public class PatientManageController implements Initializable {
         colPatientId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colContact.setCellValueFactory(new PropertyValueFactory<>("registerDate"));
-        colRegDate.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colRegDate.setCellValueFactory(new PropertyValueFactory<>("registerDate"));
         colMedicalHistory.setCellValueFactory(new PropertyValueFactory<>("medical_history"));
 
         try {

@@ -1,6 +1,7 @@
 package lk.ijse.gdse.bo.custom;
 
 import lk.ijse.gdse.bo.SuperBo;
+import lk.ijse.gdse.dto.PatientDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.entity.TherapyProgram;
 
@@ -21,4 +22,6 @@ public interface TherapyProgramBo extends SuperBo {
     TherapyProgramDto findByName(String programName);
 
     TherapyProgramDto findById(String therapyProgramId);
+
+    ArrayList<PatientDto> findPatientsListById(String programId);
 }

@@ -18,7 +18,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM
+        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +42,8 @@ public class BOFactory {
                 return (T) new TrackTherapyScheduleBoImpl();
             case VIEW_PATIENT_PROGRAM:
                 return (T) new ViewPatientProgramBoImpl();
+            case FILTER_PATIENT:
+                return (T) new FilterPatientBoImpl();
 //            case PAYMENT:
 //                return new PaymentBOImpl();
             default:

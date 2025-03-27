@@ -17,7 +17,9 @@ import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.TherapyProgram;
 import lk.ijse.gdse.entity.TherapySession;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TherapySessionBoImpl implements TherapySessionBo {
@@ -167,5 +169,57 @@ public class TherapySessionBoImpl implements TherapySessionBo {
         }
 
         return therapySessionDtos;
+    }
+
+    @Override
+    public ArrayList<PatientDto> findByDate(Date sessionDate) {
+        ArrayList<TherapySession> therapySessions = therapySessionDao.findByDate(sessionDate);
+
+        ArrayList<Patient> patients = new ArrayList<>();
+
+        for (TherapySession therapySession : therapySessions){
+            patients.add(therapySession.getPatient());
+        }
+
+        ArrayList<PatientDto> patientDtos = new ArrayList<>();
+
+        for (Patient patient : patients){
+            patientDtos.add(new PatientDto(
+                    patient.getId(),
+                    patient.getName(),
+                    patient.getEmail(),
+                    patient.getRegisterDate(),
+                    patient.getContact(),
+                    patient.getMedical_history()
+            ));
+        }
+
+        return patientDtos;
+    }
+
+    @Override
+    public ArrayList<PatientDto> findByStatus(String sessionStatus) {
+        ArrayList<TherapySession> therapySessions = therapySessionDao.findByStatus(sessionStatus);
+
+        ArrayList<Patient> patients = new ArrayList<>();
+
+        for (TherapySession therapySession : therapySessions){
+            patients.add(therapySession.getPatient());
+        }
+
+        ArrayList<PatientDto> patientDtos = new ArrayList<>();
+
+        for (Patient patient : patients){
+            patientDtos.add(new PatientDto(
+                    patient.getId(),
+                    patient.getName(),
+                    patient.getEmail(),
+                    patient.getRegisterDate(),
+                    patient.getContact(),
+                    patient.getMedical_history()
+            ));
+        }
+
+        return patientDtos;
     }
 }

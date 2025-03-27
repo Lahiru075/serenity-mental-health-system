@@ -3,13 +3,17 @@ package lk.ijse.gdse.bo.custom.impl;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.TherapyProgramDao;
+import lk.ijse.gdse.dto.PatientDto;
 import lk.ijse.gdse.dto.TherapistDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
+import lk.ijse.gdse.entity.Patient;
+import lk.ijse.gdse.entity.ProgramDetails;
 import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.TherapyProgram;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TherapyProgramBoImpl implements TherapyProgramBo {
 
@@ -103,5 +107,33 @@ public class TherapyProgramBoImpl implements TherapyProgramBo {
         therapyProgramDto.setFee(therapyProgram.getFee());
 
         return therapyProgramDto;
+    }
+
+    @Override
+    public ArrayList<PatientDto> findPatientsListById(String programId) {
+        TherapyProgram therapyProgram = therapyProgramDao.findById(programId);
+
+        List<ProgramDetails> programDetails = therapyProgram.getProgramDetails();
+
+        ArrayList<Patient> patients = new ArrayList<>();
+
+        for (ProgramDetails programDetails1 : programDetails){
+            patients.add(programDetails1.getPatient());
+        }
+
+        ArrayList<PatientDto> patientDtos = new ArrayList<>();
+
+        for (Patient patient : patients){
+            patientDtos.add(new PatientDto(
+                    patient.getId(),
+                    patient.getName(),
+                    patient.getEmail(),
+                    patient.getRegisterDate(),
+                    patient.getContact(),
+                    patient.getMedical_history()
+            ));
+        }
+
+        return patientDtos;
     }
 }
