@@ -67,6 +67,7 @@ public class LoginFormController {
                 Stage stage = new Stage();
                 stage.setResizable(false);
                 stage.setTitle("Admin Dashboard");
+                stage.setResizable(false);
                 stage.setScene(new Scene(root));
                 stage.show();
 

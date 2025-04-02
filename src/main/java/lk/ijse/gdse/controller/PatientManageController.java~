@@ -205,15 +205,8 @@ public class PatientManageController implements Initializable {
 
 
     @FXML
-    void btnTherapyProgramsOnAction(ActionEvent event) throws IOException {
-        Parent load =  FXMLLoader.load(getClass().getResource("/view/viewPatientInAllPrograms.fxml"));
-        Scene scene = new Scene(load);
+    void btnTherapyProgramsOnAction(ActionEvent event) {
 
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Patient In All Programs Form");
-        stage.setResizable(false);
-        stage.show();
     }
 
     @FXML

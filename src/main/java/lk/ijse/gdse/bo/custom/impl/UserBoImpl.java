@@ -19,19 +19,19 @@ public class UserBoImpl implements UserBo {
 
     @Override
     public UserDto checkUser(String username, String password) {
-        List<User> users = userDao.checkUser();
+
+        List<User> users = userDao.checkUser(username);
+
 
         for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                if (encryptAndDecrypt.verifyUser(user.getEmail(), password)) {
-                    return new UserDto(
-                            user.getId(),
-                            user.getUsername(),
-                            user.getPassword(),
-                            user.getRole(),
-                            user.getEmail()
-                    );
-                }
+            if (encryptAndDecrypt.verifyUser(user.getPassword(), password)) {
+                return new UserDto(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getRole(),
+                        user.getEmail()
+                );
             }
         }
 

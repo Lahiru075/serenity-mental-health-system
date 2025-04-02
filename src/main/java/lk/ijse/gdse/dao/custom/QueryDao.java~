@@ -1,4 +1,10 @@
 package lk.ijse.gdse.dao.custom;
 
-public interface QueryDao {
+import lk.ijse.gdse.dao.SuperDao;
+import lk.ijse.gdse.entity.Patient;
+
+import java.util.List;
+
+public interface QueryDao extends SuperDao {
+    List<Patient> checkPatientInAllPrograms();
 }

@@ -8,6 +8,7 @@ import lk.ijse.gdse.entity.TherapyProgram;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface PatientBo extends SuperBo {
     String getNextId() throws SQLException;

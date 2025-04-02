@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "therapist")
-public class Therapist implements SuperEntity{
+public class Therapist implements SuperEntity {
     @Id
     @Column(name = "therapist_id")
     private String id;
@@ -20,7 +20,7 @@ public class Therapist implements SuperEntity{
     private String contact;
 
     @ManyToMany
-    @JoinTable (
+    @JoinTable(
             name = "therapist_therapy_program",
             joinColumns = @JoinColumn(name = "therapist_id"),
             inverseJoinColumns = @JoinColumn(name = "program_id")

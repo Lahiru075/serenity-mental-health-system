@@ -18,9 +18,11 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public List<User> checkUser() {
+    public List<User> checkUser(String username) {
         Session session = factoryConfiguration.getSession();
-        Query<User> query = session.createQuery("from User", User.class);
+        Query<User> query = session.createQuery("FROM User u WHERE u.username = :username", User.class);
+        query.setParameter("username", username);
+
         List<User> list = query.list();
         return list;
     }
