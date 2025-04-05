@@ -1,7 +1,7 @@
 package lk.ijse.gdse.bo.custom.impl;
 
 import lk.ijse.gdse.bo.BOFactory;
-import lk.ijse.gdse.bo.custom.EncryptAndDecrypt;
+import lk.ijse.gdse.bo.custom.EncryptAndDecryptBo;
 import lk.ijse.gdse.bo.custom.UserBo;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.UserDao;
@@ -15,7 +15,7 @@ import java.util.List;
 public class UserBoImpl implements UserBo {
 
     UserDao userDao = DaoFactory.getInstance().getDao(DaoFactory.DaoType.USER);
-    EncryptAndDecrypt encryptAndDecrypt = BOFactory.getInstance().getBO(BOFactory.BOType.ENCRYPT);
+    EncryptAndDecryptBo encryptAndDecrypt = BOFactory.getInstance().getBO(BOFactory.BOType.ENCRYPT);
 
     @Override
     public UserDto checkUser(String username, String password) {

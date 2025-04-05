@@ -61,14 +61,27 @@ public class LoginFormController {
                 Stage currentStage = (Stage) mainAnchorpane.getScene().getWindow();
                 currentStage.close();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/adminDashBoard.fxml"));
-                Parent root = loader.load();
+                if (userDto.getRole().equals("Admin")) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/adminDashBoard.fxml"));
+                    Parent root = loader.load();
 
-                Stage stage = new Stage();
-                stage.setResizable(false);
-                stage.setTitle("Admin Dashboard");
-                stage.setScene(new Scene(root));
-                stage.show();
+                    Stage stage = new Stage();
+                    stage.setResizable(false);
+                    stage.setTitle("Admin Dashboard");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
+                }else {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/receptionistDashBoard.fxml"));
+                    Parent root = loader.load();
+
+                    Stage stage = new Stage();
+                    stage.setResizable(false);
+                    stage.setTitle("Receptionist Dashboard");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
+                }
 
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR, "loading error").showAndWait();

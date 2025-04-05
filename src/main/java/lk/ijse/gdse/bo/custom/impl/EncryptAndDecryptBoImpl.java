@@ -1,14 +1,14 @@
 package lk.ijse.gdse.bo.custom.impl;
 
-import lk.ijse.gdse.bo.custom.EncryptAndDecrypt;
+import lk.ijse.gdse.bo.custom.EncryptAndDecryptBo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-public class EncryptAndDecryptImpl implements EncryptAndDecrypt {
+public class EncryptAndDecryptBoImpl implements EncryptAndDecryptBo {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public EncryptAndDecryptImpl(BCryptPasswordEncoder passwordEncoder) {
+    public EncryptAndDecryptBoImpl(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

@@ -1,6 +1,5 @@
 package lk.ijse.gdse.bo;
 
-import lk.ijse.gdse.bo.custom.TrackTherapyScheduleBo;
 import lk.ijse.gdse.bo.custom.impl.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -18,7 +17,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT, VIEW_PATIENT_IN_ALL_PROGRAMS
+        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT, VIEW_PATIENT_IN_ALL_PROGRAMS,CHANGE_CREDENTIAL
     }
 
     @SuppressWarnings("unchecked")
@@ -27,7 +26,7 @@ public class BOFactory {
             case USER:
                 return (T) new UserBoImpl();
             case ENCRYPT:
-                return (T) new EncryptAndDecryptImpl(new BCryptPasswordEncoder());
+                return (T) new EncryptAndDecryptBoImpl(new BCryptPasswordEncoder());
             case PROGRAM_DETAILS:
                 return (T) new ProgramDetailsBoImpl();
             case PATIENT:
@@ -46,6 +45,8 @@ public class BOFactory {
                 return (T) new FilterPatientBoImpl();
             case VIEW_PATIENT_IN_ALL_PROGRAMS:
                 return (T) new ViewPatientInAllProgramsBoImpl();
+            case CHANGE_CREDENTIAL:
+                return (T) new ChangeCredentialBoImpl();
 //            case PAYMENT:
 //                return new PaymentBOImpl();
             default:
