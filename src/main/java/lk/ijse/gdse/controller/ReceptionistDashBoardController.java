@@ -3,14 +3,18 @@ package lk.ijse.gdse.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.entity.User;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ReceptionistDashBoardController {
 
@@ -65,6 +69,8 @@ public class ReceptionistDashBoardController {
     @FXML
     private AnchorPane subAnchorPaneOne;
 
+    User user = new User();
+
     @FXML
     void btnCredentialManageOnAction(ActionEvent event) throws IOException {
         navigateToAnchorPane("/view/changeCredential.fxml");
@@ -84,7 +90,18 @@ public class ReceptionistDashBoardController {
     }
 
     @FXML
-    void btnPatientManageOnAction(ActionEvent event) {
+    void btnPatientManageOnAction(ActionEvent event) throws IOException {
+
+        user.setRole("Receptionist");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/patientManage.fxml"));
+        Parent root = loader.load();
+
+        PatientManageController patientManageController = loader.getController();
+        patientManageController.setPatientManageController(this);
+
+        subAnchorPaneOne.getChildren().clear();
+        subAnchorPaneOne.getChildren().add(root);
 
     }
 
@@ -99,8 +116,8 @@ public class ReceptionistDashBoardController {
     }
 
     @FXML
-    void btnTherapySessionSchedulingOnAction(ActionEvent event) {
-
+    void btnTherapySessionSchedulingOnAction(ActionEvent event) throws IOException {
+        navigateToAnchorPane("/view/sessionManage.fxml");
     }
 
     private void navigateToAnchorPane(String path) throws IOException {
@@ -108,5 +125,4 @@ public class ReceptionistDashBoardController {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
         subAnchorPaneOne.getChildren().add(anchorPane);
     }
-
 }

@@ -79,6 +79,8 @@ public class PatientManageController implements Initializable {
     @FXML
     private TextField txtName;
 
+    private ReceptionistDashBoardController receptionistDashBoardController = new ReceptionistDashBoardController();
+
     PatientBo patientBo = BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
 
     @FXML
@@ -290,8 +292,10 @@ public class PatientManageController implements Initializable {
         dpRegisterDate.setValue(patientTm.getRegisterDate().toLocalDate());
 
         btnSave.setDisable(true);
-        btnDelete.setDisable(false);
         btnUpdate.setDisable(false);
+        if (this.receptionistDashBoardController.user.getRole() == null){
+            btnDelete.setDisable(false);
+        }
     }
 
     void reset() throws SQLException {
@@ -307,8 +311,10 @@ public class PatientManageController implements Initializable {
         dpRegisterDate.setValue(null);
 
         btnSave.setDisable(false);
-        btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
+        if (this.receptionistDashBoardController.user.getRole() == null){
+            btnDelete.setDisable(true);
+        }
 
     }
 
@@ -346,6 +352,22 @@ public class PatientManageController implements Initializable {
             reset();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void setPatientManageController(ReceptionistDashBoardController receptionistDashBoardController) {
+        this.receptionistDashBoardController = receptionistDashBoardController;
+
+        if (receptionistDashBoardController != null) {
+            if (receptionistDashBoardController.user != null) {
+                if (receptionistDashBoardController.user.getRole().equals("Receptionist")) {
+                    btnDelete.setDisable(true);
+                }
+            }else {
+                System.out.println("receptionistDashBoardController user is null");
+            }
+        }else {
+            System.out.println("receptionistDashBoardController is null");
         }
     }
 }
