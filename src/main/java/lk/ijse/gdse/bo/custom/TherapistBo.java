@@ -3,6 +3,7 @@ package lk.ijse.gdse.bo.custom;
 import lk.ijse.gdse.bo.SuperBo;
 import lk.ijse.gdse.dto.TherapistDto;
 import lk.ijse.gdse.entity.Therapist;
+import lk.ijse.gdse.entity.TherapyProgram;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,4 +18,6 @@ public interface TherapistBo extends SuperBo {
     TherapistDto findByName(String name);
 
     TherapistDto findById(String therapistsId);
+
+    List<TherapyProgram> getProgramById(String id);
 }

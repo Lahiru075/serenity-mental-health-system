@@ -9,7 +9,6 @@ public class EncryptAndDecryptBoImpl implements EncryptAndDecryptBo {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public EncryptAndDecryptBoImpl(BCryptPasswordEncoder passwordEncoder) {
-
         this.passwordEncoder = passwordEncoder;
     }
 

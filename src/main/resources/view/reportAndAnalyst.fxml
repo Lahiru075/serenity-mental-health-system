@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="887.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.controller.ReportAndAnalystController">
+    <children>
+        <!-- Header -->
+        <Label layoutX="32.0" layoutY="9.0" text="Reports and Analytics" textFill="#2c3e50">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <!-- Main Content Panel -->
+        <AnchorPane layoutX="30.4" layoutY="49.0" prefHeight="615.0" prefWidth="868.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" AnchorPane.bottomAnchor="29.399999999999977" AnchorPane.leftAnchor="30.4" AnchorPane.rightAnchor="30.399999999999977" AnchorPane.topAnchor="49.0">
+            <children>
+                <!-- Section 1: Therapist Performance Analysis -->
+                <VBox layoutX="20.0" layoutY="20.0" prefHeight="328.0" prefWidth="786.0" spacing="20.0">
+                    <children>
+                        <Label text="Therapist Performance Analysis" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Therapist Selection Controls -->
+                        <HBox alignment="CENTER_LEFT" spacing="30.0">
+                            <children>
+                                <Label text="Therapist ID:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="cmbTherapistId" onAction="#cmbTherapistIdOnAction" prefWidth="150.0" />
+
+                                <Label text="Name:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lblTherapistName" prefHeight="30.0" prefWidth="234.0" style="-fx-background-color: #f8f9fa; -fx-padding: 5; -fx-background-radius: 3;">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" spacing="50.0">
+                            <children>
+                                <Label text="Program:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="cmbProgramName" prefHeight="26.0" prefWidth="250.0" />
+
+                                <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#btnSearchOnAction" prefHeight="35.0" prefWidth="111.0" style="-fx-background-color: #2c3e50; -fx-background-radius: 5;" text="Search" textFill="WHITE">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+
+                        <!-- Bar Chart for Therapist Performance -->
+                        <BarChart fx:id="barChartPerformance" barGap="0.0" categoryGap="80.0" prefHeight="166.0" prefWidth="786.0">
+                            <xAxis>
+                                <CategoryAxis fx:id="X" label="Session Status" side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="Y" minorTickCount="2" minorTickLength="2.0" side="LEFT" tickLabelGap="4.0" tickLength="2.0" tickUnit="2.0" upperBound="12.5" />
+                            </yAxis>
+                        </BarChart>
+                    </children>
+                </VBox>
+
+                <!-- Section 2: Therapy Session Statistics -->
+                <VBox layoutX="23.0" layoutY="339.0" prefWidth="785.0" spacing="20.0">
+                    <children>
+                        <Label text="Therapy Session Statistics" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Table View for Session Statistics -->
+                        <TableView fx:id="tblSessionStats" prefHeight="161.0" prefWidth="786.0">
+                            <columns>
+                                <TableColumn fx:id="colProgramId" prefWidth="120.0" text="Program ID" />
+                                <TableColumn fx:id="colProgramName" prefWidth="269.5999755859375" text="Program Name" />
+                                <TableColumn fx:id="colCompletedCount" prefWidth="147.20001220703125" text="Completed Sessions" />
+                                <TableColumn fx:id="colBookingCount" prefWidth="118.39996337890625" text="Booked Sessions" />
+                                <TableColumn fx:id="colCancelledCount" prefWidth="137.5999755859375" text="Cancelled Sessions" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="30.0" right="30.0" top="30.0" />
+            </padding>
+        </AnchorPane>
+    </children>
+</AnchorPane>

@@ -99,8 +99,8 @@ public class AdminDashBoardController {
     }
 
     @FXML
-    void btnReportingAnalyticsOnAction(ActionEvent event) {
-
+    void btnReportingAnalyticsOnAction(ActionEvent event) throws IOException {
+        navigateToAnchorPane("/view/reportAndAnalyst.fxml");
     }
 
     @FXML

@@ -222,4 +222,28 @@ public class TherapySessionBoImpl implements TherapySessionBo {
 
         return patientDtos;
     }
+
+    @Override
+    public ArrayList<TherapySessionDto> getAllCounts(String therapistId, String therapyProgramId) {
+        ArrayList<TherapySession> therapySessions = therapySessionDao.getAllCounts(therapistId, therapyProgramId);
+
+        ArrayList<TherapySessionDto> therapySessionDtos = new ArrayList<>();
+
+        for (TherapySession therapySession : therapySessions){
+            TherapySessionDto therapySessionDto = new TherapySessionDto();
+            therapySessionDto.setId(therapySession.getId());
+            therapySessionDto.setTime(therapySession.getTime());
+            therapySessionDto.setDate(therapySession.getDate());
+            therapySessionDto.setStatus(therapySession.getStatus());
+            therapySessionDto.setTherapyProgramId(therapySession.getTherapyProgram().getId());
+            therapySessionDto.setTherapistsId(therapySession.getTherapists().getId());
+            therapySessionDto.setPatientId(therapySession.getPatient().getId());
+
+            therapySessionDtos.add(therapySessionDto);
+        }
+
+        return therapySessionDtos;
+
+    }
+
 }

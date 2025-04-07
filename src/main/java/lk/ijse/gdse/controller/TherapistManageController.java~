@@ -201,9 +201,9 @@ public class TherapistManageController implements Initializable {
             return;
         }
 
-        boolean isUpdate = therapistBo.update(new TherapistDto(id, name, email, contact),list);
+        boolean isSave = therapistBo.update(new TherapistDto(id, name, email, contact),list);
 
-        if (isUpdate) {
+        if (isSave) {
             new Alert(Alert.AlertType.INFORMATION, "Therapist Updated Successful").showAndWait();
             reset();
         }else {

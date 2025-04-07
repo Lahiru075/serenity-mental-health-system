@@ -131,7 +131,9 @@ public class TherapySessionDaoImpl implements TherapySessionDao {
     public ArrayList<TherapySession> getAllCounts(String therapistId, String programId) {
         Session session = factoryConfiguration.getSession();
 
-        Query<TherapySession> query = session.createQuery("FROM TherapySession ts WHERE ts.therapists.id = :therapistId AND ts.therapyProgram.id = :programId", TherapySession.class);
+        String hql = "FROM TherapySession ts " +
+                "WHERE ts.therapists.id = :therapistId AND ts.therapyProgram.id = :programId";
+        Query<TherapySession> query = session.createQuery(hql, TherapySession.class);
         query.setParameter("therapistId", therapistId);
         query.setParameter("programId", programId);
         List<TherapySession> sessions = query.list();

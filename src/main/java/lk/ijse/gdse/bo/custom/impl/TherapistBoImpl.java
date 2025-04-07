@@ -115,4 +115,13 @@ public class TherapistBoImpl implements TherapistBo {
 
         return new TherapistDto(therapist.getId(), therapist.getName(), therapist.getEmail(), therapist.getContact());
     }
+
+    @Override
+    public List<TherapyProgram> getProgramById(String id) {
+        Therapist therapist = therapistDao.findById(id);
+
+        List<TherapyProgram> therapyPrograms = therapist.getTherapyPrograms();
+
+        return therapyPrograms;
+    }
 }

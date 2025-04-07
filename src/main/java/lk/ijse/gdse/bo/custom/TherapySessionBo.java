@@ -22,4 +22,6 @@ public interface TherapySessionBo extends SuperBo {
     ArrayList<PatientDto> findByDate(Date sessionDate);
 
     ArrayList<PatientDto> findByStatus(String sessionStatus);
+
+    ArrayList<TherapySessionDto> getAllCounts(String therapistId, String therapyProgramId);
 }
