@@ -10,14 +10,18 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.ReportAndAnalystBo;
 import lk.ijse.gdse.bo.custom.TherapistBo;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.bo.custom.TherapySessionBo;
+import lk.ijse.gdse.dto.SessionStatisticsDto;
 import lk.ijse.gdse.dto.TherapistDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.dto.TherapySessionDto;
+import lk.ijse.gdse.dto.tm.SessionStatisticsTm;
+import lk.ijse.gdse.dto.tm.TherapySessionTm;
 import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.TherapyProgram;
 
@@ -48,25 +52,28 @@ public class ReportAndAnalystController implements Initializable {
     private ComboBox<String> cmbTherapistId;
 
     @FXML
-    private TableColumn<?, ?> colBookingCount;
+    private TableColumn<SessionStatisticsTm, Integer> colBookingCount;
 
     @FXML
-    private TableColumn<?, ?> colCancelledCount;
+    private TableColumn<SessionStatisticsTm, Integer> colCancelledCount;
 
     @FXML
-    private TableColumn<?, ?> colCompletedCount;
+    private TableColumn<SessionStatisticsTm, Integer> colCompletedCount;
 
     @FXML
-    private TableColumn<?, ?> colProgramId;
+    private TableColumn<SessionStatisticsTm, Integer> colRescheduleCount;
 
     @FXML
-    private TableColumn<?, ?> colProgramName;
+    private TableColumn<SessionStatisticsTm, String> colProgramId;
+
+    @FXML
+    private TableColumn<SessionStatisticsTm, String> colProgramName;
 
     @FXML
     private Label lblTherapistName;
 
     @FXML
-    private TableView<?> tblSessionStats;
+    private TableView<SessionStatisticsTm> tblSessionStats;
 
     TherapistBo therapistBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
     ReportAndAnalystBo reportAndAnalystBo = BOFactory.getInstance().getBO(BOFactory.BOType.REPORT_AND_ANALYSIS);
@@ -167,11 +174,39 @@ public class ReportAndAnalystController implements Initializable {
 
     }
 
+    private void loadTable() throws SQLException {
+        ArrayList<SessionStatisticsDto> sessionStatisticsDtos = reportAndAnalystBo.getAllDetails();
+
+        ObservableList<SessionStatisticsTm> sessionStatisticsTms = FXCollections.observableArrayList();
+
+        for (SessionStatisticsDto sessionStatisticsDto : sessionStatisticsDtos) {
+            SessionStatisticsTm sessionStatisticsTm = new SessionStatisticsTm();
+            sessionStatisticsTm.setId(sessionStatisticsDto.getId());
+            sessionStatisticsTm.setName(sessionStatisticsDto.getName());
+            sessionStatisticsTm.setCompletedSessionCount(sessionStatisticsDto.getCompletedSessionCount());
+            sessionStatisticsTm.setBookedSessionCount(sessionStatisticsDto.getBookedSessionCount());
+            sessionStatisticsTm.setRescheduleSessionCount(sessionStatisticsDto.getRescheduleSessionCount());
+            sessionStatisticsTm.setCanceledSessionCount(sessionStatisticsDto.getCanceledSessionCount());
+
+            sessionStatisticsTms.add(sessionStatisticsTm);
+        }
+
+        tblSessionStats.setItems(sessionStatisticsTms);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colProgramName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colCompletedCount.setCellValueFactory(new PropertyValueFactory<>("completedSessionCount"));
+        colBookingCount.setCellValueFactory(new PropertyValueFactory<>("bookedSessionCount"));
+        colRescheduleCount.setCellValueFactory(new PropertyValueFactory<>("rescheduleSessionCount"));
+        colCancelledCount.setCellValueFactory(new PropertyValueFactory<>("canceledSessionCount"));
 
         try {
             loadTherapistIds();
+            loadTable();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

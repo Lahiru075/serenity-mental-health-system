@@ -99,11 +99,12 @@
                         <!-- Table View for Session Statistics -->
                         <TableView fx:id="tblSessionStats" prefHeight="161.0" prefWidth="786.0">
                             <columns>
-                                <TableColumn fx:id="colProgramId" prefWidth="120.0" text="Program ID" />
-                                <TableColumn fx:id="colProgramName" prefWidth="269.5999755859375" text="Program Name" />
-                                <TableColumn fx:id="colCompletedCount" prefWidth="147.20001220703125" text="Completed Sessions" />
-                                <TableColumn fx:id="colBookingCount" prefWidth="118.39996337890625" text="Booked Sessions" />
-                                <TableColumn fx:id="colCancelledCount" prefWidth="137.5999755859375" text="Cancelled Sessions" />
+                                <TableColumn fx:id="colProgramId" prefWidth="88.80000877380371" text="Program ID" />
+                                <TableColumn fx:id="colProgramName" prefWidth="211.19998931884766" text="Program Name" />
+                                <TableColumn fx:id="colCompletedCount" prefWidth="128.800048828125" text="Completed Sessions" />
+                                <TableColumn fx:id="colBookingCount" prefWidth="117.5999755859375" text="Booked Sessions" />
+                                <TableColumn fx:id="colRescheduleCount" minWidth="0.0" prefWidth="120.0" text="Reschedule Sessions" />
+                        <TableColumn fx:id="colCancelledCount" minWidth="0.0" prefWidth="120.79998779296875" text="Cancelled Sessions" />
                             </columns>
                         </TableView>
                     </children>

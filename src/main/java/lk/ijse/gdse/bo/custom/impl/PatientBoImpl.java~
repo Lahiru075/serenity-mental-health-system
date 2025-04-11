@@ -114,7 +114,7 @@ public class PatientBoImpl implements PatientBo {
         Patient patient = patientDao.findById(patientId);
 
         List<ProgramDetails> therapyPrograms = patient.getProgramDetails();
-
+        
         ArrayList<TherapyProgram> programs = new ArrayList<>();
 
         for (ProgramDetails programDetails : therapyPrograms) {

@@ -3,12 +3,15 @@ package lk.ijse.gdse.bo.custom.impl;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.ReportAndAnalystBo;
 import lk.ijse.gdse.bo.custom.TherapistBo;
+import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.bo.custom.TherapySessionBo;
+import lk.ijse.gdse.dto.SessionStatisticsDto;
 import lk.ijse.gdse.dto.TherapistDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.dto.TherapySessionDto;
 import lk.ijse.gdse.entity.TherapyProgram;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.List;
 public class ReportAndAnalystBoImpl implements ReportAndAnalystBo {
     TherapistBo therapistBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
     TherapySessionBo therapySessionBo = BOFactory.getInstance().getBO(BOFactory.BOType.SESSION);
+    TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
 
     @Override
     public ArrayList<TherapyProgramDto> findById(String id) {
@@ -67,5 +71,10 @@ public class ReportAndAnalystBoImpl implements ReportAndAnalystBo {
         return counts;
 
 
+    }
+
+    @Override
+    public ArrayList<SessionStatisticsDto> getAllDetails() throws SQLException {
+        return therapyProgramBo.getAllDetails();
     }
 }

@@ -3,13 +3,8 @@ package lk.ijse.gdse.bo.custom.impl;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.TherapyProgramDao;
-import lk.ijse.gdse.dto.PatientDto;
-import lk.ijse.gdse.dto.TherapistDto;
-import lk.ijse.gdse.dto.TherapyProgramDto;
-import lk.ijse.gdse.entity.Patient;
-import lk.ijse.gdse.entity.ProgramDetails;
-import lk.ijse.gdse.entity.Therapist;
-import lk.ijse.gdse.entity.TherapyProgram;
+import lk.ijse.gdse.dto.*;
+import lk.ijse.gdse.entity.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -135,5 +130,52 @@ public class TherapyProgramBoImpl implements TherapyProgramBo {
         }
 
         return patientDtos;
+    }
+
+    @Override
+    public ArrayList<SessionStatisticsDto> getAllDetails() throws SQLException {
+        ArrayList<TherapyProgram> therapyPrograms = therapyProgramDao.getAll();
+
+        ArrayList<SessionStatisticsDto> sessionStatisticsDtos = new ArrayList<>();
+
+        int completedCounts = 0;
+        int bookedCounts = 0;
+        int rescheduleCounts = 0;
+        int canceledCounts = 0;
+
+        for (TherapyProgram therapyProgram : therapyPrograms){
+            SessionStatisticsDto sessionStatisticsDto = new SessionStatisticsDto();
+            sessionStatisticsDto.setId(therapyProgram.getId());
+            sessionStatisticsDto.setName(therapyProgram.getName());
+
+            List<TherapySession> therapySessionDtos = therapyProgram.getTherapySessions();
+
+            for (TherapySession therapySession : therapySessionDtos){
+                if (therapySession.getStatus().equals("Completed")){
+                    completedCounts++;
+                } else if (therapySession.getStatus().equals("Booked")){
+                    bookedCounts++;
+                } else if (therapySession.getStatus().equals("Rescheduled")){
+                    rescheduleCounts++;
+                } else if (therapySession.getStatus().equals("Cancelled")){
+                    canceledCounts++;
+                }
+            }
+
+            sessionStatisticsDto.setCompletedSessionCount(completedCounts);
+            sessionStatisticsDto.setBookedSessionCount(bookedCounts);
+            sessionStatisticsDto.setRescheduleSessionCount(rescheduleCounts);
+            sessionStatisticsDto.setCanceledSessionCount(canceledCounts);
+
+            completedCounts = 0;
+            bookedCounts = 0;
+            rescheduleCounts = 0;
+            canceledCounts = 0;
+
+
+            sessionStatisticsDtos.add(sessionStatisticsDto);
+        }
+
+        return sessionStatisticsDtos;
     }
 }
