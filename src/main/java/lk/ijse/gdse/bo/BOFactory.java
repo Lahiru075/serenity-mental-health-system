@@ -49,8 +49,8 @@ public class BOFactory {
                 return (T) new ChangeCredentialBoImpl();
             case REPORT_AND_ANALYSIS:
                 return (T) new ReportAndAnalystBoImpl();
-//            case PAYMENT:
-//                return new PaymentBOImpl();
+            case PAYMENT:
+                return (T) new PaymentAndInvoiceManageBoImpl();
             default:
                 return null;
         }

@@ -42,7 +42,7 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
     }
 
     @Override
-    public boolean save(String programId, String patientId) throws SQLException {
+    public boolean save(String programId, String patientId, double fee) throws SQLException {
         ProgramDetailsId programDetailsId = new ProgramDetailsId(programId, patientId);
 
         TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId);
@@ -67,6 +67,7 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
         programDetails.setId(programDetailsId);
         programDetails.setTherapyProgram(therapyProgram);
         programDetails.setPatient(patient);
+        programDetails.setCurrentPaymentStatus(fee);
         programDetails.setTherapyProgramName(therapyProgram.getName());
 
         return programDetailsDao.save(programDetails);
@@ -101,6 +102,19 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
         programDetails.setTherapyProgramName(therapyProgram.getName());
 
         return programDetailsDao.delete(programDetails);
+    }
+
+    @Override
+    public ProgramDetailsDto findProgramDetails(String patientId, String programId) {
+        ProgramDetails programDetails = programDetailsDao.findProgramDetails(patientId, programId);
+
+        ProgramDetailsDto programDetailsDto = new ProgramDetailsDto();
+        programDetailsDto.setPatient(programDetails.getPatient().getId());
+        programDetailsDto.setTherapyProgram(programDetails.getTherapyProgram().getId());
+        programDetailsDto.setTherapyProgramName(programDetails.getTherapyProgramName());
+        programDetailsDto.setCurrentPaymentStatus(programDetails.getCurrentPaymentStatus());
+
+        return programDetailsDto;
     }
 
 }

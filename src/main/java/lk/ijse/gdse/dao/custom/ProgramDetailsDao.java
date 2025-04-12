@@ -9,4 +9,6 @@ import java.sql.SQLException;
 
 public interface ProgramDetailsDao extends CrudDao<ProgramDetails, String> {
     boolean delete(ProgramDetails programDetails);
+
+    ProgramDetails findProgramDetails(String patientId, String programId);
 }

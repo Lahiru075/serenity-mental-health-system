@@ -25,5 +25,5 @@ public class ProgramDetails implements SuperEntity {
 
     private String therapyProgramName;
 
-    private double currentPaymentStatus;
+    private double currentFee;
 }

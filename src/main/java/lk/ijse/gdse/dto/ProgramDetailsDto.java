@@ -11,4 +11,5 @@ public class ProgramDetailsDto {
     private String patient;
     private String therapyProgram;
     private String therapyProgramName;
+    private double currentPaymentStatus;
 }

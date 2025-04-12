@@ -4,6 +4,7 @@ import lk.ijse.gdse.bo.SuperBo;
 import lk.ijse.gdse.dto.PatientDto;
 import lk.ijse.gdse.dto.SessionStatisticsDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
+import lk.ijse.gdse.dto.TherapySessionDto;
 import lk.ijse.gdse.entity.TherapyProgram;
 
 import java.sql.SQLException;
@@ -27,4 +28,6 @@ public interface TherapyProgramBo extends SuperBo {
     ArrayList<PatientDto> findPatientsListById(String programId);
 
     ArrayList<SessionStatisticsDto> getAllDetails() throws SQLException;
+
+    ArrayList<TherapySessionDto> getSessionsByProgramId(String programId);
 }

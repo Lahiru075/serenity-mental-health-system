@@ -76,6 +76,15 @@ public class ProgramDetailsDaoImpl implements ProgramDetailsDao {
         }
     }
 
+    @Override
+    public ProgramDetails findProgramDetails(String patientId, String programId) {
+        Session session = factoryConfiguration.getSession();
+        Query<ProgramDetails> query = session.createQuery("FROM ProgramDetails pd WHERE pd.id.patientId = :patientId AND pd.id.therapyProgramId = :programId", ProgramDetails.class);
+        query.setParameter("patientId", patientId);
+        query.setParameter("programId", programId);
+        return query.uniqueResult();
+    }
+
 
     @Override
     public boolean update(ProgramDetails programDetails) throws SQLException {

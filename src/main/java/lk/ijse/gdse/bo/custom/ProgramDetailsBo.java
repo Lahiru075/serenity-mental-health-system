@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public interface ProgramDetailsBo extends SuperBo {
     ArrayList<ProgramDetailsDto> getAll() throws SQLException;
-    boolean save(String programId, String patientId) throws SQLException;
+    boolean save(String programId, String patientId, double programFee) throws SQLException;
     boolean delete(String patientId, String programId) throws SQLException;
+
+    ProgramDetailsDto findProgramDetails(String patientId, String programId);
 }

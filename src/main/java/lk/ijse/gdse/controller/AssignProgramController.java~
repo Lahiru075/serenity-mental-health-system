@@ -151,7 +151,6 @@ public class AssignProgramController implements Initializable {
 
         lbProgramId.setText("");
         lbPatientId.setText("");
-        lbProgramFee.setText("");
         cmbProgramName.setValue("");
         cmbPatientName.setValue("");
 

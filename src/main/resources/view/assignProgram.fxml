@@ -122,5 +122,19 @@
                   </Label>
               </children>
           </HBox>
+      <HBox layoutX="420.0" layoutY="248.0" spacing="20.0">
+         <children>
+            <Label text="Program Fee">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbProgramFee" prefHeight="20.0" prefWidth="117.0" textFill="#2c3e50">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

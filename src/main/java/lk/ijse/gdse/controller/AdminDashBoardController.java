@@ -94,8 +94,8 @@ public class AdminDashBoardController {
     }
 
     @FXML
-    void btnPaymentInvoiceManageOnAction(ActionEvent event) {
-
+    void btnPaymentInvoiceManageOnAction(ActionEvent event) throws IOException {
+        navigateToAnchorPane("/view/paymentAndInvoiceManage.fxml");
     }
 
     @FXML

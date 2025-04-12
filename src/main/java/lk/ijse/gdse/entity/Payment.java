@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -16,6 +18,7 @@ public class Payment implements SuperEntity{
     private String id;
     private double amount;
     private String status;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")

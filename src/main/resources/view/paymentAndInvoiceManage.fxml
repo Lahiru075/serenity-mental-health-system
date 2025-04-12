@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="887.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.controller.PaymentAndInvoiceManageController">
+
+    <children>
+        <!-- Header -->
+        <Label layoutX="33.0" layoutY="30.0" text="Payment and Invoice Management" textFill="#2c3e50">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <!-- Main Content Panel -->
+        <AnchorPane layoutX="31.2" layoutY="78.0" prefHeight="557.0" prefWidth="825.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="77.0">
+            <children>
+                <!-- Payment Information Form -->
+                <GridPane hgap="15.0" layoutX="31.0" layoutY="23.0" prefWidth="765.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <!-- Row 1 -->
+                        <Label text="Payment ID:" textFill="#2c3e50" GridPane.rowIndex="0">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblPaymentId" prefHeight="31.0" prefWidth="96.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+
+                        <Label text="Date:" textFill="#2c3e50" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblDate" prefHeight="30.0" prefWidth="226.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Row 2 -->
+                        <Label text="Patient ID:" textFill="#2c3e50" GridPane.rowIndex="1">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbPatientId" onAction="#cmbPatientIdOnAction" prefHeight="26.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Patient Name:" textFill="#2c3e50" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblPatientName" prefHeight="45.0" prefWidth="220.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Row 3 -->
+                        <Label text="Program ID:" textFill="#2c3e50" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbProgramId" onAction="#cmbProgramIdOnAction" prefHeight="26.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Program Name:" textFill="#2c3e50" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblProgramName" prefHeight="53.0" prefWidth="220.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Row 4 -->
+                        <Label text="Full Payment:" textFill="#2c3e50" GridPane.rowIndex="3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblFullPayment" prefHeight="86.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+
+                        <Label text="Current Status:" textFill="#2c3e50" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblCurrentStatus" prefHeight="114.0" prefWidth="236.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Row 5 -->
+                        <Label text="Amount:" textFill="#2c3e50" GridPane.rowIndex="4">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtAmount" prefHeight="26.0" prefWidth="220.0" promptText="Enter payment amount" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                        <Label text="Session ID:" textFill="#2c3e50" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                  <ComboBox fx:id="cmbSessionId" layoutX="165.0" layoutY="94.0" prefHeight="26.0" prefWidth="226.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                    </children>
+                </GridPane>
+
+                <!-- Status Selection -->
+                <HBox alignment="CENTER_LEFT" layoutX="29.0" layoutY="235.0" spacing="48.0">
+                    <children>
+                        <Label text="Payment Status:" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cmbStatus" prefHeight="26.0" prefWidth="222.0" />
+                    </children>
+                </HBox>
+
+                <!-- Action Buttons -->
+                <HBox layoutX="30.0" layoutY="290.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #2c3e50; -fx-background-radius: 5;" text="Save" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #3498db; -fx-background-radius: 5;" text="Update" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+
+                        <Button fx:id="btnGenerateInvoice" mnemonicParsing="false" onAction="#btnGenerateInvoiceOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #27ae60; -fx-background-radius: 5;" text="Generate Invoice" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+
+                <!-- Payment Records Table -->
+                <TableView fx:id="tblPayments" layoutX="30.0" layoutY="349.0" onMouseClicked="#tblPaymentsOnMouseClicked" prefHeight="175.0" prefWidth="766.0">
+                    <columns>
+                        <TableColumn fx:id="colPaymentId" prefWidth="87.99999809265137" text="Payment ID" />
+                        <TableColumn fx:id="colAmount" prefWidth="121.59998321533203" text="Amount" />
+                        <TableColumn fx:id="colPatientId" prefWidth="106.39996337890625" text="Patient ID" />
+                        <TableColumn fx:id="colProgramId" prefWidth="98.39996337890625" text="Program ID" />
+                        <TableColumn fx:id="colSessionId" prefWidth="91.99996948242188" text="Session ID" />
+                        <TableColumn fx:id="colStatus" prefWidth="120.0" text="Status" />
+                        <TableColumn fx:id="colDate" prefWidth="142.4000244140625" text="Date" />
+                    </columns>
+                </TableView>
+            </children>
+            <padding>
+                <Insets left="30.0" top="30.0" />
+            </padding>
+        </AnchorPane>
+    </children>
+</AnchorPane>
