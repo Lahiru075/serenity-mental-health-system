@@ -107,7 +107,39 @@ public class PaymentAndInvoiceManageController implements Initializable {
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException {
+
+        String paymentId = lblPaymentId.getText();
+        String patientId = cmbPatientId.getValue();
+        String therapyProgramId = cmbProgramId.getValue();
+        String therapySessionId = cmbSessionId.getValue();
+        double amount = Double.parseDouble(txtAmount.getText());
+        double currentPayment = Double.parseDouble(lblFullPayment.getText());
+        String status = cmbStatus.getValue();
+        Date date = Date.valueOf(LocalDate.now());
+
+        if (paymentId.isEmpty() || patientId.isEmpty() || therapyProgramId.isEmpty() || therapySessionId.isEmpty() || txtAmount.getText().isEmpty() || status.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
+            return;
+        }
+
+        String amountPattern = "^\\d+(\\.\\d{1,2})?$";
+
+        boolean isValidAmount = txtAmount.getText().matches(amountPattern);
+
+        if (!isValidAmount) {
+            new Alert(Alert.AlertType.ERROR, "Invalid amount").showAndWait();
+            return;
+        }
+
+        boolean isSaved = paymentAndInvoiceManageBo.save(paymentId, patientId, therapyProgramId, therapySessionId, amount, status, currentPayment, date);
+
+        if (isSaved) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Payment saved").showAndWait();
+            reset();
+        }else {
+            new Alert(Alert.AlertType.ERROR, "Payment not saved").showAndWait();
+        }
 
     }
 
@@ -135,6 +167,10 @@ public class PaymentAndInvoiceManageController implements Initializable {
     @FXML
     void cmbPatientIdOnAction(ActionEvent event) throws SQLException {
         String id = cmbPatientId.getValue();
+
+        if (id == null || id.isEmpty()) {
+            return;
+        }
 
         PatientDto patientDto = patientBo.findById(id);
 
@@ -220,19 +256,20 @@ public class PaymentAndInvoiceManageController implements Initializable {
         cmbStatus.setItems(statuses);
     }
 
-    private void reset(){
-        lblPaymentId.setText("");
+    private void reset() throws SQLException {
+        String id = paymentAndInvoiceManageBo.getNextId();
+        lblPaymentId.setText(id);
+
         lblPatientName.setText("");
         lblProgramName.setText("");
-        lblSessionId.setText("");
         lblDate.setText("");
         lblFullPayment.setText("");
         lblCurrentStatus.setText("");
         txtAmount.setText("");
         cmbPatientId.setValue(null);
-        cmbProgramId.setValue(null);
         cmbStatus.setValue(null);
-        cmbSessionId.setValue(null);
+        cmbProgramId.getItems().clear();
+        cmbSessionId.getItems().clear();
 
         btnSave.setDisable(false);
         btnUpdate.setDisable(true);
@@ -252,6 +289,7 @@ public class PaymentAndInvoiceManageController implements Initializable {
 
         try {
             loadPatientIds();
+            reset();
             loadStatuses();
         } catch (SQLException e) {
             throw new RuntimeException(e);

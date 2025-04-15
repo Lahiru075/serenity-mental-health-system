@@ -13,6 +13,7 @@ import lk.ijse.gdse.entity.Patient;
 import lk.ijse.gdse.entity.ProgramDetails;
 import lk.ijse.gdse.entity.ProgramDetailsId;
 import lk.ijse.gdse.entity.TherapyProgram;
+import org.hibernate.Session;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -115,6 +116,11 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
         programDetailsDto.setCurrentPaymentStatus(programDetails.getCurrentPaymentStatus());
 
         return programDetailsDto;
+    }
+
+    @Override
+    public boolean updateCurrentPayment(Session session, ProgramDetails programDetails) {
+        return programDetailsDao.updateCurrentPayment(session, programDetails);
     }
 
 }

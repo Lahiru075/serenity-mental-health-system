@@ -15,6 +15,4 @@ public interface TherapySessionDao extends CrudDao<TherapySession, String> {
     ArrayList<TherapySession> findByStatus(String sessionStatus);
 
     ArrayList<TherapySession> getAllCounts(String therapistId, String therapyProgramId);
-
-    TherapySession findById(String therapySessionId);
 }

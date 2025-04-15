@@ -97,11 +97,7 @@ public class ProgramDetailsDaoImpl implements ProgramDetailsDao {
             query.setParameter("programId", programId);
             ProgramDetails programDetails1 = query.uniqueResult();
 
-            if (programDetails1 == null){
-                return false;
-            }
-
-            session.merge(programDetails);
+            session.merge(programDetails1);
             return true;
         } catch (Exception e){
             return false;

@@ -2,6 +2,8 @@ package lk.ijse.gdse.bo.custom;
 
 import lk.ijse.gdse.bo.SuperBo;
 import lk.ijse.gdse.dto.ProgramDetailsDto;
+import lk.ijse.gdse.entity.ProgramDetails;
+import org.hibernate.Session;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,4 +14,6 @@ public interface ProgramDetailsBo extends SuperBo {
     boolean delete(String patientId, String programId) throws SQLException;
 
     ProgramDetailsDto findProgramDetails(String patientId, String programId);
+
+    boolean updateCurrentPayment(Session session, ProgramDetails programDetails);
 }

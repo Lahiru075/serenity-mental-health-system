@@ -15,7 +15,7 @@ public class DaoFactory {
     }
 
     public enum DaoType {
-        USER, THERAPIST, PROGRAM, PATIENT, SESSION, PROGRAM_DETAILS, QUERY
+        USER, THERAPIST, PROGRAM, PATIENT, SESSION, PROGRAM_DETAILS, QUERY, PAYMENT
     }
 
     public <T extends SuperDao> T getDao(DaoType daoType) {
@@ -34,6 +34,8 @@ public class DaoFactory {
                 return (T) new ProgramDetailsDaoImpl();
             case QUERY:
                 return (T) new QueryDaoImpl();
+            case PAYMENT:
+                return (T) new PaymentAndInvoiceManageDaoImpl();
             default:
                 return null;
         }

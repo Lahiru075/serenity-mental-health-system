@@ -137,4 +137,13 @@ public class TherapySessionDaoImpl implements TherapySessionDao {
         List<TherapySession> sessions = query.list();
         return new ArrayList<>(sessions);
     }
+
+    @Override
+    public TherapySession findById(String therapySessionId) {
+        Session session = factoryConfiguration.getSession();
+
+        TherapySession therapySession = session.get(TherapySession.class, therapySessionId);
+
+        return therapySession;
+    }
 }

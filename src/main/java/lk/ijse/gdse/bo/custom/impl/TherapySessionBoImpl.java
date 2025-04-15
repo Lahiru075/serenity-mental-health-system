@@ -246,4 +246,20 @@ public class TherapySessionBoImpl implements TherapySessionBo {
 
     }
 
+    @Override
+    public TherapySessionDto findById(String therapySessionId) {
+        TherapySession therapySession = therapySessionDao.findById(therapySessionId);
+
+        TherapySessionDto therapySessionDto = new TherapySessionDto();
+        therapySessionDto.setId(therapySession.getId());
+        therapySessionDto.setTime(therapySession.getTime());
+        therapySessionDto.setDate(therapySession.getDate());
+        therapySessionDto.setStatus(therapySession.getStatus());
+        therapySessionDto.setTherapyProgramId(therapySession.getTherapyProgram().getId());
+        therapySessionDto.setTherapistsId(therapySession.getTherapists().getId());
+        therapySessionDto.setPatientId(therapySession.getPatient().getId());
+
+        return therapySessionDto;
+    }
+
 }
