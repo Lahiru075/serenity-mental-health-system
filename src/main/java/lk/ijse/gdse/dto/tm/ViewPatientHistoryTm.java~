@@ -1,0 +1,14 @@
+package lk.ijse.gdse.dto.tm;
+
+import java.sql.Date;
+import java.sql.Time;
+
+public class ViewPatientHistoryTm {
+    private String programId;
+    private String programName;
+    private String sessionId;
+    private Date date;
+    private Time time;
+    private String status;
+
+}

@@ -17,7 +17,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT, VIEW_PATIENT_IN_ALL_PROGRAMS,CHANGE_CREDENTIAL,REPORT_AND_ANALYSIS
+        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT, VIEW_PATIENT_IN_ALL_PROGRAMS, CHANGE_CREDENTIAL, REPORT_AND_ANALYSIS, VIEW_PATIENT_HISTORY
     }
 
     @SuppressWarnings("unchecked")
@@ -51,6 +51,8 @@ public class BOFactory {
                 return (T) new ReportAndAnalystBoImpl();
             case PAYMENT:
                 return (T) new PaymentAndInvoiceManageBoImpl();
+            case VIEW_PATIENT_HISTORY:
+                return (T) new ViewPatientHistoryBoImpl();
             default:
                 return null;
         }

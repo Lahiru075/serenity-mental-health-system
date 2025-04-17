@@ -27,7 +27,7 @@
         <AnchorPane layoutX="30.4" layoutY="49.0" prefHeight="615.0" prefWidth="868.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" AnchorPane.bottomAnchor="29.399999999999977" AnchorPane.leftAnchor="30.4" AnchorPane.rightAnchor="30.399999999999977" AnchorPane.topAnchor="49.0">
             <children>
                 <!-- Section 1: Therapist Performance Analysis -->
-                <VBox layoutX="20.0" layoutY="20.0" prefHeight="328.0" prefWidth="786.0" spacing="20.0">
+                <VBox layoutX="20.0" layoutY="20.0" prefHeight="328.0" prefWidth="786.0" spacing="15.0">
                     <children>
                         <Label text="Therapist Performance Analysis" textFill="#2c3e50">
                             <font>
@@ -88,7 +88,7 @@
                 </VBox>
 
                 <!-- Section 2: Therapy Session Statistics -->
-                <VBox layoutX="23.0" layoutY="339.0" prefWidth="785.0" spacing="20.0">
+                <VBox layoutX="23.0" layoutY="308.0" prefWidth="785.0" spacing="20.0">
                     <children>
                         <Label text="Therapy Session Statistics" textFill="#2c3e50">
                             <font>
@@ -109,9 +109,14 @@
                         </TableView>
                     </children>
                 </VBox>
+            <Button fx:id="btnViewPatientHistory" layoutX="23.0" layoutY="535.0" mnemonicParsing="false" onAction="#btnViewPatientHistoryOnAction" prefHeight="35.0" prefWidth="316.0" style="-fx-background-color: #16a085; -fx-background-radius: 5;" text="View Patient History" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
             </children>
             <padding>
-                <Insets bottom="10.0" left="30.0" right="30.0" top="30.0" />
+                <Insets left="30.0" right="30.0" top="30.0" />
             </padding>
         </AnchorPane>
     </children>

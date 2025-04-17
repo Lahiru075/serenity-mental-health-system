@@ -35,9 +35,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
     private Button btnSave;
 
     @FXML
-    private Button btnUpdate;
-
-    @FXML
     private ComboBox<String> cmbSessionId;
 
     @FXML
@@ -114,7 +111,7 @@ public class PaymentAndInvoiceManageController implements Initializable {
         String therapyProgramId = cmbProgramId.getValue();
         String therapySessionId = cmbSessionId.getValue();
         double amount = Double.parseDouble(txtAmount.getText());
-        double currentPayment = Double.parseDouble(lblFullPayment.getText());
+        double currentPayment = Double.parseDouble(lblCurrentStatus.getText());
         String status = cmbStatus.getValue();
         Date date = Date.valueOf(LocalDate.now());
 
@@ -144,11 +141,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void tblPaymentsOnMouseClicked(MouseEvent event) {
         PaymentTm paymentTm = tblPayments.getSelectionModel().getSelectedItem();
 
@@ -161,7 +153,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
         lblCurrentStatus.setText(paymentTm.getStatus());
 
         btnSave.setDisable(true);
-        btnUpdate.setDisable(false);
     }
 
     @FXML
@@ -272,7 +263,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
         cmbSessionId.getItems().clear();
 
         btnSave.setDisable(false);
-        btnUpdate.setDisable(true);
     }
 
     @Override

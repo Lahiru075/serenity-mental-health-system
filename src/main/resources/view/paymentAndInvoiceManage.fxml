@@ -165,12 +165,6 @@
                             </font>
                         </Button>
 
-                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #3498db; -fx-background-radius: 5;" text="Update" textFill="WHITE">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-
                         <Button fx:id="btnGenerateInvoice" mnemonicParsing="false" onAction="#btnGenerateInvoiceOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #27ae60; -fx-background-radius: 5;" text="Generate Invoice" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />

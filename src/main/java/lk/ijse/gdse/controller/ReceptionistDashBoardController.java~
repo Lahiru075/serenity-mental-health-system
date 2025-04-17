@@ -106,8 +106,8 @@ public class ReceptionistDashBoardController {
     }
 
     @FXML
-    void btnPaymentInvoiceManageOnAction(ActionEvent event) throws IOException {
-        navigateToAnchorPane("/view/paymentAndInvoiceManage.fxml");
+    void btnPaymentInvoiceManageOnAction(ActionEvent event) {
+
     }
 
     @FXML

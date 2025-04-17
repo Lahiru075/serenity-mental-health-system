@@ -146,14 +146,4 @@ public class TherapySessionDaoImpl implements TherapySessionDao {
 
         return therapySession;
     }
-
-    @Override
-    public ArrayList<TherapySession> getSessionByPatientId(String patientId) {
-        Session session = factoryConfiguration.getSession();
-
-        Query<TherapySession> query = session.createQuery("FROM TherapySession ts WHERE ts.patient.id = :patientId", TherapySession.class);
-        query.setParameter("patientId", patientId);
-        List<TherapySession> sessions = query.list();
-        return new ArrayList<>(sessions);
-    }
 }
