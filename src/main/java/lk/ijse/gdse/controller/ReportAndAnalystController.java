@@ -101,12 +101,12 @@ public class ReportAndAnalystController implements Initializable {
         String therapistId = cmbTherapistId.getValue();
         String sessionName = cmbProgramName.getValue();
 
-        if (therapistId.isEmpty()){
+        if (cmbTherapistId.getValue() == null || therapistId.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Please select a therapist").showAndWait();
             return;
         }
 
-        if (sessionName.isEmpty()){
+        if (cmbProgramName.getValue() == null || sessionName.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Please select a session").showAndWait();
             return;
         }

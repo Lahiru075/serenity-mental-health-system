@@ -283,8 +283,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
         }
 
         btnSave.setDisable(true);
-        btnUpdate.setDisable(false);
-        btnDelete.setDisable(false);
     }
 
     @FXML
@@ -397,8 +395,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
         cmbSessionId.getItems().clear();
 
         btnSave.setDisable(false);
-        btnUpdate.setDisable(true);
-        btnDelete.setDisable(true);
     }
 
     private void getAllPayments() throws SQLException {

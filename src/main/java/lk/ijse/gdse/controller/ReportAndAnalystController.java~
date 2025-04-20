@@ -4,13 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.ReportAndAnalystBo;
 import lk.ijse.gdse.bo.custom.TherapistBo;
@@ -25,6 +29,7 @@ import lk.ijse.gdse.dto.tm.TherapySessionTm;
 import lk.ijse.gdse.entity.Therapist;
 import lk.ijse.gdse.entity.TherapyProgram;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -80,8 +85,15 @@ public class ReportAndAnalystController implements Initializable {
     TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
 
     @FXML
-    void btnViewPatientHistoryOnAction(ActionEvent event) {
+    void btnViewPatientHistoryOnAction(ActionEvent event) throws IOException {
+        Parent load =  FXMLLoader.load(getClass().getResource("/view/ViewPatientHistory.fxml"));
+        Scene scene = new Scene(load);
 
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Patient's history Form");
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -89,12 +101,12 @@ public class ReportAndAnalystController implements Initializable {
         String therapistId = cmbTherapistId.getValue();
         String sessionName = cmbProgramName.getValue();
 
-        if (therapistId.isEmpty()){
+        if (cmbTherapistId.getValue() == null || therapistId.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Please select a therapist").showAndWait();
             return;
         }
 
-        if (sessionName.isEmpty()){
+        if (cmbTherapistId.getValue() == null || sessionName.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Please select a session").showAndWait();
             return;
         }

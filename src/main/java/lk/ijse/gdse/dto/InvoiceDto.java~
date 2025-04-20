@@ -1,0 +1,15 @@
+package lk.ijse.gdse.dto;
+
+import java.sql.Date;
+
+public class InvoiceDto {
+    private String patientId;
+    private String patientName;
+    private String programName;
+    private String sessionId;
+    private Date sessionDate;
+    private Date invoiceDate;
+    private double fee;
+    private double paymentFee;
+    private String status;
+}
