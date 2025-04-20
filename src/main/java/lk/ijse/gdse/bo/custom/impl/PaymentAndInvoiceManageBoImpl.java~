@@ -274,19 +274,20 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
             Patient patient = new Patient();
             patient.setId(patientId);
             patient.setName(patientDto.getName());
-            patient.setEmail(patientDto.getEmail());
-            patient.setRegisterDate(patientDto.getRegisterDate());
+            patient.setAddress(patientDto.getAddress());
             patient.setContact(patientDto.getContact());
-            patient.setMedical_history(patientDto.getMedical_history());
+            patient.setDob(patientDto.getDob());
+            patient.setGender(patientDto.getGender());
+            patient.setNic(patientDto.getNic());
 
             ProgramDetails programDetails = new ProgramDetails();
             programDetails.setId(new ProgramDetailsId(programId, patientId));
             programDetails.setTherapyProgram(therapyProgram);
-            programDetails.setPatient(patient);
+            programDetails.setPatient(programDetailsDto.getPatient());
             programDetails.setCurrentPaymentStatus(newCurrentPaymentStatus);
             programDetails.setTherapyProgramName(programDetailsDto.getTherapyProgramName());
 
-            boolean isUpdatedProgramDetails = programDetailsBo.updateCurrentPayment(session, programDetails); // Update the program details
+            boolean isUpdatedProgramDetails = programDetailsBo.updateCurrentPayment(session, programDetailsDto); // Update the program details
 
             if (!isUpdatedProgramDetails) {
                 transaction.rollback();

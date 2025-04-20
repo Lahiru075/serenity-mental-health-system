@@ -14,6 +14,7 @@ import lk.ijse.gdse.bo.custom.PaymentAndInvoiceManageBo;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.bo.custom.TherapySessionBo;
 import lk.ijse.gdse.dto.PatientDto;
+import lk.ijse.gdse.dto.PaymentDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.dto.TherapySessionDto;
 import lk.ijse.gdse.dto.tm.PatientTm;
@@ -29,10 +30,16 @@ import java.util.ResourceBundle;
 public class PaymentAndInvoiceManageController implements Initializable {
 
     @FXML
+    private Button btnDelete;
+
+    @FXML
     private Button btnGenerateInvoice;
 
     @FXML
     private Button btnSave;
+
+    @FXML
+    private Button btnUpdate;
 
     @FXML
     private ComboBox<String> cmbSessionId;
@@ -85,8 +92,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
     @FXML
     private Label lblProgramName;
 
-    @FXML
-    private Label lblSessionId;
 
     @FXML
     private TableView<PaymentTm> tblPayments;
@@ -132,11 +137,37 @@ public class PaymentAndInvoiceManageController implements Initializable {
         boolean isSaved = paymentAndInvoiceManageBo.save(paymentId, patientId, therapyProgramId, therapySessionId, amount, status, currentPayment, date);
 
         if (isSaved) {
-            new Alert(Alert.AlertType.CONFIRMATION, "Payment saved").showAndWait();
+            new Alert(Alert.AlertType.INFORMATION, "Payment saved").showAndWait();
             reset();
-        }else {
+        } else {
             new Alert(Alert.AlertType.ERROR, "Payment not saved").showAndWait();
         }
+
+    }
+
+    @FXML
+    void btnUpdateOnAction(ActionEvent event) throws SQLException {
+        String id = lblPaymentId.getText();
+        String newAmount = txtAmount.getText();
+
+        if (newAmount.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill amount field").showAndWait();
+            return;
+        }
+
+        boolean isUpdated = paymentAndInvoiceManageBo.update(id, newAmount);
+
+        if (isUpdated) {
+            new Alert(Alert.AlertType.INFORMATION, "Payment updated").showAndWait();
+            reset();
+        }else {
+            new Alert(Alert.AlertType.ERROR, "Payment not updated").showAndWait();
+        }
+
+    }
+
+    @FXML
+    void btnDeleteOnAction(ActionEvent event) {
 
     }
 
@@ -144,13 +175,11 @@ public class PaymentAndInvoiceManageController implements Initializable {
     void tblPaymentsOnMouseClicked(MouseEvent event) {
         PaymentTm paymentTm = tblPayments.getSelectionModel().getSelectedItem();
 
-        lblPaymentId.setText(paymentTm.getId());
-        lblPatientName.setText(paymentTm.getPatientId());
-        lblProgramName.setText(paymentTm.getTherapyProgramId());
-        lblSessionId.setText(paymentTm.getTherapySessionId());
-        lblDate.setText(String.valueOf(paymentTm.getDate()));
-        lblFullPayment.setText(String.valueOf(paymentTm.getAmount()));
-        lblCurrentStatus.setText(paymentTm.getStatus());
+        if (paymentTm != null) {
+            lblPaymentId.setText(paymentTm.getId());
+            cmbSessionId.setValue(paymentTm.getTherapySessionId());
+            txtAmount.setText(String.valueOf(paymentTm.getAmount()));
+        }
 
         btnSave.setDisable(true);
     }
@@ -242,7 +271,7 @@ public class PaymentAndInvoiceManageController implements Initializable {
         cmbSessionId.setItems(therapySessionId);
     }
 
-    private void loadStatuses(){
+    private void loadStatuses() {
         ObservableList<String> statuses = FXCollections.observableArrayList("Completed", "Pending");
         cmbStatus.setItems(statuses);
     }
@@ -250,6 +279,8 @@ public class PaymentAndInvoiceManageController implements Initializable {
     private void reset() throws SQLException {
         String id = paymentAndInvoiceManageBo.getNextId();
         lblPaymentId.setText(id);
+
+        getAllPayments();
 
         lblPatientName.setText("");
         lblProgramName.setText("");
@@ -265,6 +296,27 @@ public class PaymentAndInvoiceManageController implements Initializable {
         btnSave.setDisable(false);
     }
 
+    private void getAllPayments() throws SQLException {
+        ArrayList<PaymentDto> payments = paymentAndInvoiceManageBo.getAll();
+
+        ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
+
+        for (PaymentDto paymentDto : payments) {
+            PaymentTm paymentTm = new PaymentTm();
+            paymentTm.setId(paymentDto.getId());
+            paymentTm.setAmount(paymentDto.getAmount());
+            paymentTm.setStatus(paymentDto.getStatus());
+            paymentTm.setDate(paymentDto.getDate());
+            paymentTm.setPatientId(paymentDto.getPatientId());
+            paymentTm.setTherapySessionId(paymentDto.getTherapySessionId());
+            paymentTm.setTherapyProgramId(paymentDto.getTherapyProgramId());
+
+            paymentTms.add(paymentTm);
+        }
+
+        tblPayments.setItems(paymentTms);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -275,8 +327,6 @@ public class PaymentAndInvoiceManageController implements Initializable {
         colSessionId.setCellValueFactory(new PropertyValueFactory<>("therapySessionId"));
         colProgramId.setCellValueFactory(new PropertyValueFactory<>("therapyProgramId"));
 
-        lblDate.setText(LocalDate.now().toString());
-
         try {
             loadPatientIds();
             reset();
@@ -284,6 +334,8 @@ public class PaymentAndInvoiceManageController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        lblDate.setText(LocalDate.now().toString());
 
     }
 }

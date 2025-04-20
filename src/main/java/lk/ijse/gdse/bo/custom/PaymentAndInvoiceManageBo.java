@@ -1,6 +1,7 @@
 package lk.ijse.gdse.bo.custom;
 
 import lk.ijse.gdse.bo.SuperBo;
+import lk.ijse.gdse.dto.PaymentDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.dto.TherapySessionDto;
 
@@ -18,4 +19,8 @@ public interface PaymentAndInvoiceManageBo extends SuperBo {
     String getNextId() throws SQLException;
 
     boolean save(String paymentId, String patientId, String therapyProgramId, String therapySessionId, double amount, String status, double currentPayment, Date date) throws SQLException;
+
+    ArrayList<PaymentDto> getAll() throws SQLException;
+
+    boolean update(String id, String newAmount);
 }

@@ -164,12 +164,16 @@
                                 <Font size="14.0" />
                             </font>
                         </Button>
-
-                        <Button fx:id="btnGenerateInvoice" mnemonicParsing="false" onAction="#btnGenerateInvoiceOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #27ae60; -fx-background-radius: 5;" text="Generate Invoice" textFill="WHITE">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
+                  <Button fx:id="btnUpdate" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #3498db; -fx-background-radius: 5;" text="Update" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnDelete" layoutX="320.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 5;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                     </children>
                 </HBox>
 
@@ -185,6 +189,12 @@
                         <TableColumn fx:id="colDate" prefWidth="142.4000244140625" text="Date" />
                     </columns>
                 </TableView>
+
+                  <Button fx:id="btnGenerateInvoice" layoutX="648.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnGenerateInvoiceOnAction" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: #27ae60; -fx-background-radius: 5;" text="Generate Invoice" textFill="WHITE">
+                      <font>
+                          <Font size="14.0" />
+                      </font>
+                  </Button>
             </children>
             <padding>
                 <Insets left="30.0" top="30.0" />
