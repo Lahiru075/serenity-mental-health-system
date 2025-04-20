@@ -11,4 +11,6 @@ public interface PaymentAndInvoiceManageDao extends CrudDao<Payment, String> {
     Payment findById(String id);
 
     boolean updatePayment(Session session, Payment payment);
+
+    boolean deletePayment(Session session, Payment payment);
 }

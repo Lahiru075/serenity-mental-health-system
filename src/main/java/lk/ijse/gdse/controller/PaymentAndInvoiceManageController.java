@@ -155,6 +155,15 @@ public class PaymentAndInvoiceManageController implements Initializable {
             return;
         }
 
+        String amountPattern = "^\\d+(\\.\\d{1,2})?$";
+
+        boolean isValidAmount = txtAmount.getText().matches(amountPattern);
+
+        if (!isValidAmount) {
+            new Alert(Alert.AlertType.ERROR, "Invalid amount").showAndWait();
+            return;
+        }
+
         boolean isUpdated = paymentAndInvoiceManageBo.update(id, newAmount);
 
         if (isUpdated) {
@@ -167,7 +176,18 @@ public class PaymentAndInvoiceManageController implements Initializable {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
+        String id = lblPaymentId.getText();
+        String amount = txtAmount.getText();
+
+        boolean isDeleted = paymentAndInvoiceManageBo.delete(id);
+
+        if (isDeleted) {
+            new Alert(Alert.AlertType.INFORMATION, "Payment deleted").showAndWait();
+            reset();
+        }else {
+            new Alert(Alert.AlertType.ERROR, "Payment not deleted").showAndWait();
+        }
 
     }
 

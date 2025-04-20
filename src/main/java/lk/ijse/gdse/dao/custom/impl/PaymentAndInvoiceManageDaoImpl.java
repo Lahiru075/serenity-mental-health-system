@@ -77,4 +77,14 @@ public class PaymentAndInvoiceManageDaoImpl implements PaymentAndInvoiceManageDa
             return false;
         }
     }
+
+    @Override
+    public boolean deletePayment(Session session, Payment payment) {
+        try {
+            session.remove(payment);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

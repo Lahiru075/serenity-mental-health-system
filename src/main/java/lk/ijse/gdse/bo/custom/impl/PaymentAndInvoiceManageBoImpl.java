@@ -306,4 +306,92 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
         }
 
     }
+
+    @Override
+    public boolean delete(String id) {
+        Session session = factoryConfiguration.getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try {
+
+            Payment payment = paymentAndInvoiceManageDao.findById(id);
+
+            if (payment == null) {
+                return false;
+            }
+
+            String programId = payment.getTherapyProgram().getId();
+            String patientId = payment.getPatient().getId();
+
+            ProgramDetailsDto programDetailsDto = programDetailsBo.findProgramDetails(patientId, programId); // find the program details
+
+            if (programDetailsDto == null) {
+                return false;
+            }
+
+            double currentPaymentStatus = programDetailsDto.getCurrentPaymentStatus();
+            double amountDouble = payment.getAmount();
+
+            double newCurrentPaymentStatus = currentPaymentStatus + amountDouble;
+
+            boolean isDeletedPayment = paymentAndInvoiceManageDao.deletePayment(session, payment); // Delete the payment
+
+            if (!isDeletedPayment) {
+                transaction.rollback();
+                return false;
+            }
+
+            TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId); // find the therapy program
+
+            if (therapyProgramDto == null) {
+                return false;
+            }
+
+            TherapyProgram therapyProgram = new TherapyProgram();
+            therapyProgram.setId(programId);
+            therapyProgram.setName(therapyProgramDto.getName());
+            therapyProgram.setDescription(therapyProgramDto.getDescription());
+            therapyProgram.setDuration(therapyProgramDto.getDuration());
+            therapyProgram.setFee(therapyProgramDto.getFee());
+
+            PatientDto patientDto = patientBo.findById(patientId); // find the patient
+
+            if (patientDto == null) {
+                return false;
+            }
+
+            Patient patient = new Patient();
+            patient.setId(patientId);
+            patient.setName(patientDto.getName());
+            patient.setEmail(patientDto.getEmail());
+            patient.setRegisterDate(patientDto.getRegisterDate());
+            patient.setContact(patientDto.getContact());
+            patient.setMedical_history(patientDto.getMedical_history());
+
+            ProgramDetails programDetails = new ProgramDetails();
+            programDetails.setId(new ProgramDetailsId(programId, patientId));
+            programDetails.setTherapyProgram(therapyProgram);
+            programDetails.setPatient(patient);
+            programDetails.setCurrentPaymentStatus(newCurrentPaymentStatus);
+            programDetails.setTherapyProgramName(programDetailsDto.getTherapyProgramName());
+
+            boolean isUpdatedProgramDetails = programDetailsBo.updateCurrentPayment(session, programDetails); // Update the program details
+
+            if (!isUpdatedProgramDetails) {
+                transaction.rollback();
+                return false;
+            }
+
+            transaction.commit();
+            return true;
+
+        } catch (Exception e) {
+            transaction.rollback();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }

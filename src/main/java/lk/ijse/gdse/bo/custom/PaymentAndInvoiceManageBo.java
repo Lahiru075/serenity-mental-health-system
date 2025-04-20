@@ -23,4 +23,6 @@ public interface PaymentAndInvoiceManageBo extends SuperBo {
     ArrayList<PaymentDto> getAll() throws SQLException;
 
     boolean update(String id, String newAmount);
+
+    boolean delete(String id);
 }
