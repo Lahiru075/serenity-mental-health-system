@@ -84,11 +84,6 @@ public class ProgramManageController implements Initializable {
     }
 
     @FXML
-    void btnLinkTherapistOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void btnResetOnAction(ActionEvent event) throws SQLException {
         reset();
     }

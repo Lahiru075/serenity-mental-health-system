@@ -149,6 +149,7 @@ public class PatientManageController implements Initializable {
         String email = txtEmail.getText();
         String contact = txtContact.getText();
         String medicalHistory = txtMedicalHistory.getText();
+        Date registerDate = Date.valueOf(dpRegisterDate.getValue());
 
         if (id.isEmpty() || name.isEmpty() || email.isEmpty() || contact.isEmpty() || medicalHistory.isEmpty() || dpRegisterDate.getValue() == null){
             new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
@@ -184,8 +185,6 @@ public class PatientManageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Invalid description").showAndWait();
             return;
         }
-
-        Date registerDate = Date.valueOf(dpRegisterDate.getValue());
 
         PatientDto patientDto = new PatientDto();
         patientDto.setId(id);

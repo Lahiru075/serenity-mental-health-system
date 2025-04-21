@@ -98,6 +98,7 @@ public class SessionManageController implements Initializable {
     void btnBookOnAction(ActionEvent event) throws SQLException {
         String id = lblSessionId.getText();
         String time = txtSessionTime.getText();
+        Date date = Date.valueOf(dpSessionDate.getValue());
         String status = cmbSessionStatus.getValue();
         String programIdId = cmbProgramId.getValue();
         String therapistId = cmbTherapistId.getValue();
@@ -118,7 +119,6 @@ public class SessionManageController implements Initializable {
         }
 
         Time newTime = Time.valueOf(time);
-        Date date = Date.valueOf(dpSessionDate.getValue());
 
         boolean idBooked = therapySessionBo.save(new TherapySessionDto(
                 id,
@@ -142,6 +142,7 @@ public class SessionManageController implements Initializable {
     void btnRescheduleOnAction(ActionEvent event) throws SQLException {
         String id = lblSessionId.getText();
         String time = txtSessionTime.getText();
+        Date date = Date.valueOf(dpSessionDate.getValue());
         String status = cmbSessionStatus.getValue();
         String programIdId = cmbProgramId.getValue();
         String therapistId = cmbTherapistId.getValue();
@@ -162,7 +163,6 @@ public class SessionManageController implements Initializable {
         }
 
         Time newTime = Time.valueOf(time);
-        Date date = Date.valueOf(dpSessionDate.getValue());
 
         boolean idBooked = therapySessionBo.update(new TherapySessionDto(
                 id,

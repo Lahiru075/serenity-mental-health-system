@@ -95,7 +95,6 @@ public class ProgramManageController implements Initializable {
         String duration = txtDuration.getText();
         String fee = txtFee.getText();
         String description = txtDescription.getText();
-        double newFee = Double.parseDouble(fee);
 
         if (id.isEmpty() || name.isEmpty() || duration.isEmpty() || fee.isEmpty() || description.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
@@ -131,6 +130,8 @@ public class ProgramManageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Invalid description").showAndWait();
             return;
         }
+
+        double newFee = Double.parseDouble(fee);
 
         boolean isSaved = therapyProgramBo.save(new TherapyProgramDto(
                 id,

@@ -133,7 +133,6 @@ public class FinancialReportController implements Initializable {
 
         if (counts[0] == 0.0 && counts[1] == 0.0 && counts[2] == 0.0){
             new Alert(Alert.AlertType.ERROR, "No payments found").showAndWait();
-            reset();
             return;
         }
 
