@@ -394,4 +394,26 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
             }
         }
     }
+
+    @Override
+    public ArrayList<PaymentDto> getPaymentsByDates(Date firstDay, Date lastDay) {
+        ArrayList<Payment> payments = paymentAndInvoiceManageDao.getPaymentsByDates(firstDay, lastDay);
+
+        ArrayList<PaymentDto> paymentDtos = new ArrayList<>();
+
+        for (Payment payment : payments) {
+            PaymentDto paymentDto = new PaymentDto();
+            paymentDto.setId(payment.getId());
+            paymentDto.setAmount(payment.getAmount());
+            paymentDto.setStatus(payment.getStatus());
+            paymentDto.setDate(payment.getDate());
+            paymentDto.setPatientId(payment.getPatient().getId());
+            paymentDto.setTherapyProgramId(payment.getTherapyProgram().getId());
+            paymentDto.setTherapySessionId(payment.getTherapySession().getId());
+
+            paymentDtos.add(paymentDto);
+        }
+
+        return paymentDtos;
+    }
 }

@@ -18,7 +18,9 @@ import lk.ijse.gdse.dto.TherapyProgramDto;
 import lk.ijse.gdse.dto.tm.ProgramDetailsTm;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -46,6 +48,12 @@ public class AssignProgramController implements Initializable {
     private TableColumn<ProgramDetailsTm, String> colProgramName;
 
     @FXML
+    private TableColumn<ProgramDetailsTm, Date> colRegisterDate;
+
+    @FXML
+    private TableColumn<ProgramDetailsTm, Double> colProgramFee;
+
+    @FXML
     private Label lbProgramId;
 
     @FXML
@@ -53,6 +61,9 @@ public class AssignProgramController implements Initializable {
 
     @FXML
     private Label lbProgramFee;
+
+    @FXML
+    private Label lbDate;
 
     @FXML
     private TableView<ProgramDetailsTm> tblAssignments;
@@ -68,8 +79,9 @@ public class AssignProgramController implements Initializable {
         String patientId = lbPatientId.getText();
         String programId = lbProgramId.getText();
         double programFee = Double.parseDouble(lbProgramFee.getText());
+        Date registerDate = Date.valueOf(lbDate.getText());
 
-        boolean isAssigned = programDetailsBo.save(programId,patientId, programFee);
+        boolean isAssigned = programDetailsBo.save(programId,patientId, programFee, registerDate);
 
         if (isAssigned) {
             new Alert(Alert.AlertType.INFORMATION, "Program assigned successfully").showAndWait();
@@ -169,6 +181,8 @@ public class AssignProgramController implements Initializable {
             therapistTherapyProgramTm.setPatient(therapistTherapyProgramDto.getPatient());
             therapistTherapyProgramTm.setTherapyProgram(therapistTherapyProgramDto.getTherapyProgram());
             therapistTherapyProgramTm.setTherapyProgramName(therapistTherapyProgramDto.getTherapyProgramName());
+            therapistTherapyProgramTm.setFee(therapistTherapyProgramDto.getCurrentPaymentStatus());
+            therapistTherapyProgramTm.setRegisterDate(therapistTherapyProgramDto.getRegisterDate());
 
             therapistTherapyProgramTms.add(therapistTherapyProgramTm);
         }
@@ -208,8 +222,11 @@ public class AssignProgramController implements Initializable {
         colProgramId.setCellValueFactory(new PropertyValueFactory<>("therapyProgram"));
         colPatientId.setCellValueFactory(new PropertyValueFactory<>("patient"));
         colProgramName.setCellValueFactory(new PropertyValueFactory<>("therapyProgramName"));
+        colProgramFee.setCellValueFactory(new PropertyValueFactory<>("fee"));
+        colRegisterDate.setCellValueFactory(new PropertyValueFactory<>("registerDate"));
 
         try {
+            lbDate.setText(LocalDate.now().toString());
             reset();
             loadPatientIds();
             loadTherapyProgramsId();

@@ -7,6 +7,7 @@ import lk.ijse.gdse.entity.Payment;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,5 +87,16 @@ public class PaymentAndInvoiceManageDaoImpl implements PaymentAndInvoiceManageDa
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<Payment> getPaymentsByDates(Date firstDate, Date secondDate) {
+        Session session = factoryConfiguration.getSession();
+
+        Query<Payment> query = session.createQuery("FROM Payment p WHERE p.date BETWEEN :firstDate AND :secondDate", Payment.class);
+        query.setParameter("firstDate", firstDate);
+        query.setParameter("secondDate", secondDate);
+        List<Payment> list = query.list();
+        return new ArrayList<>(list);
     }
 }

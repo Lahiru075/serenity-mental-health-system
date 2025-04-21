@@ -1,5 +1,6 @@
 package lk.ijse.gdse.bo;
 
+import lk.ijse.gdse.bo.custom.FinanceReportBo;
 import lk.ijse.gdse.bo.custom.impl.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -17,7 +18,7 @@ public class BOFactory {
     }
 
     public enum BOType {
-        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT, VIEW_PATIENT_IN_ALL_PROGRAMS, CHANGE_CREDENTIAL, REPORT_AND_ANALYSIS, VIEW_PATIENT_HISTORY
+        USER, PROGRAM_DETAILS, PATIENT, THERAPIST, THERAPY_PROGRAM, SESSION, PAYMENT, ENCRYPT, TRACK_THERAPY_SCHEDULE, VIEW_PATIENT_PROGRAM, FILTER_PATIENT, VIEW_PATIENT_IN_ALL_PROGRAMS, CHANGE_CREDENTIAL, REPORT_AND_ANALYSIS, VIEW_PATIENT_HISTORY, FINANCE
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +54,8 @@ public class BOFactory {
                 return (T) new PaymentAndInvoiceManageBoImpl();
             case VIEW_PATIENT_HISTORY:
                 return (T) new ViewPatientHistoryBoImpl();
+            case FINANCE:
+                return (T) new FinanceReportBoImpl();
             default:
                 return null;
         }

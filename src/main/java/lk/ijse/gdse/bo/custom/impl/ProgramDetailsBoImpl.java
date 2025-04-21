@@ -15,6 +15,7 @@ import lk.ijse.gdse.entity.ProgramDetailsId;
 import lk.ijse.gdse.entity.TherapyProgram;
 import org.hibernate.Session;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -35,6 +36,8 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
             programDetailsDto.setPatient(programDetail.getPatient().getId());
             programDetailsDto.setTherapyProgram(programDetail.getTherapyProgram().getId());
             programDetailsDto.setTherapyProgramName(programDetail.getTherapyProgramName());
+            programDetailsDto.setCurrentPaymentStatus(programDetail.getCurrentPaymentStatus());
+            programDetailsDto.setRegisterDate(programDetail.getRegisterDate());
 
             programDetailsDtos.add(programDetailsDto);
         }
@@ -43,7 +46,7 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
     }
 
     @Override
-    public boolean save(String programId, String patientId, double fee) throws SQLException {
+    public boolean save(String programId, String patientId, double fee, Date registerDate) throws SQLException {
         ProgramDetailsId programDetailsId = new ProgramDetailsId(programId, patientId);
 
         TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId);
@@ -70,6 +73,7 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
         programDetails.setPatient(patient);
         programDetails.setCurrentPaymentStatus(fee);
         programDetails.setTherapyProgramName(therapyProgram.getName());
+        programDetails.setRegisterDate(registerDate);
 
         return programDetailsDao.save(programDetails);
 
@@ -121,6 +125,26 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
     @Override
     public boolean updateCurrentPayment(Session session, ProgramDetails programDetails) {
         return programDetailsDao.updateCurrentPayment(session, programDetails);
+    }
+
+    @Override
+    public ArrayList<ProgramDetailsDto> getDetailsByDates(Date firstDay, Date lastDay) {
+        ArrayList<ProgramDetails> programDetails = programDetailsDao.getDetailsByDates(firstDay, lastDay);
+
+        ArrayList<ProgramDetailsDto> programDetailsDtos = new ArrayList<>();
+
+        for (ProgramDetails programDetail : programDetails) {
+            ProgramDetailsDto programDetailsDto = new ProgramDetailsDto();
+            programDetailsDto.setPatient(programDetail.getPatient().getId());
+            programDetailsDto.setTherapyProgram(programDetail.getTherapyProgram().getId());
+            programDetailsDto.setTherapyProgramName(programDetail.getTherapyProgramName());
+            programDetailsDto.setCurrentPaymentStatus(programDetail.getCurrentPaymentStatus());
+            programDetailsDto.setRegisterDate(programDetail.getRegisterDate());
+
+            programDetailsDtos.add(programDetailsDto);
+        }
+
+        return programDetailsDtos;
     }
 
 }

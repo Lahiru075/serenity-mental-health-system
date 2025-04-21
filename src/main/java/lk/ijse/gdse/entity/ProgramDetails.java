@@ -3,6 +3,8 @@ package lk.ijse.gdse.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -26,4 +28,6 @@ public class ProgramDetails implements SuperEntity {
     private String therapyProgramName;
 
     private double currentPaymentStatus;
+
+    private Date registerDate;
 }

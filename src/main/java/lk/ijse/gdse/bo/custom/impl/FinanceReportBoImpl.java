@@ -1,0 +1,67 @@
+package lk.ijse.gdse.bo.custom.impl;
+
+import lk.ijse.gdse.bo.BOFactory;
+import lk.ijse.gdse.bo.custom.FinanceReportBo;
+import lk.ijse.gdse.bo.custom.PaymentAndInvoiceManageBo;
+import lk.ijse.gdse.bo.custom.ProgramDetailsBo;
+import lk.ijse.gdse.bo.custom.TherapyProgramBo;
+import lk.ijse.gdse.dto.PaymentDto;
+import lk.ijse.gdse.dto.ProgramDetailsDto;
+import lk.ijse.gdse.dto.TherapyProgramDto;
+
+import java.sql.Date;
+import java.util.ArrayList;
+
+public class FinanceReportBoImpl implements FinanceReportBo {
+
+    PaymentAndInvoiceManageBo paymentAndInvoiceManageBo = BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    ProgramDetailsBo programDetailsBo = BOFactory.getInstance().getBO(BOFactory.BOType.PROGRAM_DETAILS);
+    TherapyProgramBo therapyProgramBo = BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
+
+    @Override
+    public ArrayList<PaymentDto> getPayments(Date firstDay, Date lastDay) {
+        return paymentAndInvoiceManageBo.getPaymentsByDates(firstDay, lastDay);
+    }
+
+    @Override
+    public double[] getPaymentCounts(Date firstDay, Date lastDay) {
+        ArrayList<ProgramDetailsDto> programDetailsDtos = programDetailsBo.getDetailsByDates(firstDay, lastDay);
+        ArrayList<PaymentDto> payments = paymentAndInvoiceManageBo.getPaymentsByDates(firstDay, lastDay);
+
+        double total = 0;
+        double received = 0;
+        double pending = 0;
+
+        double[] counts = new double[3];
+
+        for (ProgramDetailsDto programDetailsDto : programDetailsDtos) {
+
+            // get details from the program details table
+
+            pending += programDetailsDto.getCurrentPaymentStatus();
+
+            String programId = programDetailsDto.getTherapyProgram();
+
+            TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId);
+            total += therapyProgramDto.getFee();
+
+            received += therapyProgramDto.getFee() - programDetailsDto.getCurrentPaymentStatus();
+
+        }
+
+        for (PaymentDto paymentDto : payments) {
+            // get details from the payment table
+
+            total += paymentDto.getAmount();
+            received += paymentDto.getAmount();
+        }
+
+        counts[0] = total;
+        counts[1] = received;
+        counts[2] = pending;
+
+        return counts;
+
+
+    }
+}

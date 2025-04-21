@@ -2,7 +2,9 @@ package lk.ijse.gdse.dao.custom.impl;
 
 import lk.ijse.gdse.config.FactoryConfiguration;
 import lk.ijse.gdse.dao.custom.ProgramDetailsDao;
+import lk.ijse.gdse.dto.ProgramDetailsDto;
 import lk.ijse.gdse.entity.Patient;
+import lk.ijse.gdse.entity.Payment;
 import lk.ijse.gdse.entity.ProgramDetails;
 import lk.ijse.gdse.entity.TherapyProgram;
 import org.hibernate.Session;
@@ -10,6 +12,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.security.access.method.P;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +109,17 @@ public class ProgramDetailsDaoImpl implements ProgramDetailsDao {
         } catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<ProgramDetails> getDetailsByDates(Date firstDate, Date secondDate) {
+        Session session = factoryConfiguration.getSession();
+
+        Query<ProgramDetails> query = session.createQuery("FROM ProgramDetails pd WHERE pd.registerDate BETWEEN :firstDate AND :secondDate", ProgramDetails.class);
+        query.setParameter("firstDate", firstDate);
+        query.setParameter("secondDate", secondDate);
+        List<ProgramDetails> list = query.list();
+        return new ArrayList<>(list);
     }
 
 

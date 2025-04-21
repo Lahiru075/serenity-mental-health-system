@@ -1,0 +1,162 @@
+package lk.ijse.gdse.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import lk.ijse.gdse.bo.BOFactory;
+import lk.ijse.gdse.bo.custom.FinanceReportBo;
+import lk.ijse.gdse.dto.PaymentDto;
+import lk.ijse.gdse.dto.tm.PaymentTm;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class FinancialReportController implements Initializable {
+
+    @FXML
+    private Button btnSearch;
+
+    @FXML
+    private TableColumn<PaymentTm, Double> colAmount;
+
+    @FXML
+    private TableColumn<PaymentTm, Date> colDate;
+
+    @FXML
+    private TableColumn<PaymentTm, String> colPatientId;
+
+    @FXML
+    private TableColumn<PaymentTm, String> colPaymentId;
+
+    @FXML
+    private TableColumn<PaymentTm, String> colProgramId;
+
+    @FXML
+    private TableColumn<PaymentTm, String> colSessionId;
+
+    @FXML
+    private TableColumn<PaymentTm, String> colStatus;
+
+    @FXML
+    private DatePicker dpFromDate;
+
+    @FXML
+    private DatePicker dpToDate;
+
+    @FXML
+    private Label lblDescription;
+
+    @FXML
+    private Label lblPendingPayments;
+
+    @FXML
+    private Label lblReceivedPayments;
+
+    @FXML
+    private Label lblTotalIncome;
+
+    @FXML
+    private TableView<PaymentTm> tblPayments;
+
+    FinanceReportBo financeReportBo = BOFactory.getInstance().getBO(BOFactory.BOType.FINANCE);
+
+    @FXML
+    void btnClearOnAction(ActionEvent event) {
+        reset();
+    }
+
+    private void reset(){
+        dpFromDate.setValue(null);
+        dpToDate.setValue(null);
+        tblPayments.setItems(null);
+        lblPendingPayments.setText("0.00");
+        lblReceivedPayments.setText("0.00");
+        lblTotalIncome.setText("0.00");
+    }
+
+    @FXML
+    void btnSearchOnAction(ActionEvent event) {
+        String dateOne = String.valueOf(dpFromDate.getValue());
+        String dateTwo = String.valueOf(dpToDate.getValue());
+
+        if (dateOne.isEmpty() || dateTwo.isEmpty() || dpFromDate.getValue() == null || dpToDate.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
+            reset();
+            return;
+        }
+
+        Date firstDay = Date.valueOf(dateOne);
+        Date lastDay = Date.valueOf(dateTwo);
+
+        if (!firstDay.before(lastDay)) {
+            new Alert(Alert.AlertType.ERROR, "first date must be before second date").showAndWait();
+            reset();
+            return;
+        }
+
+        ArrayList<PaymentDto> payments = financeReportBo.getPayments(firstDay, lastDay); // get payments between dates
+
+        if (payments == null){
+            new Alert(Alert.AlertType.ERROR, "No payments found").showAndWait();
+            return;
+        }
+
+        ObservableList<PaymentTm> paymentTms = FXCollections.observableArrayList();
+
+        for (PaymentDto paymentDto : payments) {
+            PaymentTm paymentTm = new PaymentTm();
+            paymentTm.setId(paymentDto.getId());
+            paymentTm.setAmount(paymentDto.getAmount());
+            paymentTm.setStatus(paymentDto.getStatus());
+            paymentTm.setDate(paymentDto.getDate());
+            paymentTm.setPatientId(paymentDto.getPatientId());
+            paymentTm.setTherapySessionId(paymentDto.getTherapySessionId());
+            paymentTm.setTherapyProgramId(paymentDto.getTherapyProgramId());
+
+            paymentTms.add(paymentTm);
+        }
+
+        tblPayments.setItems(paymentTms);
+
+        double[] counts = financeReportBo.getPaymentCounts(firstDay, lastDay); // get total, received, pending
+
+        lblTotalIncome.setText(String.valueOf(counts[0]));
+        lblReceivedPayments.setText(String.valueOf(counts[1]));
+        lblPendingPayments.setText(String.valueOf(counts[2]));
+
+    }
+
+    @FXML
+    void btnViewPatientHistoryOnAction(ActionEvent event) throws IOException {
+        Parent load =  FXMLLoader.load(getClass().getResource("/view/ViewPatientHistory.fxml"));
+        Scene scene = new Scene(load);
+
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Patient's history Form");
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        colPaymentId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colPatientId.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        colSessionId.setCellValueFactory(new PropertyValueFactory<>("therapySessionId"));
+        colProgramId.setCellValueFactory(new PropertyValueFactory<>("therapyProgramId"));
+    }
+}

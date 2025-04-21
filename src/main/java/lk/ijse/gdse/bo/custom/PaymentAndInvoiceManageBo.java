@@ -25,4 +25,6 @@ public interface PaymentAndInvoiceManageBo extends SuperBo {
     boolean update(String id, String newAmount);
 
     boolean delete(String id);
+
+    ArrayList<PaymentDto> getPaymentsByDates(Date firstDay, Date lastDay);
 }
