@@ -3,6 +3,7 @@ package lk.ijse.gdse.bo.custom.impl;
 import javafx.scene.control.Alert;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.*;
+import lk.ijse.gdse.bo.exception.PaymentProcessingException;
 import lk.ijse.gdse.config.FactoryConfiguration;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.PaymentAndInvoiceManageDao;
@@ -75,6 +76,10 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
     public boolean save(String paymentId, String patientId, String therapyProgramId, String therapySessionId, double amount, String status, double currentPayment, Date date) {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
+
+        if (amount <= 0) {
+            throw new PaymentProcessingException("Amount must be greater than 0");
+        }
 
         try {
             PatientDto patientDto = patientBo.findById(patientId); // Check if the patient exists
@@ -213,6 +218,12 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
     public boolean update(String id, String newAmount) {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
+
+        double amount = Double.parseDouble(newAmount);
+
+        if (amount <= 0) {
+            throw new PaymentProcessingException("Amount must be greater than 0");
+        }
 
         try {
 

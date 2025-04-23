@@ -28,6 +28,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean existsByUsername(String username) {
+        Session session = factoryConfiguration.getSession();
+        try {
+            String hql = "SELECT COUNT(*) FROM User u WHERE u.username = :username";
+            Query<Long> query = session.createQuery(hql, Long.class);
+            query.setParameter("username", username);
+            return query.getSingleResult() > 0;
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
     public String getNextId() throws SQLException {
         Session session = factoryConfiguration.getSession();
 

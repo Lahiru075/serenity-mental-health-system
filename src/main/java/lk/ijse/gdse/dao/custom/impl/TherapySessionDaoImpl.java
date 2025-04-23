@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -155,5 +156,20 @@ public class TherapySessionDaoImpl implements TherapySessionDao {
         query.setParameter("patientId", patientId);
         List<TherapySession> sessions = query.list();
         return new ArrayList<>(sessions);
+    }
+
+    @Override
+    public boolean existsConflict(String therapistId, Date sessionDate, Time sessionTime) {
+        Session session = factoryConfiguration.getSession();
+        try {
+            String hql = "SELECT COUNT(*) FROM TherapySession ts WHERE ts.therapists.id = :therapistId AND ts.date = :sessionDate AND ts.time = :sessionTime AND ts.status != 'Cancelled'";
+            Query<Long> query = session.createQuery(hql, Long.class);
+            query.setParameter("therapistId", therapistId);
+            query.setParameter("sessionDate", sessionDate);
+            query.setParameter("sessionTime", sessionTime);
+            return query.getSingleResult() > 0;
+        } finally {
+            session.close();
+        }
     }
 }

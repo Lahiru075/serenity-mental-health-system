@@ -5,6 +5,7 @@ import lk.ijse.gdse.bo.custom.PatientBo;
 import lk.ijse.gdse.bo.custom.TherapistBo;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.bo.custom.TherapySessionBo;
+import lk.ijse.gdse.bo.exception.SchedulingConflictException;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.TherapyProgramDao;
 import lk.ijse.gdse.dao.custom.TherapySessionDao;
@@ -102,6 +103,10 @@ public class TherapySessionBoImpl implements TherapySessionBo {
         therapySession.setTherapists(therapist);
         therapySession.setPatient(patient);
 
+        if (therapySessionDao.existsConflict(therapist.getId(), therapySession.getDate(), therapySession.getTime())) {
+            throw new SchedulingConflictException("Scheduling conflict for therapist at " + therapySession.getDate() + " " + therapySession.getTime());
+        }
+
         return therapySessionDao.save(therapySession);
     }
 
@@ -145,6 +150,10 @@ public class TherapySessionBoImpl implements TherapySessionBo {
         therapySession.setTherapyProgram(therapyProgram);
         therapySession.setTherapists(therapist);
         therapySession.setPatient(patient);
+
+        if (therapySessionDao.existsConflict(therapist.getId(), therapySession.getDate(), therapySession.getTime())) {
+            throw new SchedulingConflictException("Scheduling conflict for therapist at " + therapySession.getDate() + " " + therapySession.getTime());
+        }
 
         return therapySessionDao.update(therapySession);
     }

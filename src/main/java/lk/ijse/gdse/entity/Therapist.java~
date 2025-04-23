@@ -27,6 +27,6 @@ public class Therapist implements SuperEntity {
     )
     private List<TherapyProgram> therapyPrograms;
 
-    @OneToMany(mappedBy = "therapists", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "therapists", fetch = FetchType.LAZY)
     private List<TherapySession> therapySessions;
 }

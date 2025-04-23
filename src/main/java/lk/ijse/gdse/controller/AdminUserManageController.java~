@@ -92,6 +92,11 @@ public class AdminUserManageController implements Initializable {
         String email = txtEmail.getText();
         String role = cmbUserRole.getValue();
 
+//        if (userId.isEmpty() || username.isEmpty() || password.isEmpty() || email.isEmpty() || role.isEmpty()) {
+//            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
+//            return;
+//        }
+
         String usernamePattern = "^[a-zA-Z0-9._-]{5,20}$";
         String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -122,6 +127,12 @@ public class AdminUserManageController implements Initializable {
         } catch (MissingFieldsException | DuplicateEntryException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
         }
+//
+//        if (isSaveUser){
+//
+//        }else {
+//            new Alert(Alert.AlertType.ERROR, "Failed to save user").showAndWait();
+//        }
 
     }
 

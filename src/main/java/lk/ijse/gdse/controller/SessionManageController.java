@@ -14,6 +14,7 @@ import lk.ijse.gdse.bo.custom.TherapistBo;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 
 import lk.ijse.gdse.bo.custom.TherapySessionBo;
+import lk.ijse.gdse.bo.exception.SchedulingConflictException;
 import lk.ijse.gdse.dto.PatientDto;
 import lk.ijse.gdse.dto.TherapistDto;
 import lk.ijse.gdse.dto.TherapyProgramDto;
@@ -119,22 +120,26 @@ public class SessionManageController implements Initializable {
 
         Time newTime = Time.valueOf(time);
         Date date = Date.valueOf(dpSessionDate.getValue());
+        
+        try {
+            boolean idBooked = therapySessionBo.save(new TherapySessionDto(
+                    id,
+                    newTime,
+                    date,
+                    status,
+                    programIdId,
+                    therapistId,
+                    patientId
+            ));
 
-        boolean idBooked = therapySessionBo.save(new TherapySessionDto(
-                id,
-                newTime,
-                date,
-                status,
-                programIdId,
-                therapistId,
-                patientId
-        ));
-
-        if (idBooked){
-            new Alert(Alert.AlertType.INFORMATION, "Booking saved successfully").showAndWait();
-            reset();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Failed to save booking").showAndWait();
+            if (idBooked){
+                new Alert(Alert.AlertType.INFORMATION, "Booking saved successfully").showAndWait();
+                reset();
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save booking").showAndWait();
+            }    
+        } catch (SchedulingConflictException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
         }
     }
 
@@ -163,22 +168,26 @@ public class SessionManageController implements Initializable {
 
         Time newTime = Time.valueOf(time);
         Date date = Date.valueOf(dpSessionDate.getValue());
+        
+        try {
+            boolean isReschedule = therapySessionBo.update(new TherapySessionDto(
+                    id,
+                    newTime,
+                    date,
+                    status,
+                    programIdId,
+                    therapistId,
+                    patientId
+            ));
 
-        boolean idBooked = therapySessionBo.update(new TherapySessionDto(
-                id,
-                newTime,
-                date,
-                status,
-                programIdId,
-                therapistId,
-                patientId
-        ));
-
-        if (idBooked){
-            new Alert(Alert.AlertType.INFORMATION, "Booking reschedule successfully").showAndWait();
-            reset();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Failed to reschedule booking").showAndWait();
+            if (isReschedule){
+                new Alert(Alert.AlertType.INFORMATION, "Booking reschedule successfully").showAndWait();
+                reset();
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Failed to reschedule booking").showAndWait();
+            }    
+        } catch (SchedulingConflictException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
         }
     }
 

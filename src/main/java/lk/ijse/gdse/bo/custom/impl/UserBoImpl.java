@@ -3,6 +3,9 @@ package lk.ijse.gdse.bo.custom.impl;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.EncryptAndDecryptBo;
 import lk.ijse.gdse.bo.custom.UserBo;
+import lk.ijse.gdse.bo.exception.DuplicateEntryException;
+import lk.ijse.gdse.bo.exception.InvalidCredentialsException;
+import lk.ijse.gdse.bo.exception.MissingFieldsException;
 import lk.ijse.gdse.dao.DaoFactory;
 import lk.ijse.gdse.dao.custom.UserDao;
 import lk.ijse.gdse.dto.UserDto;
@@ -35,7 +38,7 @@ public class UserBoImpl implements UserBo {
             }
         }
 
-        return null;
+        throw new InvalidCredentialsException("Invalid username or password");
     }
 
     @Override
@@ -75,6 +78,10 @@ public class UserBoImpl implements UserBo {
     public boolean save(UserDto userDto) throws SQLException {
         String encryptedPassword = encryptAndDecrypt.encryptPassword(userDto.getPassword());
 
+        if (userDto.getUsername() == null || userDto.getPassword() == null || userDto.getRole() == null || userDto.getEmail() == null) {
+            throw new MissingFieldsException("Missing fields");
+        }
+
         User user = new User();
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
@@ -94,6 +101,14 @@ public class UserBoImpl implements UserBo {
     @Override
     public boolean update(UserDto userDto) throws SQLException {
         String encryptedPassword = encryptAndDecrypt.encryptPassword(userDto.getPassword());
+
+        if (userDto.getUsername() == null || userDto.getPassword() == null || userDto.getRole() == null || userDto.getEmail() == null) {
+            throw new MissingFieldsException("Missing fields");
+        }
+
+        if (userDao.existsByUsername(userDto.getUsername())) {
+            throw new DuplicateEntryException("Username already exists: " + userDto.getUsername());
+        }
 
         User user = new User();
         user.setId(userDto.getId());

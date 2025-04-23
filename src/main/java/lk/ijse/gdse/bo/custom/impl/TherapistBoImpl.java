@@ -99,6 +99,27 @@ public class TherapistBoImpl implements TherapistBo {
         therapist.setEmail(therapistDto.getEmail());
         therapist.setContact(therapistDto.getContact());
 
+        ArrayList<TherapyProgramDto> therapyProgram = therapyProgramBo.getAll();
+
+        List<TherapyProgram> selectedProgramDto = new ArrayList<>();
+
+        for (TherapyProgramDto therapyProgramDto : therapyProgram) {
+            for (String name : programNames){
+                if (name.equals(therapyProgramDto.getName())){
+                    TherapyProgram therapyProgram1 = new TherapyProgram();
+                    therapyProgram1.setId(therapyProgramDto.getId());
+                    therapyProgram1.setName(therapyProgramDto.getName());
+                    therapyProgram1.setDuration(therapyProgramDto.getDuration());
+                    therapyProgram1.setDescription(therapyProgramDto.getDescription());
+                    therapyProgram1.setFee(therapyProgramDto.getFee());
+
+                    selectedProgramDto.add(therapyProgram1);
+                }
+            }
+        }
+
+        therapist.setTherapyPrograms(selectedProgramDto);
+
         return therapistDao.update(therapist);
     }
 

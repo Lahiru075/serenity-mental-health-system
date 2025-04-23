@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.gdse.bo.BOFactory;
 import lk.ijse.gdse.bo.custom.UserBo;
+import lk.ijse.gdse.bo.exception.InvalidCredentialsException;
 import lk.ijse.gdse.dto.UserDto;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class LoginFormController {
     @FXML
     void btnLoginOnAction(ActionEvent event) {
 
-        if (showPasswordBox.isSelected()){
+        if (showPasswordBox.isSelected()) {
             new Alert(Alert.AlertType.ERROR, "Please uncheck show password box").showAndWait();
             return;
         }
@@ -47,11 +48,14 @@ public class LoginFormController {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please enter username and password").showAndWait();
         } else {
-            try{
-                UserDto userDto = userBo.checkUser(txtUsername.getText(), txtPassword.getText());
+            try {
 
-                if (userDto == null) {
-                    new Alert(Alert.AlertType.ERROR, "Invalid username or password").showAndWait();
+                UserDto userDto;
+
+                try {
+                    userDto = userBo.checkUser(txtUsername.getText(), txtPassword.getText());
+                } catch (InvalidCredentialsException e) {
+                    new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
                     txtUsername.clear();
                     txtPassword.clear();
                     txtSecondPassword.clear();
@@ -71,7 +75,7 @@ public class LoginFormController {
                     stage.setScene(new Scene(root));
                     stage.show();
 
-                }else {
+                } else {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/receptionistDashBoard.fxml"));
                     Parent root = loader.load();
 

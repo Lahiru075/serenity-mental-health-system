@@ -4,7 +4,6 @@ import lk.ijse.gdse.dao.CrudDao;
 import lk.ijse.gdse.entity.TherapySession;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -20,6 +19,4 @@ public interface TherapySessionDao extends CrudDao<TherapySession, String> {
     TherapySession findById(String therapySessionId);
 
     ArrayList<TherapySession> getSessionByPatientId(String patientId);
-
-    boolean existsConflict(String id, Date date, Time time);
 }

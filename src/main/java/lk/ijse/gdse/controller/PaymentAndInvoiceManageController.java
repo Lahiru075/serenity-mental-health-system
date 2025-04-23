@@ -19,6 +19,7 @@ import lk.ijse.gdse.bo.custom.PatientBo;
 import lk.ijse.gdse.bo.custom.PaymentAndInvoiceManageBo;
 import lk.ijse.gdse.bo.custom.TherapyProgramBo;
 import lk.ijse.gdse.bo.custom.TherapySessionBo;
+import lk.ijse.gdse.bo.exception.PaymentProcessingException;
 import lk.ijse.gdse.dto.*;
 import lk.ijse.gdse.dto.tm.PatientTm;
 import lk.ijse.gdse.dto.tm.PaymentTm;
@@ -179,21 +180,28 @@ public class PaymentAndInvoiceManageController implements Initializable {
             return;
         }
 
-        boolean isSaved = paymentAndInvoiceManageBo.save(paymentId, patientId, therapyProgramId, therapySessionId, amount, status, currentPayment, date);
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.INFORMATION, "Payment saved").showAndWait();
 
-            String patientName = lblPatientName.getText();
-            String programName = lblProgramName.getText();
-            String sessionId = cmbSessionId.getValue();
-            Date invoiceDate = date;
-            double fee = Double.parseDouble(txtAmount.getText());
+        try {
+            boolean isSaved = paymentAndInvoiceManageBo.save(paymentId, patientId, therapyProgramId, therapySessionId, amount, status, currentPayment, date);
 
-            setInvoiceDto(patientId, patientName, programName, sessionId, invoiceDate, fee);
-            reset();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Payment not saved").showAndWait();
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment saved").showAndWait();
+
+                String patientName = lblPatientName.getText();
+                String programName = lblProgramName.getText();
+                String sessionId = cmbSessionId.getValue();
+                Date invoiceDate = date;
+                double fee = Double.parseDouble(txtAmount.getText());
+
+                setInvoiceDto(patientId, patientName, programName, sessionId, invoiceDate, fee);
+                reset();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Payment not saved").showAndWait();
+            }
+
+        }catch (PaymentProcessingException e){
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
         }
 
     }
@@ -217,26 +225,33 @@ public class PaymentAndInvoiceManageController implements Initializable {
             return;
         }
 
-        boolean isUpdated = paymentAndInvoiceManageBo.update(id, newAmount);
 
-        if (isUpdated) {
-            new Alert(Alert.AlertType.INFORMATION, "Payment updated").showAndWait();
+        try {
+            boolean isUpdated = paymentAndInvoiceManageBo.update(id, newAmount);
 
-            PatientDto patientDto = patientBo.findByName(lblPatientName.getText());
-            TherapyProgramDto therapyProgramDto = therapyProgramBo.findByName(lblProgramName.getText());
+            if (isUpdated) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment updated").showAndWait();
 
-            String patientId = patientDto.getId();
-            String patientName = patientDto.getName();
-            String programName = therapyProgramDto.getName();
-            String sessionId = cmbSessionId.getValue();
-            Date invoiceDate = Date.valueOf(LocalDate.now());
-            double fee = Double.parseDouble(txtAmount.getText());
+                PatientDto patientDto = patientBo.findByName(lblPatientName.getText());
+                TherapyProgramDto therapyProgramDto = therapyProgramBo.findByName(lblProgramName.getText());
 
-            setInvoiceDto(patientId, patientName, programName, sessionId, invoiceDate, fee);
-            reset();
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Payment not updated").showAndWait();
+                String patientId = patientDto.getId();
+                String patientName = patientDto.getName();
+                String programName = therapyProgramDto.getName();
+                String sessionId = cmbSessionId.getValue();
+                Date invoiceDate = Date.valueOf(LocalDate.now());
+                double fee = Double.parseDouble(txtAmount.getText());
+
+                setInvoiceDto(patientId, patientName, programName, sessionId, invoiceDate, fee);
+                reset();
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Payment not updated").showAndWait();
+            }
+        } catch (PaymentProcessingException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
         }
+
+
 
     }
 

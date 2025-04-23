@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface UserDao extends CrudDao<User, String> {
     List<User> checkUser(String username);
+
+    boolean existsByUsername(String username);
 }
