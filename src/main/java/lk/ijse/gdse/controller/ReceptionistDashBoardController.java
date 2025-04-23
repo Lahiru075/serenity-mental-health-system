@@ -14,9 +14,10 @@ import lk.ijse.gdse.entity.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class ReceptionistDashBoardController {
+public class ReceptionistDashBoardController implements Initializable {
 
     @FXML
     private Button btnCredentialManage;
@@ -124,5 +125,10 @@ public class ReceptionistDashBoardController {
         subAnchorPaneOne.getChildren().clear();
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(path));
         subAnchorPaneOne.getChildren().add(anchorPane);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        lblCurrentDate.setText(LocalDate.now().toString());
     }
 }

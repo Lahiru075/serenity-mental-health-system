@@ -207,15 +207,7 @@
         <!-- Top Bar -->
         <HBox alignment="CENTER_RIGHT" layoutX="266.0" prefHeight="60.0" prefWidth="887.0" style="-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
             <children>
-                <Label fx:id="lblCurrentDate" text="April 5, 2025">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lblReceptionistName" text="Receptionist Name">
+                <Label fx:id="lblCurrentDate" alignment="TOP_RIGHT" prefHeight="33.0" prefWidth="115.0">
                     <HBox.margin>
                         <Insets right="20.0" />
                     </HBox.margin>

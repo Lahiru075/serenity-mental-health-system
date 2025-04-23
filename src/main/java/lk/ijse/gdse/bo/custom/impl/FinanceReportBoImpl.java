@@ -52,8 +52,7 @@ public class FinanceReportBoImpl implements FinanceReportBo {
             boolean isExist = false;
 
             for (ProgramDetailsDto programDetailsDto : programDetailsDtos) {
-                if (paymentDto.getPatientId().equals(programDetailsDto.getPatient()) &&
-                        paymentDto.getTherapyProgramId().equals(programDetailsDto.getTherapyProgram())) {
+                if (paymentDto.getPatientId().equals(programDetailsDto.getPatient()) && paymentDto.getTherapyProgramId().equals(programDetailsDto.getTherapyProgram())) {
                     isExist = true;
                     break;
                 }
@@ -71,7 +70,6 @@ public class FinanceReportBoImpl implements FinanceReportBo {
         counts[2] = pending;
 
         return counts;
-
 
     }
 }
