@@ -118,7 +118,6 @@ public class ProgramDetailsBoImpl implements ProgramDetailsBo {
         programDetailsDto.setTherapyProgram(programDetails.getTherapyProgram().getId());
         programDetailsDto.setTherapyProgramName(programDetails.getTherapyProgramName());
         programDetailsDto.setCurrentPaymentStatus(programDetails.getCurrentPaymentStatus());
-        programDetailsDto.setRegisterDate(programDetails.getRegisterDate());
 
         return programDetailsDto;
     }

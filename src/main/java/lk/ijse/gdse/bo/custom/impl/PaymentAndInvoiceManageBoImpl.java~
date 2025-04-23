@@ -159,16 +159,12 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
 
             double newCurrentPayment = currentPayment - amount; // Update the current payment
 
-            ProgramDetailsDto programDetailsDto = programDetailsBo.findProgramDetails(patientId, therapyProgramId); // Find the program details
-
             ProgramDetails programDetails = new ProgramDetails();
             programDetails.setId(new ProgramDetailsId(therapyProgramId, patientId));
             programDetails.setTherapyProgram(therapyProgram);
             programDetails.setPatient(patient);
             programDetails.setCurrentPaymentStatus(newCurrentPayment);
             programDetails.setTherapyProgramName(therapyProgram.getName());
-            programDetails.setRegisterDate(programDetailsDto.getRegisterDate());
-
 
             if (amount > currentPayment) {
                 transaction.rollback();
@@ -300,7 +296,6 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
             programDetails.setPatient(patient);
             programDetails.setCurrentPaymentStatus(newCurrentPaymentStatus);
             programDetails.setTherapyProgramName(programDetailsDto.getTherapyProgramName());
-            programDetails.setRegisterDate(programDetailsDto.getRegisterDate());
 
             boolean isUpdatedProgramDetails = programDetailsBo.updateCurrentPayment(session, programDetails); // Update the program details
 
@@ -390,7 +385,6 @@ public class PaymentAndInvoiceManageBoImpl implements PaymentAndInvoiceManageBo 
             programDetails.setPatient(patient);
             programDetails.setCurrentPaymentStatus(newCurrentPaymentStatus);
             programDetails.setTherapyProgramName(programDetailsDto.getTherapyProgramName());
-            programDetails.setRegisterDate(programDetailsDto.getRegisterDate());
 
             boolean isUpdatedProgramDetails = programDetailsBo.updateCurrentPayment(session, programDetails); // Update the program details
 

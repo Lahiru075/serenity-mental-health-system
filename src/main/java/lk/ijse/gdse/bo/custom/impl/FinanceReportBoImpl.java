@@ -36,25 +36,35 @@ public class FinanceReportBoImpl implements FinanceReportBo {
 
         for (ProgramDetailsDto programDetailsDto : programDetailsDtos) {
 
-            // get details from the program details table
-
-            pending += programDetailsDto.getCurrentPaymentStatus();
-
             String programId = programDetailsDto.getTherapyProgram();
 
             TherapyProgramDto therapyProgramDto = therapyProgramBo.findById(programId);
             total += therapyProgramDto.getFee();
 
-            received += therapyProgramDto.getFee() - programDetailsDto.getCurrentPaymentStatus();
-
         }
 
         for (PaymentDto paymentDto : payments) {
             // get details from the payment table
-
-            total += paymentDto.getAmount();
             received += paymentDto.getAmount();
         }
+
+        for (PaymentDto paymentDto : payments) {
+            boolean isExist = false;
+
+            for (ProgramDetailsDto programDetailsDto : programDetailsDtos) {
+                if (paymentDto.getPatientId().equals(programDetailsDto.getPatient()) &&
+                        paymentDto.getTherapyProgramId().equals(programDetailsDto.getTherapyProgram())) {
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if (!isExist) {
+                total += paymentDto.getAmount();
+            }
+        }
+
+        pending = total - received;
 
         counts[0] = total;
         counts[1] = received;

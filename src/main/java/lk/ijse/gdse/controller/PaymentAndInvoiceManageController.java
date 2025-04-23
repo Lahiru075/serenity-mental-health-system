@@ -291,7 +291,7 @@ public class PaymentAndInvoiceManageController implements Initializable {
             String patientName = patientDto.getName();
             String programName = therapyProgramDto.getName();
             String sessionId = cmbSessionId.getValue();
-            Date invoiceDate = Date.valueOf(LocalDate.now());
+            Date invoiceDate = paymentTm.getDate();
             double fee = Double.parseDouble(txtAmount.getText());
 
             setInvoiceDto(patientId, patientName, programName, sessionId, invoiceDate, fee);
