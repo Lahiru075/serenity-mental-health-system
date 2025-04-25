@@ -9,6 +9,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 public class InvoiceDto {
     private String patientId;
     private String patientName;

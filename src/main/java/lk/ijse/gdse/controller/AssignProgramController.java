@@ -78,8 +78,16 @@ public class AssignProgramController implements Initializable {
     void btnAssignOnAction(ActionEvent event) throws SQLException {
         String patientId = lbPatientId.getText();
         String programId = lbProgramId.getText();
-        double programFee = Double.parseDouble(lbProgramFee.getText());
-        Date registerDate = Date.valueOf(lbDate.getText());
+        String fee = lbProgramFee.getText();
+        String date = lbDate.getText();
+
+        if (patientId.isEmpty() || programId.isEmpty() || fee.isEmpty() || date.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
+            return;
+        }
+
+        double programFee = Double.parseDouble(fee);
+        Date registerDate = Date.valueOf(date);
 
         boolean isAssigned = programDetailsBo.save(programId,patientId, programFee, registerDate);
 

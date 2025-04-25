@@ -161,12 +161,12 @@ public class PaymentAndInvoiceManageController implements Initializable {
         String patientId = cmbPatientId.getValue();
         String therapyProgramId = cmbProgramId.getValue();
         String therapySessionId = cmbSessionId.getValue();
-        double amount = Double.parseDouble(txtAmount.getText());
-        double currentPayment = Double.parseDouble(lblCurrentStatus.getText());
         String status = cmbStatus.getValue();
+        String stringAmount = txtAmount.getText();
+        String stringCurrentPayment = lblCurrentStatus.getText();
         Date date = Date.valueOf(LocalDate.now());
 
-        if (paymentId.isEmpty() || patientId.isEmpty() || therapyProgramId.isEmpty() || therapySessionId.isEmpty() || txtAmount.getText().isEmpty() || status.isEmpty()) {
+        if (paymentId.isEmpty() || cmbPatientId.getValue() == null || cmbProgramId.getValue() == null || cmbSessionId.getValue() == null || cmbStatus.getValue() == null || patientId.isEmpty() || therapyProgramId.isEmpty() || therapySessionId.isEmpty() || txtAmount.getText().isEmpty() || status.isEmpty() || stringCurrentPayment.isEmpty() || stringAmount.isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please fill all the fields").showAndWait();
             return;
         }
@@ -180,7 +180,8 @@ public class PaymentAndInvoiceManageController implements Initializable {
             return;
         }
 
-
+        double amount = Double.parseDouble(stringAmount);
+        double currentPayment = Double.parseDouble(stringCurrentPayment);
 
         try {
             boolean isSaved = paymentAndInvoiceManageBo.save(paymentId, patientId, therapyProgramId, therapySessionId, amount, status, currentPayment, date);
